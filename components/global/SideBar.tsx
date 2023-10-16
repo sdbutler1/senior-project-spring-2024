@@ -38,11 +38,11 @@ const SideBar = () => {
 
   return (
     <div
-      className={`sidebar fixed top-0 left-0 h-screen flex flex-col bg-[#7d1f2e] text-[#fff] border ${
+      className={`sidebar h-screen flex flex-col bg-[#7d1f2e] text-[#fdfdfd] transition-all duration-300 ${
         isSidebarOpen ? "w-80" : "w-20"
       }`}
     >
-      <div className="w-full h-20 flex items-center justify-between bg-[#fff] text-[#000] p-4 ">
+      <div className="w-full h-20 flex items-center justify-between bg-[#fdfdfd] text-[#000] p-4 ">
         {isSidebarOpen ? (
           <Image
             src={logo}
@@ -60,16 +60,18 @@ const SideBar = () => {
           )}
         </div>
       </div>
-      {isSidebarOpen ? (
-        <div className="relative w-full h-20 flex items-center justify-start text-4xl pl-10">
-          Welcome
-          <hr
-            className={`absolute left-0 w-[318px] h-[2px] ${
-              isSidebarOpen ? "border-gray-600" : "border-white-800"
-            }  mt-20`}
-          />
+
+      <div className="relative w-full h-20 flex items-center justify-between text-4xl pl-4">
+        {isSidebarOpen ? "Welcome" : undefined}
+        <div className="h-20 flex items-center justify-center pr-2">
+          <ThemeSwitcher isSidebarOpen={isSidebarOpen} />
         </div>
-      ) : undefined}
+      </div>
+      <hr
+        className={`w-full h-[2px] ${
+          isSidebarOpen ? "border-gray-600" : "border-white-800"
+        }  my-4`}
+      />
       <div
         className={`w-full h-auto ${isSidebarOpen ? "px-8" : "px-4 "} py-4 `}
       >
@@ -129,7 +131,7 @@ const SideBar = () => {
               <FeedIcon className="text-[1.5rem]" />
             </div>
             <div
-              className={`${isSidebarOpen ? "flex" : "hidden"} text-[1.1rem]`}
+              className={`${isSidebarOpen ? "flex" : "hidden"} text-[1.1rem] whitespace-nowrap`}
             >
               News and Events
             </div>
@@ -149,7 +151,7 @@ const SideBar = () => {
               <FaLink className="text-[1.5rem]" />
             </div>
             <div
-              className={`${isSidebarOpen ? "flex" : "hidden"} text-[1.1rem]`}
+              className={`${isSidebarOpen ? "flex" : "hidden"} text-[1.1rem] whitespace-nowrap`}
             >
               Quick Links
             </div>
@@ -161,11 +163,9 @@ const SideBar = () => {
           isSidebarOpen ? "border-gray-600" : "border-white-800"
         }  my-4`}
       />
-      {isSidebarOpen ? (
-        <div className="w-full h-12 flex items-center justify-start text-2xl mb-4 p-4">
+        <div className={`w-full h-12 ${isSidebarOpen ? "flex" : "hidden"} items-center justify-start text-2xl mb-4 p-4`}>
           Account
         </div>
-      ) : undefined}
       <div className={`w-full h-auto ${isSidebarOpen ? "px-8" : "px-4 "} `}>
         <div className="flex items-center justify-start gap-4 p-2">
           <div>
@@ -191,9 +191,6 @@ const SideBar = () => {
             Logout
           </div>
         </div>
-      </div>
-      <div className={`${isSidebarOpen ? undefined : "rotate-90"} h-20 flex items-center justify-center mt-8`}>
-        <ThemeSwitcher isSidebarOpen={isSidebarOpen}/>
       </div>
     </div>
   );
