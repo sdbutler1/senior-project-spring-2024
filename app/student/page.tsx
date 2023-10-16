@@ -13,6 +13,8 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Close";
+import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
+import EmailModal from "@/components/global/EmailModal";
 
 type EditableFieldProps = {
   isEditing: boolean;
@@ -48,7 +50,7 @@ const EditableField: React.FC<EditableFieldProps> = ({
 
 const Page = () => {
   const [isEditing, setIsEditing] = useState(false);
-
+  const [modalShown, setModalShown] = useState(false);
   // Other code...
 
   const handleEditClick = () => {
@@ -137,6 +139,10 @@ const Page = () => {
     },
   ];
 
+  const closeModal = () => {
+    setModalShown(state => !state)
+  }
+
   return (
     <div className="fixed right-0 bottom-0 w-[calc(100vw-20rem)] h-full flex items-center justify-center bg">
       <Box>
@@ -144,6 +150,19 @@ const Page = () => {
           <div className="text-5xl text-[#8c2333] tracking-wide font-sans font-semibold ">
             Students
           </div>
+          <button
+            onClick={() => setModalShown(state => !state)}
+            className="mt-2 flex items-center justify-center gap-2 rounded-md bg-shaw-garnet text-white p-2"
+          >
+            <span>
+              Send email
+            </span>
+            <EmailOutlinedIcon />
+          </button>
+            {
+              modalShown &&
+              <EmailModal modalShown={modalShown} closeModal={closeModal} />
+            }
           <Box
             m="20px 0"
             height="74vh"

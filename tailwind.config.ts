@@ -8,6 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      colors:{
+        'shaw-garnet': '#960A2C'
+      },
       fontFamily: {
         'sans': ['Source Sans Pro', 'sans-serif'],
       },
