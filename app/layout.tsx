@@ -22,7 +22,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Providers>
-          <div className="relative w-screen h-auto flex items-center justify-between">
+          <div className="relative w-screen h-auto flex items-center">
             <SideBar />
             {children}
           </div>

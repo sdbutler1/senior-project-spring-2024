@@ -138,10 +138,10 @@ const Page = () => {
   ];
 
   return (
-    <div className="fixed right-0 bottom-0 w-[calc(100vw-20rem)] h-full flex items-center justify-center bg">
+    <div className="w-full h-screen flex items-center justify-center">
       <Box>
         <Box>
-          <div className="text-5xl text-[#8c2333] tracking-wide font-sans font-semibold ">
+          <div className="text-5xl tracking-wide font-sans font-semibold ">
             Students
           </div>
           <Box
@@ -177,6 +177,7 @@ const Page = () => {
             }}
           >
             <DataGrid
+            className="gridBorder"
               sx={{
                 boxShadow: 2,
                 border: 2,
@@ -199,7 +200,7 @@ const Page = () => {
                   },
                 },
               }}
-              pageSizeOptions={[5]}
+              pageSizeOptions={[15]}
               checkboxSelection
               disableRowSelectionOnClick
             />

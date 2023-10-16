@@ -8,16 +8,21 @@ html {
 }
 
 body {
-  background-color: #ffffff;
-  color: #1f2937;
+  background-color: #F6F6F6;
+  color: #7d1f2e;
 }
 
 [data-theme="dark"] body {
-  background-color: #1f1f1f;
+  background-color: #22282a;
   color: #fff;
 }
 
 [data-theme="dark"] .sidebar {
   border: none;
 }
+
+[data-theme="dark"] .gridBorder {
+  border: 0.1rem solid #fff;
+}
+
 

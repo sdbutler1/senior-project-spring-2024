@@ -50,26 +50,26 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ isSidebarOpen }) => {
         onChange={handleSwitchChange}
         className={`${
           enabled ? "bg-[#e7e5e5]" : "bg-[#373636]"
-        } relative inline-flex h-8 ${
-          isSidebarOpen ? "w-32" : "w-20"
+        } relative inline-flex h-9 ${
+          isSidebarOpen ? "w-16" : "w-10 bg-transparent"
         } items-center rounded-full`}
       >
         <span
           className={`${
             isSidebarOpen
               ? enabled
-                ? "translate-x-24"
-                : "translate-x-0"
+                ? "translate-x-7"
+                : "translate-x-1"
               : enabled
-              ? "translate-x-12"
-              : "translate-x-0"
-          } flex items-center justify-center h-8 w-8 transform rounded-full transition bg-[#aeaeae] hover:text-[#3a9194]`}
+              ? "translate-x-1 bg-[#22282a]"
+              : "translate-x-1 bg-[#22282a]"
+          } flex items-center justify-center h-8 w-8 transform rounded-full transition bg-[#aeaeae] hover:text-[#8b2333]`}
         >
           <span className="flex items-center justify-center">
             {theme === "dark" ? (
-              <RiSunLine className="text-[1rem] md:text-[1rem]" />
+              <RiSunLine className="text-[1rem] md:text-[1.5rem]" />
             ) : (
-              <RiMoonLine className="text-[1rem] md:text-[1rem]" />
+              <RiMoonLine className="text-[1rem] md:text-[1.5rem]" />
             )}
           </span>
         </span>
