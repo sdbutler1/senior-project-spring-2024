@@ -4,7 +4,6 @@
 import React, { useState } from "react";
 
 // components
-import useSidebarStore from "@/components/global/sideBar/sideBarStore";
 
 // assets
 import { StudentData } from "./studentData";
@@ -146,14 +145,8 @@ const Page = () => {
     setModalShown((state) => !state);
   };
 
-  const { isSidebarOpen } = useSidebarStore();
-
   return (
-    <div
-      className={`w-full h-screen flex items-center justify-center ${
-        isSidebarOpen ? "-translate-x-[5rem]" : "translate-x-0"
-      } transition-transform duration-700 border`}
-    >
+    <div className={`w-full h-screen flex items-center justify-center`}>
       <Box>
         <Box>
           <div className="text-5xl tracking-wide font-sans font-semibold ">
