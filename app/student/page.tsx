@@ -1,12 +1,12 @@
 "use client";
 
 // react components
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 // assets
 import { StudentData } from "./studentData";
 import { Box } from "@mui/material";
-import { GridCellParams, GridColDef, DataGrid } from "@mui/x-data-grid";
+import { GridCellParams, GridColDef, DataGrid, GridRowId } from "@mui/x-data-grid";
 
 // icons
 import EditIcon from "@mui/icons-material/Edit";
@@ -48,10 +48,15 @@ const EditableField: React.FC<EditableFieldProps> = ({
   );
 };
 
+type studentsFormatted = {
+  [id: number]: student
+}
+
 const Page = () => {
-  const [isEditing, setIsEditing] = useState(false);
-  const [modalShown, setModalShown] = useState(false);
-  // Other code...
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [modalShown, setModalShown] = useState<boolean>(false);
+  const [selectedRows, setSelectedRows] = useState<student[]>([])
+  const [formattedStudentData, setFormattedStudentData] = useState<studentsFormatted>()
 
   const handleEditClick = () => {
     setIsEditing(true);
@@ -70,6 +75,24 @@ const Page = () => {
   const handleDeleteClick = () => {
     // Add logic to delete the data here
   };
+
+  const handleRowSelection = (data: any) => {
+    const recipients = data.map((studentId: any) => formattedStudentData && formattedStudentData[studentId]);
+    setSelectedRows(recipients);
+  }
+
+  useEffect(() => {
+    const data: studentsFormatted = {};
+
+    StudentData.forEach(student => {
+      data[student.id] = student
+    })
+
+    setFormattedStudentData(data);
+    console.log(data);
+
+  }, [StudentData])
+
 
   const columns: GridColDef[] = [
     {
@@ -143,6 +166,8 @@ const Page = () => {
     setModalShown(state => !state)
   }
 
+
+
   return (
     <div className="w-full h-screen flex items-center justify-center">
       <Box>
@@ -161,7 +186,7 @@ const Page = () => {
           </button>
             {
               modalShown &&
-              <EmailModal modalShown={modalShown} closeModal={closeModal} />
+              <EmailModal recipients={selectedRows} modalShown={modalShown} closeModal={closeModal} />
             }
           <Box
             m="20px 0"
@@ -196,6 +221,7 @@ const Page = () => {
             }}
           >
             <DataGrid
+            onRowSelectionModelChange={handleRowSelection}
             className="gridBorder"
               sx={{
                 boxShadow: 2,
@@ -222,6 +248,7 @@ const Page = () => {
               pageSizeOptions={[15]}
               checkboxSelection
               disableRowSelectionOnClick
+              
             />
           </Box>
         </Box>
