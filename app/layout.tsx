@@ -25,6 +25,7 @@ export default function RootLayout({
       <body>
         <Providers>
           <div className="relative w-screen h-auto flex items-center">
+<<<<<<< HEAD
             <AuthContextProvider>
               <SideBar />
               <div
@@ -37,6 +38,10 @@ export default function RootLayout({
                 {children}
               </div>
             </AuthContextProvider>
+=======
+            <SideBar />
+            {children}
+>>>>>>> 2516c4821eb023044b39b80739f2bab48a481ac3
           </div>
         </Providers>
       </body>

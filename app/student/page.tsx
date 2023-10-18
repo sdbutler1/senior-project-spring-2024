@@ -149,9 +149,13 @@ const Page = () => {
   const { isSidebarOpen } = useSidebarStore();
 
   return (
+<<<<<<< HEAD
     <div className={`w-full h-screen flex items-center justify-center ${
       isSidebarOpen ? "-translate-x-[5rem]" : "translate-x-0"
     } transition-transform duration-700 border`}>
+=======
+    <div className="w-full h-screen flex items-center justify-center">
+>>>>>>> 2516c4821eb023044b39b80739f2bab48a481ac3
       <Box>
         <Box>
           <div className="text-5xl tracking-wide font-sans font-semibold ">
@@ -200,7 +204,11 @@ const Page = () => {
             }}
           >
             <DataGrid
+<<<<<<< HEAD
               className="gridBorder"
+=======
+            className="gridBorder"
+>>>>>>> 2516c4821eb023044b39b80739f2bab48a481ac3
               sx={{
                 boxShadow: 2,
                 border: 2,
