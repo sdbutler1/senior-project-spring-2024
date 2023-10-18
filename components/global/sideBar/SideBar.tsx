@@ -1,14 +1,13 @@
 "use client";
 
 // react components
-import React from "react";
+import React, {useState} from "react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 
 //components
 import ThemeSwitcher from "../ThemeSwitcher";
-import useSidebarStore from './sideBarStore';
 
 // assets
 import logo from "../../../public/assets/shaw.png";
@@ -28,7 +27,7 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import LogoutIcon from "@mui/icons-material/Logout";
 
 const SideBar = () => {
-  const { isSidebarOpen, setSidebarOpen } = useSidebarStore();
+  const [isSidebarOpen, setSidebarOpen] = useState(true);
   const currentPathname = usePathname();
 
   const toggleSideBar = () => {
@@ -40,7 +39,7 @@ const SideBar = () => {
   }
 
   return (
-    <div className="fixed top-0 left-0 h-screen w-80 flex flex-col items-center justify-start z-50">
+    <div className="h-screen w-80 flex flex-col items-center justify-start z-50">
       <div
         className={`h-20 w-80 bg-[#fdfdfd] flex items-center justify-between text-[#000] p-2 ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-[15rem]"

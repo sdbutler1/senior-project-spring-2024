@@ -1,7 +1,10 @@
-"use client";
-
 // html
 import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "To be Decided",
+  description: "Computer Science Department Website",
+};
 
 // react components
 

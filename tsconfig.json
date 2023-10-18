@@ -22,6 +22,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/firebase", "app/context/AuthContext.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/firebase", "app/context/AuthContext.tsx", "components/global/sideBar/SideBar.jsx"],
   "exclude": ["node_modules"]
 }

@@ -32,7 +32,7 @@ const Login = (props: Props) => {
   const translateAuth = isauthBarOpen;
 
   return (
-    <div className="w-screen h-screen flex items-center justify-center">
+    <div className="relative w-screen h-screen flex items-center justify-center">
       <Image
         src={ShawU}
         alt="logo"
