@@ -1,9 +1,7 @@
 "use client";
 
-// html
-import type { Metadata } from "next";
-
 // react components
+import { usePathname } from "next/navigation";
 
 // css
 import "../styles/globals.css";
@@ -19,29 +17,23 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const pathname = usePathname();
   const { isSidebarOpen } = useSidebarStore();
   return (
     <html lang="en">
       <body>
         <Providers>
-          <div className="relative w-screen h-auto flex items-center">
-<<<<<<< HEAD
-            <AuthContextProvider>
-              <SideBar />
-              <div
-                className={`relative h-screen ${
-                  isSidebarOpen
-                    ? "w-[100rem] -right-80 transition-width duration-700"
-                    : "w-[115rem] -right-20 transition-width duration-700"
-                }`}
-              >
-                {children}
-              </div>
-            </AuthContextProvider>
-=======
+          <div className="relative h-auto flex items-center">
             <SideBar />
-            {children}
->>>>>>> 2516c4821eb023044b39b80739f2bab48a481ac3
+            <div
+              className={`relative h-screen ${
+                (isSidebarOpen && pathname !== "/login")
+                  ? "w-[100rem] -right-80 transition-width duration-700"
+                  : "w-[115rem] -right-20 transition-width duration-700"
+              }`}
+            >
+              {children}
+            </div>
           </div>
         </Providers>
       </body>
