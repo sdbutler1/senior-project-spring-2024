@@ -3,6 +3,9 @@
 // react components
 import React, { useState } from "react";
 
+// components
+import useSidebarStore from "../../components/global/sideBar/sideBarStore";
+
 // assets
 import { StudentData } from "./studentData";
 import { Box } from "@mui/material";
@@ -13,7 +16,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Close";
-import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
+import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import EmailModal from "@/components/global/EmailModal";
 
 type EditableFieldProps = {
@@ -140,29 +143,30 @@ const Page = () => {
   ];
 
   const closeModal = () => {
-    setModalShown(state => !state)
-  }
+    setModalShown((state) => !state);
+  };
+  
+  const { isSidebarOpen } = useSidebarStore();
 
   return (
-    <div className="w-full h-screen flex items-center justify-center">
+    <div className={`w-full h-screen flex items-center justify-center ${
+      isSidebarOpen ? "-translate-x-[5rem]" : "translate-x-0"
+    } transition-transform duration-700 border`}>
       <Box>
         <Box>
           <div className="text-5xl tracking-wide font-sans font-semibold ">
             Students
           </div>
           <button
-            onClick={() => setModalShown(state => !state)}
+            onClick={() => setModalShown((state) => !state)}
             className="mt-2 flex items-center justify-center gap-2 rounded-md bg-shaw-garnet text-white p-2"
           >
-            <span>
-              Send email
-            </span>
+            <span>Send email</span>
             <EmailOutlinedIcon />
           </button>
-            {
-              modalShown &&
-              <EmailModal modalShown={modalShown} closeModal={closeModal} />
-            }
+          {modalShown && (
+            <EmailModal modalShown={modalShown} closeModal={closeModal} />
+          )}
           <Box
             m="20px 0"
             height="74vh"
@@ -196,7 +200,7 @@ const Page = () => {
             }}
           >
             <DataGrid
-            className="gridBorder"
+              className="gridBorder"
               sx={{
                 boxShadow: 2,
                 border: 2,

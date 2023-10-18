@@ -19,15 +19,21 @@
     "@mui/material": "^5.14.13",
     "@mui/x-data-grid": "^6.16.2",
     "@mui/x-data-grid-generator": "^6.16.2",
+    "encoding": "^0.1.13",
+    "firebase": "^10.5.0",
+    "framer-motion": "^10.16.4",
     "js-cookie": "^3.0.5",
     "next": "13.5.4",
+    "next-auth": "^4.23.2",
     "next-themes": "^0.2.1",
     "react": "^18",
     "react-bootstrap": "^2.9.0",
     "react-dom": "^18",
     "react-icons": "^4.11.0",
     "react-pro-sidebar": "^1.1.0-alpha.1",
-    "sharp": "^0.32.6"
+    "react-transition-group": "^4.4.5",
+    "sharp": "^0.32.6",
+    "zustand": "^4.4.3"
   },
   "devDependencies": {
     "@types/js-cookie": "^3.0.4",
