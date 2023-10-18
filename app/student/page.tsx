@@ -3,6 +3,8 @@
 // react components
 import React, { useEffect, useState } from "react";
 
+// components
+
 // assets
 import { StudentData } from "./studentData";
 import { Box } from "@mui/material";
@@ -13,7 +15,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Close";
-import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
+import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import EmailModal from "@/components/global/EmailModal";
 
 type EditableFieldProps = {
@@ -163,25 +165,23 @@ const Page = () => {
   ];
 
   const closeModal = () => {
-    setModalShown(state => !state)
-  }
+    setModalShown((state) => !state);
+  };
 
 
 
   return (
-    <div className="w-full h-screen flex items-center justify-center">
+    <div className={`w-full h-screen flex items-center justify-center`}>
       <Box>
         <Box>
           <div className="text-5xl tracking-wide font-sans font-semibold ">
             Students
           </div>
           <button
-            onClick={() => setModalShown(state => !state)}
+            onClick={() => setModalShown((state) => !state)}
             className="mt-2 flex items-center justify-center gap-2 rounded-md bg-shaw-garnet text-white p-2"
           >
-            <span>
-              Send email
-            </span>
+            <span>Send email</span>
             <EmailOutlinedIcon />
           </button>
             {

@@ -1,17 +1,20 @@
 // html
 import type { Metadata } from "next";
 
-// css
-import "../styles/globals.css";
-
-// components
-import SideBar from "../components/global/SideBar";
-import Providers from "./providers";
-
 export const metadata: Metadata = {
   title: "To be Decided",
   description: "Computer Science Department Website",
 };
+
+// react components
+
+// css
+import "../styles/globals.css";
+
+// components
+import SideBar from "../components/global/sideBar/SideBar";
+import Providers from "./providers";
+import { AuthContextProvider } from "./context/AuthContext";
 
 export default function RootLayout({
   children,
@@ -23,8 +26,10 @@ export default function RootLayout({
       <body>
         <Providers>
           <div className="relative w-screen h-auto flex items-center">
-            <SideBar />
-            {children}
+            <AuthContextProvider>
+              <SideBar />
+              {children}
+            </AuthContextProvider>
           </div>
         </Providers>
       </body>
