@@ -93,7 +93,7 @@ const Page = () => {
     setFormattedStudentData(data);
     console.log(data);
 
-  }, [StudentData])
+  }, [])
 
 
   const columns: GridColDef[] = [

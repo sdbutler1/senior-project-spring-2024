@@ -10,11 +10,11 @@ import { useRouter } from "next/navigation";
 // Assets
 import logo from "../../public/assets/shaw.png";
 import ShawU from "../../public/assets/ShawUSign.jpg";
-import google from "../../public/assets/google-icon.png";
 import microsoft from "../../public/assets/microsoft-icon.png";
 
 // icons
 import { HiAtSymbol, HiFingerPrint } from "react-icons/hi2";
+import { FcLock, FcUnlock } from "react-icons/fc";
 
 type Props = {};
 
@@ -62,25 +62,25 @@ const Login = (props: Props) => {
       >
         <div className="w-full flex flex-col items-center justify-center gap-4">
           <h4 className="text-2xl text-[#fff] font-bold mb-4">Sign In</h4>
-          <div className="w-full flex items-center justify-center gap-4 text-[#000] text-center bg-[#fff] p-[0.6rem] rounded-md hover:scale-95 cursor-pointer">
-            <Image
-              className="w-[20px] h-auto"
-              src={google}
-              alt="google"
-              priority
-            ></Image>
-            <h4 className="text-[1.1rem] font-semibold">
-              Continue with Google
+          <div className="group relative w-full flex items-center justify-center text-[#000] text-center bg-[#fff] p-[0.6rem] rounded-md hover:scale-95 cursor-pointer">
+            <div className="relative w-1/4 h-full text-5xl">
+              <FcLock className="absolute top-0 left-0 w-full h-full opacity-100 transition-opacity duration-100 group-hover:opacity-0" />
+              <FcUnlock className="absolute top-0 left-0 w-full h-full opacity-0 transition-opacity duration-100 group-hover:opacity-100" />
+            </div>
+            <h4 className="w-3/4 text-[1.1rem] text-left font-semibold">
+              Continue with SSO
             </h4>
           </div>
-          <div className="w-full flex items-center justify-center gap-4 text-[#000] text-center bg-[#fff] p-[0.6rem] rounded-md hover:scale-95 cursor-pointer">
-            <Image
-              className="w-[20px] h-auto ml-5"
-              src={microsoft}
-              alt="microsoft"
-              priority
-            ></Image>
-            <h4 className="text-[1.1rem] font-semibold">
+          <div className="w-full flex items-center justify-center text-[#000] text-center bg-[#fff] p-[0.6rem] rounded-md hover:scale-95 cursor-pointer">
+            <div className="w-1/4 flex items-center justify-center">
+              <Image
+                className="w-[25px] h-auto"
+                src={microsoft}
+                alt="google"
+                priority
+              ></Image>
+            </div>
+            <h4 className="w-3/4 text-[1.1rem] text-left font-semibold">
               Continue with Microsoft
             </h4>
           </div>
