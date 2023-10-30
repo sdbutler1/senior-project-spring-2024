@@ -37,7 +37,7 @@ const SideBar = () => {
   return (
     <div
       className={`fixed bottom-0 left-0 h-[calc(100%-5rem)] z-50 ${
-        isSidebarOpen ? "w-80" : isSidebarHidden ? "w-20" : "w-0"
+        isSidebarOpen ? "w-60" : isSidebarHidden ? "w-20" : "w-0"
       }  flex flex-col items-center justify-start bg-[#7d1f2e] text-[#fff] overflow-scroll xl:overflow-hidden transition-width duration-500`}
     >
       <div className="h-auto w-full flex items-center justify-end gap-4 pt-2">
