@@ -44,28 +44,44 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ isSidebarOpen }) => {
   }
 
   return (
-    <div>
-      <Switch
-        checked={enabled}
-        onChange={handleSwitchChange}
-        className={`${
-          enabled ? "bg-[#e7e5e5]" : "bg-[#373636]"
-        } relative inline-flex h-9 w-16 items-center rounded-full`}
+    <div className="h-full w-full flex items-center justify-between">
+      <div
+        className={`h-full w-4/12 flex items-center justify-center ml-1 ${
+          isSidebarOpen ? "flex" : "hidden"
+        }`}
       >
-        <span
+        {theme === "dark" ? (
+          <RiMoonLine className="text-[1.3rem]" />
+        ) : (
+          <RiSunLine className="text-[1.3rem]" />
+        )}
+      </div>
+      <div
+        className={`h-full w-full flex items-center justify-start text-[1.1rem] ml-1.5 ${
+          isSidebarOpen ? "flex" : "hidden"
+        }`}
+      >
+        {theme === "dark" ? "Dark Mode" : "Light Mode"}
+      </div>
+      <div
+        className={`h-full ${
+          isSidebarOpen ? "w-4/12" : "w-full"
+        } flex items-center justify-center`}
+      >
+        <Switch
+          checked={enabled}
+          onChange={handleSwitchChange}
           className={`${
-            enabled ? "translate-x-7" : "translate-x-1"
-          } flex items-center justify-center h-8 w-8 transform rounded-full transition bg-[#aeaeae] hover:text-[#8b2333]`}
+            enabled ? "bg-[#373636]" : "bg-[#e7e5e5]"
+          } relative inline-flex h-6 w-12 items-center rounded-full hover:scale-105`}
         >
-          <span className="flex items-center justify-center">
-            {theme === "dark" ? (
-              <RiSunLine className="text-[1rem] md:text-[1.5rem]" />
-            ) : (
-              <RiMoonLine className="text-[1rem] md:text-[1.5rem]" />
-            )}
-          </span>
-        </span>
-      </Switch>
+          <span
+            className={`${
+              enabled ? "translate-x-7" : "translate-x-1"
+            } flex items-center justify-center h-4 w-4 transform rounded-full transition bg-[#aeaeae] hover:text-[#8b2333]`}
+          ></span>
+        </Switch>
+      </div>
     </div>
   );
 };

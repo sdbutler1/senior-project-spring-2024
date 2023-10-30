@@ -3,20 +3,29 @@
 // react components
 import React, { useEffect, useState } from "react";
 
+// global states
+import { globalSideBar } from "../../globalStates/globalSideBar";
+
 // components
 
 // assets
 import { StudentData } from "./studentData";
 import { Box } from "@mui/material";
-import { GridCellParams, GridColDef, DataGrid, GridRowId } from "@mui/x-data-grid";
+import {
+  GridCellParams,
+  GridColDef,
+  DataGrid,
+  GridRowId,
+} from "@mui/x-data-grid";
 
 // icons
+import EmailModal from "@/components/global/EmailModal";
+import { BsSearch } from "react-icons/bs";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Close";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
-import EmailModal from "@/components/global/EmailModal";
 
 type EditableFieldProps = {
   isEditing: boolean;
@@ -51,14 +60,15 @@ const EditableField: React.FC<EditableFieldProps> = ({
 };
 
 type studentsFormatted = {
-  [id: number]: student
-}
+  [id: number]: student;
+};
 
 const Page = () => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [modalShown, setModalShown] = useState<boolean>(false);
-  const [selectedRows, setSelectedRows] = useState<student[]>([])
-  const [formattedStudentData, setFormattedStudentData] = useState<studentsFormatted>()
+  const [selectedRows, setSelectedRows] = useState<student[]>([]);
+  const [formattedStudentData, setFormattedStudentData] =
+    useState<studentsFormatted>();
 
   const handleEditClick = () => {
     setIsEditing(true);
@@ -79,22 +89,23 @@ const Page = () => {
   };
 
   const handleRowSelection = (data: any) => {
-    const recipients = data.map((studentId: any) => formattedStudentData && formattedStudentData[studentId]);
+    const recipients = data.map(
+      (studentId: any) =>
+        formattedStudentData && formattedStudentData[studentId]
+    );
     setSelectedRows(recipients);
-  }
+  };
 
   useEffect(() => {
     const data: studentsFormatted = {};
 
-    StudentData.forEach(student => {
-      data[student.id] = student
-    })
+    StudentData.forEach((student) => {
+      data[student.id] = student;
+    });
 
     setFormattedStudentData(data);
     console.log(data);
-
-  }, [])
-
+  }, []);
 
   const columns: GridColDef[] = [
     {
@@ -168,26 +179,59 @@ const Page = () => {
     setModalShown((state) => !state);
   };
 
-
-
+  const { isSidebarOpen, isSidebarHidden } = globalSideBar();
   return (
-    <div className={`w-full h-screen flex items-center justify-center`}>
+    <div
+      className={`fixed bottom-0 right-0 h-[calc(100%-5rem)] ${
+        isSidebarOpen && isSidebarHidden
+          ? "w-[calc(100%-20rem)]"
+          : !isSidebarOpen && !isSidebarHidden
+          ? "w-screen"
+          : !isSidebarOpen && isSidebarHidden && "w-[calc(100%-5rem)]"
+      } flex items-center justify-center transition-width duration-500`}
+    >
       <Box>
         <Box>
           <div className="text-5xl tracking-wide font-sans font-semibold ">
             Students
           </div>
-          <button
-            onClick={() => setModalShown((state) => !state)}
-            className="mt-2 flex items-center justify-center gap-2 rounded-md bg-shaw-garnet text-white p-2"
-          >
-            <span>Send email</span>
-            <EmailOutlinedIcon />
-          </button>
-            {
-              modalShown &&
-              <EmailModal recipients={selectedRows} modalShown={modalShown} closeModal={closeModal} />
-            }
+          <div className="flex items-center justify-between">
+            <button
+              onClick={() => setModalShown((state) => !state)}
+              className="mt-2 flex items-center justify-center gap-2 rounded-md bg-shaw-garnet text-white p-2"
+            >
+              <span>Send email</span>
+              <EmailOutlinedIcon />
+            </button>
+            <div className="h-[3.5rem] w-80 flex items-center justify-center bg-shaw-garnet rounded-md">
+              <form className="h-full w-full ">
+                <label className="h-full w-full flex items-center justify-start text-lg px-4 gap-2">
+                  <div
+                    className={`h-full w-1/6 flex items-center justify-center text-xl cursor-pointer text-[#fff] hover:text-[#f4b461]`}
+                  >
+                    <BsSearch />
+                  </div>
+                  <input
+                    type="text"
+                    id="search"
+                    name="search"
+                    autoComplete="off"
+                    placeholder="Search..."
+                    className={`w-full bg-transparent outline-none p-2 focus:border-b placeholder:text-[#fff] ${
+                      isSidebarOpen ? "flex" : "hidden"
+                    }`}
+                  />
+                </label>
+              </form>
+            </div>
+          </div>
+          {modalShown && (
+            <EmailModal
+              recipients={selectedRows}
+              modalShown={modalShown}
+              closeModal={closeModal}
+            />
+          )}
           <Box
             m="20px 0"
             height="74vh"
@@ -221,8 +265,8 @@ const Page = () => {
             }}
           >
             <DataGrid
-            onRowSelectionModelChange={handleRowSelection}
-            className="gridBorder"
+              onRowSelectionModelChange={handleRowSelection}
+              className="gridBorder"
               sx={{
                 boxShadow: 2,
                 border: 2,
@@ -248,7 +292,6 @@ const Page = () => {
               pageSizeOptions={[15]}
               checkboxSelection
               disableRowSelectionOnClick
-              
             />
           </Box>
         </Box>
