@@ -94,7 +94,7 @@ const SideBar = () => {
         >
           <li
             className={`absolute left-0 h-full w-full flex items-center text-[1.4rem] ${
-              isSidebarOpen ? "justify-start pl-6" : "justify-center pl-0"
+              isSidebarOpen ? "justify-start pl-6" : "justify-center pl-0 "
             } `}
           >
             <HiHome />
