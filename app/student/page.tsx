@@ -194,9 +194,9 @@ const Page = () => {
 
   return (
     <div
-      className={`h-screen w-screen flex items-center justify-start`}
-    >
-      <Box className="mt-20 ml-24">
+      className={`h-screen w-screen flex items-center justify-center`}
+    >`
+      <Box className={`mt-20 ${isSidebarOpen ? "ml-32" : "ml-0"} transition-all duration-500`}>
         <Box>
           <div className="text-5xl tracking-wide font-sans font-semibold">
             Students
