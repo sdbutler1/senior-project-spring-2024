@@ -12,10 +12,8 @@ const NotificationList = (props: Props) => {
       <ul className="h-full w-full flex flex-col items-center justify-start">
         {Messages.map((Messages) => (
           <li
-            key={Messages.id}
             className="h-auto w-full flex items-center justify-start p-2 border"
           >
-            {Messages.message}
           </li>
         ))}
       </ul>
