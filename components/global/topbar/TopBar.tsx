@@ -89,7 +89,7 @@ const Topbar = (props: Props) => {
     };
   }, [isPopUpOpen1, isPopUpOpen2, isPopUpOpen3]);
 
-  if (currentPathname === "/login" || currentPathname === "/forgot-password") {
+  if (currentPathname === "/login" || currentPathname === "/forgotPassword") {
     return null;
   }
   return (

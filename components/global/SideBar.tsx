@@ -40,19 +40,6 @@ const SideBar = () => {
   const { logout } = useAuth();
   const router = useRouter();
 
-  useEffect(() => {
-    // Retrieve the sidebar state from localStorage
-    const isSidebarOpenPreference = localStorage.getItem("isSidebarOpen");
-    if (isSidebarOpenPreference !== null) {
-      globalSideBar.getState().toggleSideBar();
-    }
-
-    const isSidebarHiddenPreference = localStorage.getItem("isSidebarHidden");
-    if (isSidebarHiddenPreference !== null) {
-      globalSideBar.getState().HideSideBar();
-    }
-  }, []);
-
   if (currentPathname === "/login" || currentPathname === "/forgotPassword") {
     return null;
   }
