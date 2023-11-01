@@ -146,7 +146,7 @@ const Topbar = (props: Props) => {
             <li
               className={`relative h-full w-full flex items-center justify-center`}
             >
-              <HiOutlineMail className="text-[1.6rem] lg:text-[2.2rem] text-[#7d1f2e]" />
+              <HiOutlineMail className="text-[1.6rem] lg:text-[2rem] text-[#7d1f2e]" />
               <MessagesCount />
               {/* <TopbarNumber /> */}
             </li>
@@ -170,7 +170,7 @@ const Topbar = (props: Props) => {
             <li
               className={`relative h-full w-full flex items-center justify-center`}
             >
-              <HiOutlineBell className="text-[1.3rem] lg:text-[2.2rem] text-[#7d1f2e]" />
+              <HiOutlineBell className="text-[1.6rem] lg:text-[2rem] text-[#7d1f2e]" />
               <NotificationsCount />
             </li>
             {/* <li className="w-full h-full flex items-center justify-start text-[1.1rem]">
