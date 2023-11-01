@@ -66,7 +66,7 @@ const Login = (props: Props) => {
     if (user) {
       router.push("/");
     }
-  }, [user]);
+  }, [user, router]);
 
   return (
     <div className="formShadow relative w-screen h-screen flex items-center justify-center">
