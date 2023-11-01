@@ -2,16 +2,21 @@
 import React from "react";
 
 // assets
-import { Notifications } from "./Messages";
+import { Messages } from "./Messages";
 
 type Props = {};
 
 const NotificationList = (props: Props) => {
   return (
-    <div className="flex items-center justify-center border border-orange-500">
-      <ul className="flex items-center justify-center">
-        {Notifications.map((notification) => (
-          <li key={notification.id} className="flex items-center justify-center border">{notification.message}</li>
+    <div className="h-full w-full flex items-start justify-center ">
+      <ul className="h-full w-full flex flex-col items-center justify-start">
+        {Messages.map((Messages) => (
+          <li
+            key={Messages.id}
+            className="h-auto w-full flex items-center justify-start p-2 border"
+          >
+            {Messages.message}
+          </li>
         ))}
       </ul>
     </div>

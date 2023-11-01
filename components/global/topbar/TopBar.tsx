@@ -9,8 +9,10 @@ import { useRouter } from "next/navigation";
 
 // components
 import { useAuth } from "@/context/AuthContext";
-import TopbarNumber from "@/components/global/topbar/TopbarNumber";
+import NotificationsCount from "@/components/global/topbar/UserNotification/NotificationsCount";
+import MessagesCount from "@/components/global/topbar/UserMessages/MessagesCount";
 import NotificationList from "./UserNotification/NotificationList";
+import MessagesList from "./UserMessages/MessagesList";
 
 // global states
 import { globalSideBar } from "@/globalStates/globalSideBar";
@@ -26,7 +28,6 @@ import {
   HiOutlineBell,
   HiOutlineUserCircle,
   HiMenu,
-  HiOutlineCheck,
 } from "react-icons/hi";
 import { GoTriangleDown } from "react-icons/go";
 import { AiOutlineSetting, AiOutlineClose } from "react-icons/ai";
@@ -146,6 +147,7 @@ const Topbar = (props: Props) => {
               className={`relative h-full w-full flex items-center justify-center`}
             >
               <HiOutlineMail className="text-[1.6rem] lg:text-[2.2rem] text-[#7d1f2e]" />
+              <MessagesCount />
               {/* <TopbarNumber /> */}
             </li>
             {/* <li className="w-full h-full flex items-center justify-start text-[1.1rem]">
@@ -169,7 +171,7 @@ const Topbar = (props: Props) => {
               className={`relative h-full w-full flex items-center justify-center`}
             >
               <HiOutlineBell className="text-[1.3rem] lg:text-[2.2rem] text-[#7d1f2e]" />
-              <TopbarNumber />
+              <NotificationsCount />
             </li>
             {/* <li className="w-full h-full flex items-center justify-start text-[1.1rem]">
             Messages
@@ -229,7 +231,9 @@ const Topbar = (props: Props) => {
             <AiOutlineClose className="cursor-pointer" />
           </div>
         </div>
-        <div className="h-full w-full border-b-[1px] border-slate-100"></div>
+        <div className="h-full w-full border-b-[1px] border-slate-100">
+          <MessagesList />
+        </div>
         <div className="h-[2.5rem] w-full flex items-center justify-between text-sm p-4">
           <div className="cursor-pointer">See all</div>
           <div className="cursor-pointer">Clear</div>
