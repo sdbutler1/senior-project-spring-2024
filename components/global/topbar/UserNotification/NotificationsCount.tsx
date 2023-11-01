@@ -2,11 +2,11 @@
 import React from "react";
 
 // assets
-import { Notifications } from "./UserNotification/Notifications";
+import { Notifications } from "./Notifications";
 
 type Props = {};
 
-const TopbarNumber = (props: Props) => {
+const NotificationsCount = (props: Props) => {
   return (
     <div className="absolute top-0 right-0 flex items-center justify-center h-4 w-4 text-xs text-white bg-[#7d1f2e] rounded-full animate-bounce">
       {Notifications.length}
@@ -14,4 +14,4 @@ const TopbarNumber = (props: Props) => {
   );
 };
 
-export default TopbarNumber;
+export default NotificationsCount;
