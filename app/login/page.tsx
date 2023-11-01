@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 
 // Components
 import { useAuth } from "@/context/AuthContext";
+import Alert from "@/components/global/Alert";
 
 // Assets
 import logo from "../../public/assets/shawlogin.png";
@@ -18,21 +19,42 @@ import { HiAtSymbol, HiFingerPrint } from "react-icons/hi2";
 type Props = {};
 
 const Login = (props: Props) => {
-  const { login } = useAuth();
-  const [showpassword, setShowPassword] = useState(false);
+  const { login, user } = useAuth();
+  const [showPassword, setShowPassword] = useState(false);
+  const [translateAlert, setTranslateAlert] = useState(false);
   const router = useRouter();
-  const { user } = useAuth();
   const [formData, setFormData] = useState({
     logEmail: "",
     logPassword: "",
   });
+  const [alertMessage, setAlertMessage] = useState({
+    message: "",
+    type: "",
+  });
 
-  const handleLogin = async (e: any) => {
+  const translateAlertPopUp = () => {
+    setTranslateAlert(!translateAlert);
+    const timer = setTimeout(() => {
+      setTranslateAlert(false);
+    }, 3000);
+    return () => {
+      clearTimeout(timer);
+    };
+  };
+
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       await login(formData.logEmail, formData.logPassword);
+      if (user.metadata.createdAt === user.metadata.lastLoginAt) {
+        router.push("/forgotPassword");
+      }
+      console.log(user.metadata.createdAt, user.metadata.lastLoginAt);
     } catch (err) {
-      console.log(err);
+      if (err instanceof Error) {
+        setAlertMessage({ message: err.message, type: "error" });
+        translateAlertPopUp();
+      }
     }
     setFormData({
       logEmail: "",
@@ -44,7 +66,7 @@ const Login = (props: Props) => {
     if (user) {
       router.push("/");
     }
-  }, [router, user]);
+  }, [user]);
 
   return (
     <div className="formShadow relative w-screen h-screen flex items-center justify-center">
@@ -56,7 +78,14 @@ const Login = (props: Props) => {
           className="h-full w-full object-cover"
         />
       </div>
-      <div className="h-[35rem] w-[26rem] flex flex-col items-center justify-between bg-[#fefefe] rounded-xl">
+      {alertMessage && (
+        <Alert
+          translateAlert={translateAlert}
+          message={alertMessage.message}
+          type={alertMessage.type}
+        />
+      )}
+      <div className="h-[33rem] w-[20rem] md:h-[35rem] md:w-[26rem] flex flex-col items-center justify-between bg-[#fefefe] rounded-xl">
         <div className="h-auto w-full flex items-center justify-center mt-4">
           <Image src={logo} alt="logo" className="w-4/6 h-auto" priority />
         </div>
@@ -93,7 +122,7 @@ const Login = (props: Props) => {
             <label htmlFor="logPassword" className="group w-full flex">
               <input
                 className="w-full text-[#fff] bg-transparent p-4 border-b border-gray-300 placeholder:text-white/75 focus:placeholder:text-white outline-none"
-                type={`${showpassword ? "text" : "password"}`}
+                type={`${showPassword ? "text" : "password"}`}
                 id="logPassword"
                 name="logPassword"
                 placeholder="Password"
@@ -109,7 +138,7 @@ const Login = (props: Props) => {
               />
               <span
                 className="flex items-center justify-center text-xl -ml-8 cursor-pointer group"
-                onClick={() => setShowPassword(!showpassword)}
+                onClick={() => setShowPassword(!showPassword)}
               >
                 <HiFingerPrint className="flex items-center justify-center text-xl text-white opacity-50 transition-opacity duration-100 group-focus-within:opacity-100 hover:opacity-100" />
               </span>
@@ -128,7 +157,7 @@ const Login = (props: Props) => {
               </button>
               <div
                 className="text-sm text-[#fff] hover:underline cursor-pointer"
-                onClick={() => router.push("/forgot-password")}
+                onClick={() => router.push("/forgotPassword")}
               >
                 Forgot Password
               </div>

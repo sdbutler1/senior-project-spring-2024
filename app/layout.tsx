@@ -13,8 +13,8 @@ export const metadata: Metadata = {
 import "../styles/globals.css";
 
 // components
-import SideBar from "../components/global/SideBar";
-import TopBar from "../components/global/TopBar";
+import SideBar from "@/components/global/SideBar";
+import TopBar from "@/components/global/topbar/TopBar";
 import Providers from "@/context/providers";
 import { AuthContextProvider } from "@/context/AuthContext";
 import { Loading } from "@/components/global/Loading";

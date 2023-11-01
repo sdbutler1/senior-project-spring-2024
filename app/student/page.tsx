@@ -182,7 +182,7 @@ const Page = () => {
   };
 
   const { isSidebarOpen, isSidebarHidden } = globalSideBar();
-  
+
   const { user } = useAuth();
   const router = useRouter();
 
@@ -194,9 +194,15 @@ const Page = () => {
 
   return (
     <div
-      className={`h-screen w-screen flex items-center justify-center`}
-    >`
-      <Box className={`mt-20 ${isSidebarOpen ? "ml-32" : "ml-0"} transition-all duration-500`}>
+      className={`fixed bottom-0 right-0 h-[calc(100%-5rem)] ${
+        isSidebarOpen && isSidebarHidden
+          ? "w-screen lg:w-[calc(100%-12rem)]"
+          : !isSidebarOpen && !isSidebarHidden
+          ? "w-screen"
+          : !isSidebarOpen && isSidebarHidden && "w-screen lg:w-[calc(100%-5rem)]"
+      } flex items-center justify-center transition-width duration-500`}
+    >
+      <Box className="mt-12 lg:mt-0">
         <Box>
           <div className="text-5xl tracking-wide font-sans font-semibold">
             Students

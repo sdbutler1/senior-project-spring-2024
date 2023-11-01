@@ -9,12 +9,14 @@ import { useRouter } from "next/navigation";
 
 // components
 import { useAuth } from "@/context/AuthContext";
+import TopbarNumber from "@/components/global/topbar/TopbarNumber";
+import NotificationList from "./UserNotification/NotificationList";
 
 // global states
 import { globalSideBar } from "@/globalStates/globalSideBar";
 
 // assets
-import logo from "../../public/assets/Shaw.png";
+import logo from "@/public/assets/Shaw.png";
 
 // Icons
 import { BsSearch } from "react-icons/bs";
@@ -66,9 +68,9 @@ const Topbar = (props: Props) => {
 
       // Check if the click event occurred outside of your popups
       if (
-        !target.closest('.popup1') &&
-        !target.closest('.popup2') &&
-        !target.closest('.popup3')
+        !target.closest(".popup1") &&
+        !target.closest(".popup2") &&
+        !target.closest(".popup3")
       ) {
         // Close all popups by setting the variables to false
         setPopUpOpen1(false);
@@ -78,14 +80,13 @@ const Topbar = (props: Props) => {
     };
 
     // Add a click event listener to the entire document
-    document.addEventListener('click', closePopupsOnOutsideClick);
+    document.addEventListener("click", closePopupsOnOutsideClick);
 
     // Cleanup the event listener when the component unmounts
     return () => {
-      document.removeEventListener('click', closePopupsOnOutsideClick);
+      document.removeEventListener("click", closePopupsOnOutsideClick);
     };
   }, [isPopUpOpen1, isPopUpOpen2, isPopUpOpen3]);
-
 
   if (currentPathname === "/login" || currentPathname === "/forgot-password") {
     return null;
@@ -103,7 +104,7 @@ const Topbar = (props: Props) => {
         <Image
           src={logo}
           alt="logo"
-          className="h-4/5 md:h-5/6 w-6/12 md:w-11/12 object-fit"
+          className="h-4/5 md:h-5/6 w-6/12 md:w-11/12 object-contain"
           priority
         />
       </div>
@@ -138,8 +139,11 @@ const Topbar = (props: Props) => {
                 }`}
               />
             </div>
-            <li className={`h-full w-full flex items-center justify-center`}>
+            <li
+              className={`relative h-full w-full flex items-center justify-center`}
+            >
               <HiOutlineMail className="text-[1.6rem] lg:text-[2.2rem] text-[#7d1f2e]" />
+              <TopbarNumber />
             </li>
             {/* <li className="w-full h-full flex items-center justify-start text-[1.1rem]">
             Messages
@@ -158,8 +162,11 @@ const Topbar = (props: Props) => {
                 }`}
               />
             </div>
-            <li className={`h-full w-full flex items-center justify-center`}>
-              <HiOutlineBell className="text-[1.6rem] lg:text-[2.2rem] text-[#7d1f2e]" />
+            <li
+              className={`relative h-full w-full flex items-center justify-center`}
+            >
+              <HiOutlineBell className="text-[1.3rem] lg:text-[2.2rem] text-[#7d1f2e]" />
+              <TopbarNumber />
             </li>
             {/* <li className="w-full h-full flex items-center justify-start text-[1.1rem]">
             Messages
@@ -225,11 +232,16 @@ const Topbar = (props: Props) => {
         } transition duration-1000 ease-in-out`}
         style={{ zIndex: isPopUpOpen2 ? 1000 : -999 }}
       >
-        <div className="h-[2.5rem] w-full flex items-center justify-end gap-4 px-4 border-b-[1px] border-slate-200">
-          <HiOutlineCheck className="cursor-pointer" />
-          <AiOutlineSetting className="cursor-pointer" />
+        <div className="h-[2.5rem] w-full flex items-center justify-between gap-4 px-4 border-b-[1px] border-slate-200">
+          <h1>Notifications</h1>
+          <div className="flex items-center justify-center gap-4">
+            <HiOutlineCheck className="cursor-pointer" />
+            <AiOutlineSetting className="cursor-pointer" />
+          </div>
         </div>
-        <div className="h-full w-full border-b-[1px] border-slate-100"></div>
+        <div className="h-full w-full border-b-[1px] border-slate-100">
+          <NotificationList/>
+        </div>
         <div className="h-[2.5rem] w-full flex items-center justify-center text-sm cursor-pointer">
           See all
         </div>
