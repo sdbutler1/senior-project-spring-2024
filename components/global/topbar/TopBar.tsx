@@ -100,14 +100,14 @@ const Topbar = (props: Props) => {
       } transition-all`}
       style={{ zIndex: "900" }}
     >
-      <div className="h-20 w-64 flex items-center sm:justify-center px-2">
+      <Link href={"/"} className="h-20 w-64 flex items-center sm:justify-center px-2 cursor-pointer">
         <Image
           src={logo}
           alt="logo"
           className="h-4/5 md:h-5/6 w-6/12 md:w-11/12 object-contain"
           priority
         />
-      </div>
+      </Link>
       {/* <form className="h-full w-4/6 hidden sm:flex items-center justify-center">
         <label className="h-4/6 w-3/6 flex items-center justify-start text-lg px-8 gap-2 rounded-3xl border border-[#7d1f2f90]">
           <div className="h-full w-8 flex items-center justify-start text-xl text-[#7d1f2e]">

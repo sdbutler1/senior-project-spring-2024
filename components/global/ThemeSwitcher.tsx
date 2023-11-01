@@ -66,11 +66,17 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = () => {
           isSidebarOpen ? "opacity-100 delay-200" : "opacity-0"
         }`}
       >
-      {theme === "dark" ? "Dark Mode" : "Light Mode"}
+        {theme === "dark" ? "Dark Mode" : "Light Mode"}
       </div>
-      <div className={`absolute right-0 h-full w-full flex items-center ${
-          isSidebarOpen ? "justify-end pr-4" : "justify-center pr-0"
-        } `}>
+      <div
+        className={`absolute right-0 h-full w-full flex items-center ${
+          isSidebarOpen
+            ? "justify-end pr-4"
+            : !isSidebarOpen && !isSidebarHidden
+            ? "hidden justify-end pr-4"
+            : "justify-center pr-0"
+        }`}
+      >
         <Switch
           checked={enabled}
           onChange={handleSwitchChange}
