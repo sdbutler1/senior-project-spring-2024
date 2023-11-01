@@ -53,7 +53,7 @@ const SideBar = () => {
     }
   }, []);
 
-  if (currentPathname === "/login" || currentPathname === "/forgot-password") {
+  if (currentPathname === "/login" || currentPathname === "/forgotPassword") {
     return null;
   }
   return (
@@ -64,9 +64,9 @@ const SideBar = () => {
       style={{ zIndex: "500" }}
     >
       <div
-        className={`h-12 w-full flex items-center ${
+        className={`h-12 w-full items-center ${
           isSidebarOpen ? "justify-end" : "justify-center"
-        } gap-2 text-[2rem]`}
+        } ${isSidebarHidden ? "flex" : "hidden"} gap-2 text-[2rem]`}
       >
         <div
           onClick={isSidebarOpen ? toggleSideBar : HideSideBar}
@@ -161,7 +161,9 @@ const SideBar = () => {
         >
           <li
             className={`absolute left-0 h-full w-full flex items-center text-[1.1rem] ${
-              isSidebarOpen ? "justify-start pl-[1.7rem]" : "justify-center pl-0"
+              isSidebarOpen
+                ? "justify-start pl-[1.7rem]"
+                : "justify-center pl-0"
             } `}
           >
             <FaBuildingColumns />

@@ -23,7 +23,13 @@ export default function Home() {
 
   return (
     <div
-      className={`h-screen w-screen flex items-center justify-center`}
+      className={`fixed bottom-0 right-0 h-[calc(100%-5rem)] ${
+        isSidebarOpen && isSidebarHidden
+          ? "w-screen lg:w-[calc(100%-12rem)]"
+          : !isSidebarOpen && !isSidebarHidden
+          ? "w-screen"
+          : !isSidebarOpen && isSidebarHidden && "w-screen lg:w-[calc(100%-5rem)]"
+      } flex items-center justify-center transition-width duration-500`}
     >
       <div className="h-full w-full flex items-center justify-center">
         <div className="flex flex-col items-center justify-center gap-8">

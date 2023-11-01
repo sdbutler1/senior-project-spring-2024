@@ -33,7 +33,7 @@ export const Loading: React.FC = () => {
   if (loading) {
     return (
       <div className="fixed top-0 left-0 h-full w-full flex items-center justify-center bg-[#7d1f2e] z-[1000]">
-        <Image src={loader} alt="loading..." />
+        <Image src={loader} alt="loading..." priority/>
       </div>
     );
   } else {
