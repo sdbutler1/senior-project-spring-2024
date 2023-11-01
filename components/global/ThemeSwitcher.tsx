@@ -1,15 +1,20 @@
 "use client";
 
+// react components
 import React, { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
-import { RiMoonLine, RiSunLine } from "react-icons/ri";
 import { Switch } from "@headlessui/react";
 
-interface ThemeSwitcherProps {
-  isSidebarOpen: boolean;
-}
+// Icons
+import { RiMoonLine, RiSunLine } from "react-icons/ri";
 
-const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ isSidebarOpen }) => {
+// global states
+import { globalSideBar } from "@/globalStates/globalSideBar";
+
+interface ThemeSwitcherProps {}
+
+const ThemeSwitcher: React.FC<ThemeSwitcherProps> = () => {
+  const { isSidebarOpen, isSidebarHidden } = globalSideBar();
   const [enabled, setEnabled] = useState(false);
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
@@ -44,10 +49,10 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ isSidebarOpen }) => {
   }
 
   return (
-    <div className="h-full w-full flex items-center justify-between">
+    <div className="relative h-full w-full flex items-center justify-center">
       <div
-        className={`h-full w-4/12 flex items-center justify-center ml-1 ${
-          isSidebarOpen ? "flex" : "hidden"
+        className={`absolute left-0 h-full w-full flex items-center justify-start pl-4 ${
+          isSidebarOpen ? "opacity-100 delay-200" : "opacity-0"
         }`}
       >
         {theme === "dark" ? (
@@ -57,17 +62,15 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ isSidebarOpen }) => {
         )}
       </div>
       <div
-        className={`h-full w-full flex items-center justify-start text-[1.1rem] ml-1.5 ${
-          isSidebarOpen ? "flex" : "hidden"
+        className={`absolute h-full w-full flex items-center justify-start text-[1.1rem] whitespace-nowrap pl-12 ${
+          isSidebarOpen ? "opacity-100 delay-200" : "opacity-0"
         }`}
       >
-        {theme === "dark" ? "Dark Mode" : "Light Mode"}
+      {theme === "dark" ? "Dark Mode" : "Light Mode"}
       </div>
-      <div
-        className={`h-full ${
-          isSidebarOpen ? "w-4/12" : "w-full"
-        } flex items-center justify-center`}
-      >
+      <div className={`absolute right-0 h-full w-full flex items-center ${
+          isSidebarOpen ? "justify-end pr-4" : "justify-center pr-0"
+        } `}>
         <Switch
           checked={enabled}
           onChange={handleSwitchChange}

@@ -2,11 +2,13 @@
 
 // react components
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 // global states
 import { globalSideBar } from "../../globalStates/globalSideBar";
 
-// components
+//components
+import { useAuth } from "@/context/AuthContext";
 
 // assets
 import { StudentData } from "./studentData";
@@ -180,19 +182,23 @@ const Page = () => {
   };
 
   const { isSidebarOpen, isSidebarHidden } = globalSideBar();
+  
+  const { user } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!user) {
+      router.push("/login");
+    }
+  }, [router, user]);
+
   return (
     <div
-      className={`fixed bottom-0 right-0 h-[calc(100%-5rem)] ${
-        isSidebarOpen && isSidebarHidden
-          ? "w-[calc(100%-20rem)]"
-          : !isSidebarOpen && !isSidebarHidden
-          ? "w-screen"
-          : !isSidebarOpen && isSidebarHidden && "w-[calc(100%-5rem)]"
-      } flex items-center justify-center transition-width duration-500`}
+      className={`h-screen w-screen flex items-center justify-start`}
     >
-      <Box>
+      <Box className="mt-20 ml-24">
         <Box>
-          <div className="text-5xl tracking-wide font-sans font-semibold ">
+          <div className="text-5xl tracking-wide font-sans font-semibold">
             Students
           </div>
           <div className="flex items-center justify-between">
@@ -217,9 +223,7 @@ const Page = () => {
                     name="search"
                     autoComplete="off"
                     placeholder="Search..."
-                    className={`w-full bg-transparent outline-none p-2 focus:border-b placeholder:text-[#fff] ${
-                      isSidebarOpen ? "flex" : "hidden"
-                    }`}
+                    className="w-full bg-transparent outline-none p-2 focus:border-b placeholder:text-[#fff]"
                   />
                 </label>
               </form>

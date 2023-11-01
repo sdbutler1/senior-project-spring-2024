@@ -14,8 +14,6 @@ const config: Config = {
       fontFamily: {
         'sans': ['Source Sans Pro', 'sans-serif'],
       },
-      backgroundImage: {
-      },
     },
   },
   plugins: [],
