@@ -29,7 +29,7 @@ import {
   HiOutlineCheck,
 } from "react-icons/hi";
 import { GoTriangleDown } from "react-icons/go";
-import { AiOutlineSetting } from "react-icons/ai";
+import { AiOutlineSetting, AiOutlineClose } from "react-icons/ai";
 
 type Props = {};
 
@@ -68,9 +68,9 @@ const Topbar = (props: Props) => {
 
       // Check if the click event occurred outside of your popups
       if (
-        !target.closest(".popup1") &&
-        !target.closest(".popup2") &&
-        !target.closest(".popup3")
+        !target.closest("#popup1") &&
+        !target.closest("#popup2") &&
+        !target.closest("#popup3")
       ) {
         // Close all popups by setting the variables to false
         setPopUpOpen1(false);
@@ -100,7 +100,10 @@ const Topbar = (props: Props) => {
       } transition-all`}
       style={{ zIndex: "900" }}
     >
-      <Link href={"/"} className="h-20 w-64 flex items-center sm:justify-center px-2 cursor-pointer">
+      <Link
+        href={"/"}
+        className="h-20 w-64 flex items-center sm:justify-center px-2 cursor-pointer"
+      >
         <Image
           src={logo}
           alt="logo"
@@ -211,42 +214,53 @@ const Topbar = (props: Props) => {
           </li> */}
         </div>
       </ul>
+      {/* ---------- */}
       <div
+        id="popup1"
         className={`absolute top-20 right-0 h-96 w-80 flex flex-col items-center justify-center text-[#000] bg-[#fefefe] border ${
           isPopUpOpen1 ? "translate-y-0" : "translate-y-[-150%]"
         } transition duration-1000 ease-in-out`}
         style={{ zIndex: isPopUpOpen1 ? 1000 : -999 }}
       >
-        <div className="h-[2.5rem] w-full flex items-center justify-end gap-4 px-4 border-b-[1px] border-slate-200">
-          <HiOutlineCheck className="cursor-pointer" />
-          <AiOutlineSetting className="cursor-pointer" />
+        <div className="h-[2.5rem] w-full flex items-center justify-between gap-4 px-2 border-b-[1px] border-slate-200">
+          <h1>Messages</h1>
+          <div className="flex items-center justify-center gap-4">
+            <AiOutlineSetting className="cursor-pointer" />
+            <AiOutlineClose className="cursor-pointer" />
+          </div>
         </div>
         <div className="h-full w-full border-b-[1px] border-slate-100"></div>
-        <div className="h-[2.5rem] w-full flex items-center justify-center text-sm cursor-pointer">
-          See all
+        <div className="h-[2.5rem] w-full flex items-center justify-between text-sm p-4">
+          <div className="cursor-pointer">See all</div>
+          <div className="cursor-pointer">Clear</div>
         </div>
       </div>
+      {/* ---------- */}
       <div
+        id="popup2"
         className={`absolute top-20 right-0 h-96 w-80 flex flex-col items-center justify-center text-[#000] bg-[#fefefe] border ${
           isPopUpOpen2 ? "translate-y-0" : "translate-y-[-150%]"
         } transition duration-1000 ease-in-out`}
         style={{ zIndex: isPopUpOpen2 ? 1000 : -999 }}
       >
-        <div className="h-[2.5rem] w-full flex items-center justify-between gap-4 px-4 border-b-[1px] border-slate-200">
+        <div className="h-[2.5rem] w-full flex items-center justify-between gap-4 px-2 border-b-[1px] border-slate-200">
           <h1>Notifications</h1>
           <div className="flex items-center justify-center gap-4">
-            <HiOutlineCheck className="cursor-pointer" />
             <AiOutlineSetting className="cursor-pointer" />
+            <AiOutlineClose className="cursor-pointer" />
           </div>
         </div>
-        <div className="h-full w-full border-b-[1px] border-slate-100">
-          <NotificationList/>
+        <div className="h-full w-full flex items-center justify-center border-b-[1px] border-slate-100">
+          <NotificationList />
         </div>
-        <div className="h-[2.5rem] w-full flex items-center justify-center text-sm cursor-pointer">
-          See all
+        <div className="h-[2.5rem] w-full flex items-center justify-between text-sm p-4">
+          <div className="cursor-pointer">See all</div>
+          <div className="cursor-pointer">Clear</div>
         </div>
       </div>
+      {/* ---------- */}
       <div
+        id="popup3"
         className={`absolute top-20 right-0 h-96 w-80 flex flex-col items-center justify-center text-[#000] bg-[#fefefe] border ${
           isPopUpOpen3 ? "translate-y-0" : "translate-y-[-150%]"
         } transition duration-1000 ease-in-out`}
