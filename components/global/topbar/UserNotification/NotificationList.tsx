@@ -8,8 +8,8 @@ type Props = {};
 
 const NotificationList = (props: Props) => {
   return (
-    <div className="h-full w-full flex items-center justify-center">
-      <ul className="h-full w-full flex items-start justify-center">
+    <div className="h-full w-full flex items-start justify-center ">
+      <ul className="h-full w-full flex flex-col items-center justify-start">
         {Notifications.map((notification) => (
           <li
             key={notification.id}
