@@ -16,7 +16,7 @@ import NotificationList from "./UserNotification/NotificationList";
 import { globalSideBar } from "@/globalStates/globalSideBar";
 
 // assets
-import logo from "@/public/assets/Shaw.png";
+import logo from "@/public/assets/shaw.png";
 
 // Icons
 import { BsSearch } from "react-icons/bs";
