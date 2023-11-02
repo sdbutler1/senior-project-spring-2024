@@ -17,6 +17,7 @@ import SideBar from "@/components/global/SideBar";
 import TopBar from "@/components/global/topbar/TopBar";
 import Providers from "@/context/providers";
 import { AuthContextProvider } from "@/context/AuthContext";
+import PageWrapper from "@/components/global/PageWrapper";
 
 export default function RootLayout({
   children,
@@ -32,7 +33,9 @@ export default function RootLayout({
               <TopBar />
               <div className="relative h-full w-full flex items-center justify-center">
                 <SideBar />
-                {children}
+                <PageWrapper>
+                  {children}
+                </PageWrapper>
               </div>
             </AuthContextProvider>
           </div>

@@ -47,7 +47,7 @@ const DataTable = (props: Props) => {
   };
 
   return (
-    <div className="dataTable">
+    <div className="dataTable w-full max-h-[90%] overflow-y-auto">
       <DataGrid
         className="dataGrid"
         rows={props.rows}
@@ -55,7 +55,7 @@ const DataTable = (props: Props) => {
         initialState={{
           pagination: {
             paginationModel: {
-              pageSize: 10,
+              pageSize: 15,
             },
           },
         }}
@@ -63,7 +63,7 @@ const DataTable = (props: Props) => {
         slotProps={{
           toolbar: {
             showQuickFilter: true,
-            quickFilterProps: { debounceMs: 500 },
+            quickFilterProps: { debounceMs: 100 },
           },
         }}
         pageSizeOptions={[5]}

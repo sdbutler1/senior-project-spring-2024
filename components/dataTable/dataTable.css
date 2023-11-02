@@ -1,11 +1,11 @@
 .dataTable {
-  background: #960A2C;
-  padding: 20px;
+  /* background: #960A2C; */
+  /* padding: 20px; */
 }
 
 .dataTable .dataGrid {
   background: white;
-  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1), -5px -5px 10px #b31139;
+  /* box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1), -5px -5px 10px #b31139; */
   padding: 20px;
 }
 
