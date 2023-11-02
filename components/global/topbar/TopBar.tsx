@@ -44,7 +44,6 @@ const Topbar = (props: Props) => {
   const [isPopUpOpen2, setPopUpOpen2] = useState(false);
   const [isPopUpOpen3, setPopUpOpen3] = useState(false);
 
-
   const togglePopUp1 = () => {
     setPopUpOpen1(!isPopUpOpen1);
     setPopUpOpen2(false);
@@ -132,10 +131,7 @@ const Topbar = (props: Props) => {
         className="h-full w-1/6 flex items-center justify-end gap-4 lg:gap-8 pr-2 lg:pr-8"
         style={{ zIndex: "1200" }}
       >
-        <div
-          onClick={togglePopUp1}
-          className="relative flex items-center justify-center cursor-pointer"
-        >
+        <div className="relative flex items-center justify-center cursor-pointer">
           <div className="flex items-center justify-center">
             <li
               className={`relative h-full w-full flex items-center justify-center`}
