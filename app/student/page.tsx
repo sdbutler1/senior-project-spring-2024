@@ -10,9 +10,9 @@ import { globalSideBar } from "../../globalStates/globalSideBar";
 //components
 import { useAuth } from "@/context/AuthContext";
 
-type Props = {}
+type Props = {};
 
-const page = (props: Props) => {
+const StudentTable = (props: Props) => {
   const { isSidebarOpen, isSidebarHidden } = globalSideBar();
   const { user } = useAuth();
   const router = useRouter();
@@ -39,4 +39,4 @@ const page = (props: Props) => {
   );
 };
 
-export default page
+export default StudentTable;
