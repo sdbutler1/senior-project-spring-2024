@@ -25,4 +25,32 @@ body {
   border: 0.1rem solid #fff;
 }
 
+.formShadow {
+  border-radius: 0.5rem;
+  box-shadow: 5px 5px 5px rgba(161, 1, 1, 0.1), -2px -2px 5px #7d1f2e;
+}
+
+/* Define the scrollbar styles for WebKit-based browsers */
+div::-webkit-scrollbar {
+  width: 1px; /* Set the width of the scrollbar */
+}
+
+div::-webkit-scrollbar-thumb {
+  background: #f4b461; /* Set the color of the scrollbar thumb */
+  border-radius: 6px; /* Round the corners of the thumb */
+}
+
+div::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Change the color on hover */
+}
+
+div::-webkit-scrollbar-track {
+  background: #7d1f2e; /* Set the background of the scrollbar track */
+  border-radius: 50%; /* Round the corners of the track */
+}
+
+div::-webkit-scrollbar-track:hover {
+  background: #ccc; /* Change the background on hover */
+}
+
 

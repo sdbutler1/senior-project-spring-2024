@@ -1,3 +1,6 @@
+// react components
+import React from "react";
+
 // html
 import type { Metadata } from "next";
 
@@ -6,16 +9,14 @@ export const metadata: Metadata = {
   description: "Computer Science Department Website",
 };
 
-// react components
-
 // css
 import "../styles/globals.css";
 
 // components
-import SideBar from "../components/global/SideBar";
-import TopBar from "../components/global/topBar";
-import Providers from "./providers";
-import { AuthContextProvider } from "./context/AuthContext";
+import SideBar from "@/components/global/SideBar";
+import TopBar from "@/components/global/topbar/TopBar";
+import Providers from "@/context/providers";
+import { AuthContextProvider } from "@/context/AuthContext";
 
 export default function RootLayout({
   children,
@@ -26,10 +27,10 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Providers>
-          <div className="relative w-screen h-auto flex flex-col items-center justify-center">
+          <div className="relative h-screen w-screen flex flex-col items-center justify-center">
             <AuthContextProvider>
               <TopBar />
-              <div className="flex items-center justify-center">
+              <div className="relative h-full w-full flex items-center justify-center">
                 <SideBar />
                 {children}
               </div>

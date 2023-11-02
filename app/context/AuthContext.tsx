@@ -2,7 +2,7 @@
 
 import { useContext, createContext, useState, useEffect, ReactNode } from "react";
 import { signInWithPopup, signOut, onAuthStateChanged, GoogleAuthProvider } from "firebase/auth";
-import { auth } from "../firebase/firebase";
+import { auth } from "../../config/firebase";
 
 type User = {
   // Define the user properties as needed.
