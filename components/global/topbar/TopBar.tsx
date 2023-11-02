@@ -207,7 +207,7 @@ const Topbar = (props: Props) => {
               />
             </div>
             <li
-              className={`h-full w-full flex items-center justify-center gap-2`}
+              className={`h-full w-full flex items-center font-bold justify-center gap-2`}
             >
               <HiOutlineUserCircle className="text-[1.6rem] lg:text-[2rem] text-[#7d1f2e]" />
               {user ? user.email.split("@")[0] : undefined}
