@@ -28,12 +28,14 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Providers>
-          <div className="relative w-screen h-auto flex flex-col items-center justify-center">
+          <div className="relative h-screen w-screen flex flex-col items-center justify-center">
             <AuthContextProvider>
               <Loading />
               <TopBar />
-              <SideBar />
-              {children}
+              <div className="relative h-full w-full flex items-center justify-center">
+                <SideBar />
+                {children}
+              </div>
             </AuthContextProvider>
           </div>
         </Providers>
