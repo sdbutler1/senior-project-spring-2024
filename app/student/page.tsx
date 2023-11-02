@@ -106,7 +106,7 @@ const StudentTable = (props: Props) => {
       router.push("/login");
     }
   }, [router, user]);
-  
+
   return (
     <div
       className={`absolute bottom-0 right-0 h-[calc(100%-5rem)] p-8 ${
@@ -159,9 +159,7 @@ const StudentTable = (props: Props) => {
                     name="search"
                     autoComplete="off"
                     placeholder="Search..."
-                    className={`w-full bg-transparent outline-none p-2 focus:border-b placeholder:text-[#fff] ${
-                      isSidebarOpen ? "flex" : "hidden"
-                    }`}
+                    className="w-full bg-transparent outline-none p-2 focus:border-b placeholder:text-[#fff]"
                   />
                 </label>
               </form>
