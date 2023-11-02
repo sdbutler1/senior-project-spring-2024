@@ -20,7 +20,9 @@ import { StudentData } from "@/app/student/studentData";
 // icons
 import { HiUserAdd } from "react-icons/hi";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
+import PersonAddAltOutlinedIcon from '@mui/icons-material/PersonAddAltOutlined';
 import { BsSearch } from "react-icons/bs";
+import { MagnifyingGlassIcon, UserPlusIcon } from "@heroicons/react/20/solid";
 
 type Props = {};
 
@@ -34,37 +36,37 @@ const columns: GridColDef[] = [
     field: "firstName",
     type: "string",
     headerName: "First name",
-    width: 200,
+    flex: 1,
   },
   {
     field: "lastName",
     type: "string",
     headerName: "Last name",
-    width: 150,
+    flex: 1,
   },
   {
     field: "email",
     type: "string",
     headerName: "Email",
-    width: 350,
+    flex: 2,
   },
   {
     field: "phone",
     type: "string",
     headerName: "Phone",
-    width: 200,
+    flex: 1,
   },
   {
     field: "classification",
     headerName: "Classification",
-    width: 100,
     type: "string",
+    flex: 1,
   },
   {
     field: "gpa",
     headerName: "GPA",
-    width: 100,
     type: "number",
+    flex: 1,
   },
 ];
 
@@ -108,17 +110,7 @@ const StudentTable = (props: Props) => {
   }, [router, user]);
 
   return (
-    <div
-      className={`absolute bottom-0 right-0 h-[calc(100%-5rem)] p-8 ${
-        isSidebarOpen && isSidebarHidden
-          ? "w-screen lg:w-[calc(100%-12rem)]"
-          : !isSidebarOpen && !isSidebarHidden
-          ? "w-screen"
-          : !isSidebarOpen &&
-            isSidebarHidden &&
-            "w-screen lg:w-[calc(100%-5rem)]"
-      } flex items-center justify-center gap-8 transition-width duration-500`}
-    >
+    <>
       {modalShown && (
         <EmailModal
           recipients={selectedRows}
@@ -126,50 +118,33 @@ const StudentTable = (props: Props) => {
           closeModal={closeModal}
         />
       )}
-      <div>
-        <div className="h-auto w-full flex flex-col items-start justify-center gap-4 mb-6">
+      <div className="w-full h-full flex flex-col">
+        <div className="w-full flex flex-col items-start justify-center gap-2 mb-2 2xl:gap-4 2xl:mb-6">
           <h1 className="text-2xl md:text-4xl font-bold">Students</h1>
           <div className="h-full w-full flex items-center justify-between">
-            <div className="flex items-center justify-start gap-8">
+            <div className="flex items-center justify-start gap-4">
               <button
                 onClick={() => setOpen(true)}
-                className="h-12 w-auto flex items-center justify-center gap-2 text-lg rounded-md bg-shaw-garnet text-white p-2"
+                className="w-auto flex items-center justify-center gap-2 text-sm 2xl:text-lg rounded-md bg-shaw-garnet hover:opacity-100 opacity-90 text-white px-2 py-1"
               >
-                Add Student <HiUserAdd className="text-xl" />
+                <span>Add Student</span>
+                <PersonAddAltOutlinedIcon className="w-6" />
               </button>
               <button
                 onClick={() => setModalShown((state) => !state)}
-                className="h-12 w-auto flex items-center justify-center gap-2 text-lg rounded-md bg-shaw-garnet text-white p-2"
+                className="w-auto flex items-center justify-center gap-2 text-sm 2xl:text-lg rounded-md bg-shaw-garnet hover:opacity-100 opacity-90 text-white px-2 py-1"
               >
                 <span>Send email</span>
-                <EmailOutlinedIcon />
+                <EmailOutlinedIcon className="w-6" />
               </button>
             </div>
-            <div className="h-[3.5rem] w-80 flex items-center justify-center bg-shaw-garnet rounded-md">
-              <form className="h-full w-full ">
-                <label className="h-full w-full flex items-center justify-start text-lg px-4 gap-2">
-                  <div
-                    className={`h-full w-1/6 flex items-center justify-center text-xl cursor-pointer text-[#fff] hover:text-[#f4b461]`}
-                  >
-                    <BsSearch />
-                  </div>
-                  <input
-                    type="text"
-                    id="search"
-                    name="search"
-                    autoComplete="off"
-                    placeholder="Search..."
-                    className="w-full bg-transparent outline-none p-2 focus:border-b placeholder:text-[#fff]"
-                  />
-                </label>
-              </form>
             </div>
-          </div>
         </div>
+
         <DataTable slug="users" columns={columns} rows={StudentData} />
         {open && <Add slug="student" columns={columns} setOpen={setOpen} />}
       </div>
-    </div>
+    </>
   );
 };
 
