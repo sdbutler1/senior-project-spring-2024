@@ -8,57 +8,58 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
 
-  .modal {
-    padding: 50px;
-    border-radius: 10px;
-    background-color: #2a3447;
-    position: relative;
+.add .modal {
+  padding: 50px;
+  border-radius: 10px;
+  background-color: #2a3447;
+  position: relative;
+}
 
-    h1 {
-      margin-bottom: 40px;
-      font-size: 24px;
-      color: #ddd;
-    }
+.add .modal h1 {
+  margin-bottom: 40px;
+  font-size: 24px;
+  color: #ddd;
+}
 
-    .close {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      cursor: pointer;
-    }
+.add .modal .close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
 
-    form {
-      display: flex;
-      flex-wrap: wrap;
-      max-width: 500px;
-      justify-content: space-between;
+.add .modal form {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 500px;
+  justify-content: space-between;
+}
 
-      .item {
-        width: 40%;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        margin-bottom: 20px;
+.add .modal form .item {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
 
-        label {
-          font-size: 14px;
-        }
+.add .modal form .item label {
+  font-size: 14px;
+}
 
-        input {
-          padding: 10px;
-          background-color: transparent;
-          color: white;
-          outline: none;
-          border: 1px solid #ddd;
-          border-radius: 3px;
-        }
-      }
-      button {
-        width: 100%;
-        padding: 10px;
-        cursor: pointer;
-      }
-    }
-  }
+.add .modal form .item input {
+  padding: 10px;
+  background-color: transparent;
+  color: white;
+  outline: none;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+}
+
+.add .modal form button {
+  width: 100%;
+  padding: 10px;
+  cursor: pointer;
 }

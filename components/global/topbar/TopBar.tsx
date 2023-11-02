@@ -98,7 +98,7 @@ const Topbar = (props: Props) => {
       className={`fixed top-0 left-0 h-20 w-screen flex items-center justify-between ${
         isPopUpOpen1 || isPopUpOpen2 || isPopUpOpen3
           ? "bg-[#fefefe]"
-          : "bg-transparent delay-500"
+          : "bg-transparent"
       } transition-all`}
       style={{ zIndex: "900" }}
     >
@@ -240,7 +240,7 @@ const Topbar = (props: Props) => {
         id="popup1"
         className={`absolute top-20 right-0 h-96 w-80 flex flex-col items-center justify-center text-[#000] bg-[#fefefe] border ${
           isPopUpOpen1 ? "translate-y-0" : "translate-y-[-150%]"
-        } transition duration-1000 ease-in-out`}
+        } transition duration-300 ease-in-out`}
         style={{ zIndex: isPopUpOpen1 ? 1000 : -999 }}
       >
         <div className="h-[2.5rem] w-full flex items-center justify-between gap-4 px-2 border-b-[1px] border-slate-200">
@@ -263,7 +263,7 @@ const Topbar = (props: Props) => {
         id="popup2"
         className={`absolute top-20 right-0 h-96 w-80 flex flex-col items-center justify-center text-[#000] bg-[#fefefe] border ${
           isPopUpOpen2 ? "translate-y-0" : "translate-y-[-150%]"
-        } transition duration-1000 ease-in-out`}
+        } transition duration-300 ease-in-out`}
         style={{ zIndex: isPopUpOpen2 ? 1000 : -999 }}
       >
         <div className="h-[2.5rem] w-full flex items-center justify-between gap-4 px-2 border-b-[1px] border-slate-200">
@@ -286,7 +286,7 @@ const Topbar = (props: Props) => {
         id="popup3"
         className={`absolute top-20 right-0 h-96 w-80 flex flex-col items-center justify-center text-[#000] bg-[#fefefe] border ${
           isPopUpOpen3 ? "translate-y-0" : "translate-y-[-150%]"
-        } transition duration-1000 ease-in-out`}
+        } transition duration-300 ease-in-out`}
         style={{ zIndex: isPopUpOpen3 ? 1000 : -999 }}
       >
         <Link
