@@ -21,13 +21,13 @@ import { globalSideBar } from "@/globalStates/globalSideBar";
 import logo from "@/public/assets/shaw.png";
 
 // Icons
-import { BsSearch } from "react-icons/bs";
 import { MdDashboard, MdLogout } from "react-icons/md";
 import {
   HiOutlineMail,
   HiOutlineBell,
   HiOutlineUserCircle,
   HiMenu,
+  HiSearch,
 } from "react-icons/hi";
 import { GoTriangleDown } from "react-icons/go";
 import { AiOutlineSetting, AiOutlineClose } from "react-icons/ai";
@@ -37,12 +37,13 @@ type Props = {};
 const Topbar = (props: Props) => {
   const currentPathname = usePathname();
   const router = useRouter();
-  const { logout } = useAuth();
+  const { logout, user } = useAuth();
   const { isSidebarOpen, isSidebarHidden, toggleSideBar, HideSideBar } =
     globalSideBar();
   const [isPopUpOpen1, setPopUpOpen1] = useState(false);
   const [isPopUpOpen2, setPopUpOpen2] = useState(false);
   const [isPopUpOpen3, setPopUpOpen3] = useState(false);
+
 
   const togglePopUp1 = () => {
     setPopUpOpen1(!isPopUpOpen1);
@@ -136,6 +137,21 @@ const Topbar = (props: Props) => {
           className="relative flex items-center justify-center cursor-pointer"
         >
           <div className="flex items-center justify-center">
+            <li
+              className={`relative h-full w-full flex items-center justify-center`}
+            >
+              <HiSearch className="text-[1rem] lg:text-[1.8rem] text-[#7d1f2e]" />
+            </li>
+            {/* <li className="w-full h-full flex items-center justify-start text-[1.1rem]">
+            Search
+          </li> */}
+          </div>
+        </div>
+        <div
+          onClick={togglePopUp1}
+          className="relative flex items-center justify-center cursor-pointer"
+        >
+          <div className="flex items-center justify-center">
             <div className="h-auto w-full flex items-center justify-end ">
               <GoTriangleDown
                 className={`text-2xl text-[#7d1f2e] ${
@@ -170,7 +186,7 @@ const Topbar = (props: Props) => {
             <li
               className={`relative h-full w-full flex items-center justify-center`}
             >
-              <HiOutlineBell className="text-[1.6rem] lg:text-[2rem] text-[#7d1f2e]" />
+              <HiOutlineBell className="text-[1.6rem] lg:text-[1.9rem] text-[#7d1f2e]" />
               <NotificationsCount />
             </li>
             {/* <li className="w-full h-full flex items-center justify-start text-[1.1rem]">
@@ -190,8 +206,11 @@ const Topbar = (props: Props) => {
                 }`}
               />
             </div>
-            <li className={`h-full w-full flex items-center justify-center`}>
+            <li
+              className={`h-full w-full flex items-center font-bold justify-center gap-2`}
+            >
               <HiOutlineUserCircle className="text-[1.6rem] lg:text-[2rem] text-[#7d1f2e]" />
+              {user ? user.email.split("@")[0] : undefined}
             </li>
           </div>
           {/* <li className="w-full h-full flex items-center justify-start text-[1.1rem]">

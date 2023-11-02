@@ -25,7 +25,7 @@ const Dashboard = (props: Props) => {
 
   return (
     <div
-      className={`fixed bottom-0 right-0 h-[calc(100%-5rem)] ${
+      className={`fixed bottom-0 right-0 h-[calc(100%-5rem)] p-8 ${
         isSidebarOpen && isSidebarHidden
           ? "w-screen lg:w-[calc(100%-12rem)]"
           : !isSidebarOpen && !isSidebarHidden
@@ -33,9 +33,25 @@ const Dashboard = (props: Props) => {
           : !isSidebarOpen &&
             isSidebarHidden &&
             "w-screen lg:w-[calc(100%-5rem)]"
-      } flex items-center justify-center transition-width duration-500`}
+      } flex items-center justify-center gap-8 transition-width duration-500`}
     >
-      Dashboard
+      <div className="h-full w-1/5 flex flex-col items-center justify-center gap-8">
+        <div className="h-3/4 w-full flex flex-col items-center justify-center border border-slate-300 rounded-lg"></div>
+        <div className="h-1/4 w-full flex flex-col items-center justify-center border border-slate-300 rounded-lg"></div>
+      </div>
+      <div className="h-full w-2/6 flex flex-col items-center justify-center gap-4">
+        <div className="h-5/6 w-full grid grid-cols-2 grid-rows-2 gap-4">
+          <div className="h-full w-full flex items-center justify-center border border-slate-300 rounded-lg"></div>
+          <div className="h-full w-full flex items-center justify-center border border-slate-300 rounded-lg"></div>
+          <div className="h-full w-full flex items-center justify-center border border-slate-300 rounded-lg"></div>
+          <div className="h-full w-full flex items-center justify-center border border-slate-300 rounded-lg"></div>
+        </div>
+        <div className="h-full w-full flex items-center justify-center border border-slate-300"></div>
+      </div>
+      <div className="h-full w-1/5 flex flex-col items-center justify-center gap-8">
+        <div className="h-3/4 w-full flex flex-col items-center justify-center border border-slate-300 rounded-lg"></div>
+        <div className="h-1/4 w-full flex flex-col items-center justify-center border border-slate-300 rounded-lg"></div>
+      </div>
     </div>
   );
 };
