@@ -22,17 +22,7 @@ export default function Home() {
   }, [router, user]);
 
   return (
-    <div
-      className={`absolute bottom-0 right-0 h-[calc(100%-5rem)] p-8 ${
-        isSidebarOpen && isSidebarHidden
-          ? "w-screen lg:w-[calc(100%-12rem)]"
-          : !isSidebarOpen && !isSidebarHidden
-          ? "w-screen"
-          : !isSidebarOpen &&
-            isSidebarHidden &&
-            "w-screen lg:w-[calc(100%-5rem)]"
-      } flex items-center justify-center gap-8 transition-width duration-500`}
-    >
+    <>
       <div className="h-full w-full flex items-center justify-center">
         <div className="flex flex-col items-center justify-center gap-8">
           <h1 className="text-5xl">Respect</h1>
@@ -42,6 +32,6 @@ export default function Home() {
           <h1 className="text-5xl">Honesty</h1>
         </div>
       </div>
-    </div>
+    </>
   );
 }
