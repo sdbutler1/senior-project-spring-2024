@@ -9,12 +9,27 @@ import { globalSideBar } from "../../globalStates/globalSideBar";
 
 //components
 import { useAuth } from "@/context/AuthContext";
+import BarChartBox from "@/components/barChartBox/BarChartBox";
+import BigChartBox from "@/components/bigChartBox/BigChartBox";
+// import ChartBox from "@/components/chartBox/ChartBox";
+import PieChartBox from "@/components/pieCartBox/PieChartBox";
+import TopBox from "@/components/topBox/TopBox";
 
 // assets
 import { StudentData } from "@/app/student/studentData";
+import {
+  barChartBoxRevenue,
+  barChartBoxVisit,
+  chartBoxConversion,
+  chartBoxProduct,
+  chartBoxRevenue,
+  chartBoxUser,
+} from "@/data";
 
-type Props = {
-};
+// css
+import "./home.scss";
+
+type Props = {};
 
 const Dashboard = (props: Props) => {
   const { isSidebarOpen, isSidebarHidden } = globalSideBar();
