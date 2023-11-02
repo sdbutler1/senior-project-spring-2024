@@ -106,6 +106,7 @@ const StudentTable = (props: Props) => {
       router.push("/login");
     }
   }, [router, user]);
+  
   return (
     <div
       className={`absolute bottom-0 right-0 h-[calc(100%-5rem)] p-8 ${
@@ -144,7 +145,6 @@ const StudentTable = (props: Props) => {
                 <EmailOutlinedIcon />
               </button>
             </div>
-
             <div className="h-[3.5rem] w-80 flex items-center justify-center bg-shaw-garnet rounded-md">
               <form className="h-full w-full ">
                 <label className="h-full w-full flex items-center justify-start text-lg px-4 gap-2">
