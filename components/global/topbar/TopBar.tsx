@@ -178,7 +178,7 @@ const Topbar = (props: Props) => {
               <HiOutlineBell className="text-[1.6rem] lg:text-[1.9rem] text-[#7d1f2e]" />
               <NotificationsCount />
             </li>
-            <li className="absolute top-[-1.7rem] right-6 w-full h-full flex items-center justify-start text-[1.1rem] opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+            <li className="absolute top-[-1.7rem] right-8 w-full h-full flex items-center justify-start text-[1.1rem] opacity-0 group-hover:opacity-100 transition-opacity duration-200">
               Notifications
             </li>
           </div>
