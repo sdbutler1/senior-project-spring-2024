@@ -31,7 +31,7 @@ export default function RootLayout({
         <Providers>
           <div className="relative h-screen w-screen flex flex-col items-center justify-center">
             <AuthContextProvider>
-              <div className="fixed top-0 left-0 h-auto w-full flex flex-col items-end justify-center gap-4 z-50">
+              <div className="fixed top-0 left-0 h-auto w-full flex flex-col items-end justify-center gap-4 z-20">
                 <TopBar />
                 <Popup />
               </div>
