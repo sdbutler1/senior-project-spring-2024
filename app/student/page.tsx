@@ -81,7 +81,7 @@ const StudentTable = (props: Props) => {
     useState<studentsFormatted>();
 
   const handleRowSelection = (data: any) => {
-    const recipients = data.map(
+    const recipients: student[] = data.map(
       (studentId: any) =>
         formattedStudentData && formattedStudentData[studentId]
     );
@@ -96,7 +96,6 @@ const StudentTable = (props: Props) => {
     });
 
     setFormattedStudentData(data);
-    console.log(data);
   }, []);
 
   const closeModal = () => {
@@ -113,7 +112,7 @@ const StudentTable = (props: Props) => {
     <>
       {modalShown && (
         <EmailModal
-          recipients={selectedRows}
+          recipients={selectedRows.length ? selectedRows : StudentData}
           modalShown={modalShown}
           closeModal={closeModal}
         />
@@ -141,7 +140,7 @@ const StudentTable = (props: Props) => {
             </div>
         </div>
 
-        <DataTable slug="users" columns={columns} rows={StudentData} />
+        <DataTable handleRowSelection={handleRowSelection} slug="users" columns={columns} rows={StudentData} />
         {open && <Add slug="student" columns={columns} setOpen={setOpen} />}
       </div>
     </>

@@ -99,8 +99,8 @@ const Topbar = (props: Props) => {
         isPopUpOpen1 || isPopUpOpen2 || isPopUpOpen3
           ? "bg-[#fefefe]"
           : "bg-transparent"
-      } transition-all bg-white`}
-      style={{ zIndex: "900" }}
+      } z-20 transition-all bg-white`}
+      // style={{ zIndex: "900" }}
     >
       <Link
         href={"/"}
