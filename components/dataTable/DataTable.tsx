@@ -12,6 +12,7 @@ type Props = {
   columns: GridColDef[];
   rows: object[];
   slug: string;
+  handleRowSelection: (data: any) => void;
 };
 
 const DataTable = (props: Props) => {
@@ -66,10 +67,10 @@ const DataTable = (props: Props) => {
             quickFilterProps: { debounceMs: 100 },
           },
         }}
+        onRowSelectionModelChange={props.handleRowSelection}
         pageSizeOptions={[5]}
         checkboxSelection
         disableRowSelectionOnClick
-        disableColumnFilter
         disableDensitySelector
         disableColumnSelector
       />

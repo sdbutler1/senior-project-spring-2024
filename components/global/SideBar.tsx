@@ -47,28 +47,28 @@ const SideBar = () => {
     <div
       className={`fixed bottom-0 left-0 h-[calc(100%-5rem)] ${
         isSidebarOpen ? "w-64" : isSidebarHidden ? "w-20" : "w-0"
-      }  flex flex-col items-center justify-start bg-[#7d1f2e] text-[#fff] transition-width duration-500`}
-      style={{ zIndex: "500" }}
+      }  z-10 flex flex-col items-center justify-start bg-[#7d1f2e] text-[#fff] transition-width duration-500`}
+      // style={{ zIndex: "500" }}
     >
       <div
         className={`h-12 w-full items-center ${
           isSidebarOpen ? "justify-end" : "justify-center"
         } ${isSidebarHidden ? "flex" : "hidden"} gap-2 text-[2rem]`}
       >
-        <div
+        <button
           onClick={isSidebarOpen ? toggleSideBar : HideSideBar}
-          className={`h-auto w-auto hover:text-[#f4b461] hover:scale-105 cursor-pointer`}
+          className={`hover:text-[#f4b461] hover:scale-105 cursor-pointer mr-2`}
         >
           <MdKeyboardArrowLeft />
-        </div>
-        <div
-          className={`h-auto w-auto hover:text-[#f4b461] hover:scale-105 cursor-pointer ${
+        </button>
+        <button
+          className={`hover:text-[#f4b461] hover:scale-105 cursor-pointer ${
             isSidebarOpen ? "hidden" : "flex"
           }`}
           onClick={toggleSideBar}
         >
           <MdKeyboardArrowRight />
-        </div>
+        </button>
       </div>
       <ul className="h-96 2xl:h-auto w-[90%] sm:w-full flex flex-col items-start justify-center px-4">
         <Link
