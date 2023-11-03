@@ -31,7 +31,7 @@ type studentsFormatted = {
 };
 
 const columns: GridColDef[] = [
-  { field: "id", headerName: "BearsId", width: 90 },
+  { field: "id", headerName: "Bears ID", width: 90 },
   {
     field: "firstName",
     type: "string",
@@ -67,6 +67,8 @@ const columns: GridColDef[] = [
     headerName: "GPA",
     type: "number",
     flex: 1,
+    headerAlign: "left",
+    align: "left",
   },
 ];
 

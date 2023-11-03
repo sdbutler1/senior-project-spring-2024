@@ -1,26 +1,37 @@
-import "./topBox.scss"
-import {topDealUsers} from "../../data.ts"
+// components
+import { StudentData } from "@/app/student/studentData";
+
+// icons
+import HowToRegIcon from "@mui/icons-material/HowToReg";
 
 const TopBox = () => {
   return (
-    <div className="topBox">
-      <h1>Top Deals</h1>
-      <div className="list">
-        {topDealUsers.map(user=>(
-          <div className="listItem" key={user.id}>
-            <div className="user">
-              <img src={user.img} alt="" />
-              <div className="userTexts">
-                <span className="username">{user.username}</span>
-                <span className="email">{user.email}</span>
+    <div className="w-full flex flex-col items-start justify-center">
+      <h1 className="w-full topboxheader">Students</h1>
+      <div className="w-full flex flex-col items-start justify-center gap-4">
+        {StudentData.map((student) => (
+          <div
+            className="h-full w-full flex items-start justify-between"
+            key={student.id}
+          >
+            <div className="">
+              <div className="">
+                <div className="topboxNames ">
+                  <span className="">{student.firstName}</span>
+                  <span className="">{student.lastName}</span>
+                </div>
+                <span className=" text-[0.85rem] font-semibold">{student.email}</span>
               </div>
             </div>
-            <span className="amount">${user.amount}</span>
+            <span className="h-12 flex items-center justify-center gap-1 font-semibold">
+              <HowToRegIcon className="mb-1"/>
+              {student.id}
+            </span>
           </div>
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default TopBox
+export default TopBox;

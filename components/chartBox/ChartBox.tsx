@@ -1,5 +1,6 @@
-import Link  from "next/navigation";
-import "./chartBox.scss";
+// react components
+import Image from "next/image";
+import Link from "next/link";
 import { Line, LineChart, ResponsiveContainer, Tooltip } from "recharts";
 
 type Props = {
@@ -17,11 +18,11 @@ const ChartBox = (props: Props) => {
     <div className="chartBox">
       <div className="boxInfo">
         <div className="title">
-          <img src={props.icon} alt="" />
+          <Image src={props.icon} alt="" priority/>
           <span>{props.title}</span>
         </div>
         <h1>{props.number}</h1>
-        <Link to="/" style={{ color: props.color }}>
+        <Link href={""} style={{ color: props.color }}>
           View all
         </Link>
       </div>
@@ -30,7 +31,12 @@ const ChartBox = (props: Props) => {
           <ResponsiveContainer width="99%" height="100%">
             <LineChart data={props.chartData}>
               <Tooltip
-                contentStyle={{ background: "transparent", border: "none" }}
+                contentStyle={{
+                  background: "transparent",
+                  border: "none",
+                  position: "relative",
+                  right: "40px",
+                }}
                 labelStyle={{ display: "none" }}
                 position={{ x: 10, y: 70 }}
               />
@@ -51,7 +57,7 @@ const ChartBox = (props: Props) => {
           >
             {props.percentage}%
           </span>
-          <span className="duration">this month</span>
+          <span className="duration">this academic year </span>
         </div>
       </div>
     </div>
