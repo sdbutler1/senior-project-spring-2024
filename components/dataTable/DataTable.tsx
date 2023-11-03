@@ -23,24 +23,26 @@ const DataTable = (props: Props) => {
   const actionColumn: GridColDef = {
     field: "action",
     headerName: "Action",
-    headerAlign: "center",
+    headerAlign: "left",
     width: 200,
-    align: "center",
     renderCell: (params) => {
       return (
-        <div className="flex items-center justify-center gap-2 ">
-          <Link
-            href={`/${props.slug}/${params.row.id}`}
-            className="cursor-pointer"
-          >
-            <EditIcon className="text-[#327123]" />
-          </Link>
-          <div
+        <div className="w-40 flex items-center justify-start gap-4">
+          <button type="button">
+            <Link
+              href={`/${props.slug}/${params.row.id}`}
+              className="cursor-pointer"
+            >
+              <EditIcon className="text-[#327123]" />
+            </Link>
+          </button>
+          <button
+            type="button"
             onClick={() => handleDelete(params.row.id)}
             className="cursor-pointer"
           >
             <DeleteIcon className="text-[#7d1f2e]" />
-          </div>
+          </button>
         </div>
       );
     },
