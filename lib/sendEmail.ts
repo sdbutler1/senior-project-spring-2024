@@ -1,5 +1,5 @@
 const sendEmail = async (email: email) => {
-  const res = await fetch("/email/sendEmail", {
+  const res = await fetch("/mail/sendEmail", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -8,3 +8,5 @@ const sendEmail = async (email: email) => {
   });
   console.log("status: ", res.status);
 }
+
+export default sendEmail;

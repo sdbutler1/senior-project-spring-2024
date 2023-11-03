@@ -7,8 +7,14 @@ type student = {
   gpa: number
 }
 
+type attachment = {
+  name: string,
+  path: string,
+}
+
 type email = {
   recipients: string[],
   subject: string,
   body: string,
+  attachments?: attachment[],
 }
