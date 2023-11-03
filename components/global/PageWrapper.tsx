@@ -20,7 +20,7 @@ function PageWrapper({
           : !isSidebarOpen &&
             isSidebarHidden && // open minimized
             "lg:ml-20 mt-[5rem] lg:w-[calc(100%-20rem)]"
-      } w-screen h-[calc(100vh-10rem)]  px-8 flex items-center justify-center gap-8 transition-width duration-500`}
+      } w-screen h-[calc(100vh-10rem)] px-8 flex items-center justify-center gap-8 transition-width duration-500`}
     >
     {children}
     </div>
