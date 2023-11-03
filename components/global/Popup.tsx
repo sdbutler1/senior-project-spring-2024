@@ -20,7 +20,7 @@ const Popup = (props: Props) => {
   const [isPopUpbg, setisPopUpbg] = useState(false);
 
   const toggleSection = () => {
-    
+    return
   }
   return (
     <div
@@ -38,9 +38,9 @@ const Popup = (props: Props) => {
       <div className="h-[2.5rem] w-full flex flex-col items-center justify-center">
         <div className="h-full w-full flex items-center justify-start">
           <div className="h-full w-9/12 flex items-center justify-between p-6">
-            <button type="button" onClick={}>All</button>
-            <button type="button" onClick={}>Read</button>
-            <button type="button" onClick={}>Unread</button>
+            <button type="button" onClick={toggleSection}>All</button>
+            <button type="button" onClick={toggleSection}>Read</button>
+            <button type="button" onClick={toggleSection}>Unread</button>
           </div>
         </div>
         <div className="h-auto w-full border px-6">
