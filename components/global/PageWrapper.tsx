@@ -1,15 +1,19 @@
-'use client'
+"use client";
 
-import { globalSideBar } from '@/globalStates/globalSideBar';
-import React from 'react'
+// react components
+import React from "react";
+import { usePathname } from "next/navigation";
 
-function PageWrapper({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+// global states
+import { globalSideBar } from "@/globalStates/globalSideBar";
+
+function PageWrapper({ children }: { children: React.ReactNode }) {
   const { isSidebarOpen, isSidebarHidden } = globalSideBar();
+  const currentPathname = usePathname();
 
+  if (currentPathname === '/login' || currentPathname === '/forgotPassword') {
+    return <>{children}</>;
+  }
   return (
     <div
       className={`${
@@ -22,9 +26,9 @@ function PageWrapper({
             "lg:ml-20 mt-[5rem] lg:w-[calc(100%-20rem)]"
       } w-screen h-[calc(100vh-10rem)] px-8 flex items-center justify-center gap-8 transition-width duration-500`}
     >
-    {children}
+      {children}
     </div>
-  )
+  );
 }
 
-export default PageWrapper
+export default PageWrapper;
