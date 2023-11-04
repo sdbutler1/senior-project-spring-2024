@@ -1,7 +1,7 @@
 "use client";
 
 // react components
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
@@ -141,7 +141,7 @@ const SideBar = () => {
         </Link>
         <Link
           href={""}
-          className={`relative h-[3.5rem] w-full flex items-center justify-center rounded-md text-[#fefefe93] ${
+          className={`relative h-[3.5rem] w-full invisible flex items-center justify-center rounded-md text-[#fefefe93] ${
             currentPathname === "" ? "bg-[#6e1d2a9f] text-[#f4b461]" : undefined
           }`}
         >
@@ -164,7 +164,7 @@ const SideBar = () => {
         </Link>
         <Link
           href={""}
-          className={`relative h-[3.5rem] w-full flex items-center justify-center rounded-md text-[#fefefe93] ${
+          className={`relative h-[3.5rem] w-full invisible flex items-center justify-center rounded-md text-[#fefefe93] ${
             currentPathname === "" ? "bg-[#6e1d2a9f] text-[#f4b461]" : undefined
           }`}
         >
@@ -185,7 +185,7 @@ const SideBar = () => {
         </Link>
         <Link
           href={""}
-          className={`relative h-[3.5rem] w-full flex items-center justify-center rounded-md text-[#fefefe93] ${
+          className={`relative h-[3.5rem] w-full invisible flex items-center justify-center rounded-md text-[#fefefe93] ${
             currentPathname === "" ? "bg-[#6e1d2a9f] text-[#f4b461]" : undefined
           }`}
         >
@@ -206,7 +206,7 @@ const SideBar = () => {
         </Link>
         <Link
           href={""}
-          className={`relative h-[3.5rem] w-full flex items-center justify-center rounded-md text-[#fefefe93] ${
+          className={`relative h-[3.5rem] w-full invisible flex items-center justify-center rounded-md text-[#fefefe93] ${
             currentPathname === "" ? "bg-[#6e1d2a9f] text-[#f4b461]" : undefined
           }`}
         >
@@ -227,7 +227,7 @@ const SideBar = () => {
         </Link>
         <Link
           href={""}
-          className={`relative h-[3.5rem] w-full flex items-center justify-center rounded-md text-[#fefefe93] ${
+          className={`relative h-[3.5rem] w-full invisible flex items-center justify-center rounded-md text-[#fefefe93] ${
             currentPathname === "" ? "bg-[#6e1d2a9f] text-[#f4b461]" : undefined
           }`}
         >
@@ -248,7 +248,7 @@ const SideBar = () => {
         </Link>
         <Link
           href={""}
-          className={`relative h-[3.5rem] w-full flex items-center justify-center rounded-md text-[#fefefe93] ${
+          className={`relative h-[3.5rem] w-full invisible flex items-center justify-center rounded-md text-[#fefefe93] ${
             currentPathname === "" ? "bg-[#6e1d2a9f] text-[#f4b461]" : undefined
           }`}
         >
@@ -272,7 +272,7 @@ const SideBar = () => {
       <ul className="h-32 2xl:h-auto w-[90%] sm:w-full flex flex-col items-start justify-center px-4">
         <Link
           href={""}
-          className={`relative h-[3.5rem] w-full flex items-center justify-center rounded-md text-[#fefefe93] ${
+          className={`relative h-[3.5rem] w-full invisible flex items-center justify-center rounded-md text-[#fefefe93] ${
             currentPathname === "" ? "bg-[#6e1d2a9f] text-[#f4b461]" : undefined
           }`}
         >
@@ -293,7 +293,7 @@ const SideBar = () => {
         </Link>
         <Link
           href={""}
-          className={`relative h-[3.5rem] w-full flex items-center justify-center rounded-md text-[#fefefe93] ${
+          className={`relative h-[3.5rem] w-full invisible flex items-center justify-center rounded-md text-[#fefefe93] ${
             currentPathname === "" ? "bg-[#6e1d2a9f] text-[#f4b461]" : undefined
           }`}
         >

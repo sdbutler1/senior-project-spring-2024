@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-type PopUpStore = {
+type globalPopUp = {
   isPopUpOpen1: boolean;
   isPopUpOpen2: boolean;
   isPopUpOpen3: boolean;
@@ -10,7 +10,7 @@ type PopUpStore = {
   setPopUpOpen3: (value: boolean) => void;
 };
 
-const usePopUpStore = create<PopUpStore>((set) => ({
+const globalPopUp = create<globalPopUp>((set) => ({
   isPopUpOpen1: false,
   isPopUpOpen2: false,
   isPopUpOpen3: false,
@@ -20,4 +20,4 @@ const usePopUpStore = create<PopUpStore>((set) => ({
   setPopUpOpen3: (value) => set({ isPopUpOpen3: value }),
 }));
 
-export default usePopUpStore;
+export default globalPopUp;

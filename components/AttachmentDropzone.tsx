@@ -40,7 +40,7 @@ const AttachmentDropzone = ({attachedFiles, updateAttachedFiles}: props) => {
 
   useEffect(()  => {
     updateAttachedFiles([...acceptedFiles]);
-  }, [acceptedFiles])
+  }, [acceptedFiles, updateAttachedFiles])
 
   const removeAttachedFile = (name: string): void => {
     updateAttachedFiles(attachedFiles.filter((file) => file.name !== name));

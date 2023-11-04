@@ -5,7 +5,7 @@ import { Line, LineChart, ResponsiveContainer, Tooltip } from "recharts";
 
 type Props = {
   color: string;
-  icon: string;
+  // icon: string;
   title: string;
   dataKey: string;
   number: number | string;
@@ -18,7 +18,7 @@ const ChartBox = (props: Props) => {
     <div className="chartBox">
       <div className="boxInfo">
         <div className="title">
-          <Image src={props.icon} alt="" priority/>
+          {/* <Image className="h-full w-full object-cover" src={props.icon} alt="" priority/> */}
           <span>{props.title}</span>
         </div>
         <h1>{props.number}</h1>

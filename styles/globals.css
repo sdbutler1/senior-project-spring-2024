@@ -37,7 +37,7 @@ body {
 }
 
 .formShadow::-webkit-scrollbar {
-  width: 3px;
+  width: 4px;
 }
 
 .formShadow::-webkit-scrollbar-thumb {
@@ -55,6 +55,30 @@ body {
 }
 
 .formShadow::-webkit-scrollbar-track:hover {
+  background: #ccc;
+}
+
+/* -------------- */
+
+.popUp::-webkit-scrollbar {
+  width: 4px;
+}
+
+.popUp::-webkit-scrollbar-thumb {
+  background: #7d1f2e;
+  border-radius: 6px;
+}
+
+.popUp::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.popUp::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 50%;
+}
+
+.popUp::-webkit-scrollbar-track:hover {
   background: #ccc;
 }
 
