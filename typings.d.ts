@@ -8,7 +8,6 @@ type student = {
 }
 
 type attachment = {
-  name: string,
   path: string,
 }
 

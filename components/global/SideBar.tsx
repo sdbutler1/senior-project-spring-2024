@@ -48,7 +48,6 @@ const SideBar = () => {
       className={`fixed bottom-0 left-0 h-[calc(100%-5rem)] ${
         isSidebarOpen ? "w-64" : isSidebarHidden ? "w-20" : "w-0"
       }  z-10 flex flex-col items-center justify-start bg-[#7d1f2e] text-[#fff] transition-width duration-500`}
-      // style={{ zIndex: "500" }}
     >
       <div
         className={`h-12 w-full items-center ${

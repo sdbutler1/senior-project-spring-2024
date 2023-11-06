@@ -42,10 +42,8 @@ const EmailModal = ({recipients, modalShown, closeModal} : props) => {
     const attachments = [...attachedFiles]
 
     attachments.map((attachedFile, i) => {
-      console.log(attachedFile)
-      attachments[i] = {name: attachedFile.name, path: attachedFile.path}
+      attachments[i] = {path: attachedFile}
     });
-
     console.log(attachments)
 
     if (editorRef.current) {
@@ -54,6 +52,10 @@ const EmailModal = ({recipients, modalShown, closeModal} : props) => {
 
     sendEmail({...emailContent, body: body, recipients: selectedRecipients, attachments: attachments})
   }
+
+  useEffect(() => {
+    console.log(attachedFiles);
+  }, [attachedFiles])
   
   const updateEmailBody = () => {
     if (editorRef.current) {
@@ -184,7 +186,7 @@ const EmailModal = ({recipients, modalShown, closeModal} : props) => {
                           </button>   
                         }
                       </div>
-                      <button>Custom</button>
+                      <button type='button'>Custom</button>
                     </div>
                   </div>
                   <div className='w-full relative'>

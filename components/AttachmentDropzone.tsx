@@ -13,22 +13,21 @@ const AttachmentDropzone = ({attachedFiles, updateAttachedFiles}: props) => {
   const {acceptedFiles, getRootProps, getInputProps} = useDropzone();
 
 
-  const files = attachedFiles.map((file: any) => {
+  const files = attachedFiles.map((file: File) => {
     const reader = new FileReader()
 
     reader.onabort = () => console.log('file reading was aborted')
     reader.onerror = () => console.log('file reading has failed')
     reader.onload = () => {
-    // Do whatever you want with the file contents
-      const binaryStr = reader.result
-      console.log(binaryStr)
+      const result = reader.result
+      console.log(result)
     }
-    reader.readAsArrayBuffer(file)    
+    reader.readAsDataURL(file)    
     
     return (
       <li
         className='flex gap-2 px-2 py-1 rounded-md border-2 broder-slate-200 w-fit my-2' 
-        key={file.path}>
+        key={file.name}>
         {file.name}
         <button onClick={() => removeAttachedFile(file.name)} type='button'>
           <XMarkIcon className='w-4 opacity-70 hover:opacity-100'/>
@@ -58,6 +57,11 @@ const AttachmentDropzone = ({attachedFiles, updateAttachedFiles}: props) => {
         </div>
       </div>
       <ul>
+        {/* {
+          files.map((file, key) => (
+            <li>{file.name}</li>
+          ))
+        } */}
         {files}
       </ul>
     </div>

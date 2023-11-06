@@ -100,7 +100,6 @@ const Topbar = (props: Props) => {
           ? "bg-[#fefefe]"
           : "bg-transparent"
       } z-20 transition-all bg-white`}
-      // style={{ zIndex: "900" }}
     >
       <Link
         href={"/"}
