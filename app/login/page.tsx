@@ -69,8 +69,8 @@ const Login = (props: Props) => {
   }, [user, router]);
 
   return (
-    <div className="formShadow relative w-screen h-screen flex items-center justify-center">
-      <div className="absolute h-screen w-screen flex items-center justify-center z-[-1000]">
+    <div className="relative w-screen h-screen flex items-center justify-center">
+      <div className="absolute h-screen w-screen flex items-center justify-center z-0">
         <Image
           src={ShawU}
           alt="logo"
@@ -85,18 +85,18 @@ const Login = (props: Props) => {
           type={alertMessage.type}
         />
       )}
-      <div className="h-[33rem] w-[20rem] md:h-[35rem] md:w-[26rem] flex flex-col items-center justify-between bg-[#fefefe] rounded-xl">
-        <div className="h-auto w-full flex items-center justify-center mt-4">
+      <div className="h-[33rem] w-[20rem] md:h-[35rem] md:w-[26rem] flex flex-col items-center justify-between bg-[#fefefe] rounded-xl z-50">
+        <div className="h-2/6 w-full flex items-center justify-center">
           <Image src={logo} alt="logo" className="w-4/6 h-auto" priority />
         </div>
-        <div className="h-auto w-full flex flex-col items-center justify-center text-3xl sm:text-4xl text-[#8c2333] font-sans font-bold">
+        <div className="h-1/6 w-full flex flex-col items-center justify-start text-3xl sm:text-4xl text-[#8c2333] font-sans font-bold">
           <h1>Department of</h1>
           <div>Computer Science</div>
         </div>
         <div className="h-3/6 w-full flex flex-col items-center justify-center gap-8 bg-[#8c2333] rounded-b-xl">
           <form
             onSubmit={handleLogin}
-            className="w-5/6 flex flex-col items-center justify-center gap-6"
+            className="w-5/6 flex flex-col items-center justify-center gap-6 rounded-b-xl"
           >
             <label htmlFor="logEmail" className="group w-full flex">
               <input
