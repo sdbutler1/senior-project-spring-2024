@@ -32,6 +32,7 @@ import {
 } from "react-icons/md";
 import { BiLink } from "react-icons/bi";
 import { FaBuildingColumns } from "react-icons/fa6";
+import { SiGoogleclassroom } from "react-icons/si";
 
 const SideBar = () => {
   const { isSidebarOpen, isSidebarHidden, toggleSideBar, HideSideBar } =
@@ -140,6 +141,50 @@ const SideBar = () => {
           </li>
         </Link>
         <Link
+          href={"/student"}
+          className={`relative h-[3.5rem] w-full flex items-center justify-center rounded-md hover:text-[#f4b461] ${
+            currentPathname === ""
+              ? "bg-[#6e1d2a9f] text-[#f4b461]"
+              : undefined
+          }`}
+        >
+          <li
+            className={`absolute left-0 h-full w-full flex items-center text-[1.4rem] ${
+              isSidebarOpen ? "justify-start pl-6" : "justify-center pl-0"
+            } `}
+          >
+            <SiGoogleclassroom />
+          </li>
+          <li
+            className={`absolute right-0 h-full w-full flex items-center justify-center text-[1.1rem] whitespace-nowrap pr-[1.5rem] ${
+              isSidebarOpen ? "opacity-100 delay-200" : "opacity-0"
+            } transition-opacity `}
+          >
+            Classes
+          </li>
+        </Link>
+        <Link
+          href={""}
+          className={`relative h-[3.5rem] w-full flex items-center justify-center rounded-md hover:text-[#f4b461] ${
+            currentPathname === "" ? "bg-[#6e1d2a9f] text-[#f4b461]" : undefined
+          }`}
+        >
+          <li
+            className={`absolute left-0 h-full w-full flex items-center text-[1.4rem] ${
+              isSidebarOpen ? "justify-start pl-6" : "justify-center pl-0"
+            } `}
+          >
+            <MdCalendarToday />
+          </li>
+          <li
+            className={`absolute right-0 h-full w-full flex items-center justify-center text-[1.1rem] whitespace-nowrap pr-4 ${
+              isSidebarOpen ? "opacity-100 delay-200" : "opacity-0"
+            } transition-opacity `}
+          >
+            Calendar
+          </li>
+        </Link>
+        <Link
           href={""}
           className={`relative h-[3.5rem] w-full invisible flex items-center justify-center rounded-md text-[#fefefe93] ${
             currentPathname === "" ? "bg-[#6e1d2a9f] text-[#f4b461]" : undefined
@@ -181,27 +226,6 @@ const SideBar = () => {
             } transition-opacity `}
           >
             Research
-          </li>
-        </Link>
-        <Link
-          href={""}
-          className={`relative h-[3.5rem] w-full invisible flex items-center justify-center rounded-md text-[#fefefe93] ${
-            currentPathname === "" ? "bg-[#6e1d2a9f] text-[#f4b461]" : undefined
-          }`}
-        >
-          <li
-            className={`absolute left-0 h-full w-full flex items-center text-[1.4rem] ${
-              isSidebarOpen ? "justify-start pl-6" : "justify-center pl-0"
-            } `}
-          >
-            <MdCalendarToday />
-          </li>
-          <li
-            className={`absolute right-0 h-full w-full flex items-center justify-center text-[1.1rem] whitespace-nowrap pr-4 ${
-              isSidebarOpen ? "opacity-100 delay-200" : "opacity-0"
-            } transition-opacity `}
-          >
-            Calendar
           </li>
         </Link>
         <Link
