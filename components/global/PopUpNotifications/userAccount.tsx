@@ -22,7 +22,7 @@ import { FaUserLock } from "react-icons/fa6";
 
 type Props = {};
 
-const userProfile = (props: Props) => {
+const UserAccount = (props: Props) => {
   const { logout, user } = useAuth();
   const currentPathname = usePathname();
   const { isPopUpOpen1, isPopUpOpen2, setPopUpOpen1, setPopUpOpen2 } = usePopUpStore();
@@ -92,7 +92,7 @@ const userProfile = (props: Props) => {
             <p className="w-full">User not found</p>
           )}
           <Link
-            href={"/userProfile"}
+            href={"/U"}
             className={`popUpClick h-10 w-full ${
               currentUser ? "flex" : "hidden"
             } items-center justify-center text-[#7d1f2e] font-semibold border-2 border-[#7d1f2e] rounded-3xl`}
@@ -155,4 +155,4 @@ const userProfile = (props: Props) => {
   );
 };
 
-export default userProfile;
+export default UserAccount;
