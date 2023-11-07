@@ -48,7 +48,6 @@ const DataTable = (props: Props) => {
       );
     },
   };
-
   return (
     <div className="dataTable w-full max-h-[90%] overflow-y-auto">
       <DataGrid

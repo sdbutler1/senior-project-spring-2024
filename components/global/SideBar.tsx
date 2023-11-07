@@ -41,9 +41,6 @@ const SideBar = () => {
   const { logout } = useAuth();
   const router = useRouter();
 
-  if (currentPathname === "/login" || currentPathname === "/forgotPassword") {
-    return null;
-  }
   return (
     <div
       className={`fixed bottom-0 left-0 h-[calc(100%-5rem)] ${

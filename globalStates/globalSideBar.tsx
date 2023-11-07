@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist, devtools } from "zustand/middleware";
-// Define your state shape and initial values
+
 interface SideBarState {
   isSidebarOpen: boolean;
   isSidebarHidden: boolean;

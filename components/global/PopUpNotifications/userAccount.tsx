@@ -13,7 +13,7 @@ import usePopUpStore from "@/globalStates/globalPopUp";
 import { useAuth } from "@/context/AuthContext";
 
 // assets
-import { UserList } from "@/components/global/topbar/UserList";
+import UserList from "@/components/global/topbar/UserList";
 
 // Icons
 import { AiOutlineClose } from "react-icons/ai";
@@ -25,7 +25,8 @@ type Props = {};
 const UserAccount = (props: Props) => {
   const { logout, user } = useAuth();
   const currentPathname = usePathname();
-  const { isPopUpOpen1, isPopUpOpen2, setPopUpOpen1, setPopUpOpen2 } = usePopUpStore();
+  const { isPopUpOpen1, isPopUpOpen2, setPopUpOpen1, setPopUpOpen2 } =
+    usePopUpStore();
   let currentUser:
     | {
         id: number;
@@ -38,8 +39,10 @@ const UserAccount = (props: Props) => {
     | undefined;
 
   if (user && user.email) {
-    currentUser = UserList.find((u) => u.email === user.email);
+    const userList = UserList();
+    currentUser = userList.find((u: { email: any }) => u.email === user.email);
   }
+  
   const closePopUp = () => {
     setPopUpOpen1(false);
   };
@@ -73,7 +76,7 @@ const UserAccount = (props: Props) => {
               <Image
                 src={currentUser.photo}
                 alt={`${currentUser.firstName} ${currentUser.lastName}`}
-                className="h-16 w-16"
+                className="h-16 w-16 rounded-full"
               />
               <div className="flex flex-col items-start justify-start gap-1">
                 <p className="text-[#7d1f2e] font-semibold">
@@ -92,7 +95,7 @@ const UserAccount = (props: Props) => {
             <p className="w-full">User not found</p>
           )}
           <Link
-            href={"/U"}
+            href={"/userProfile"}
             className={`popUpClick h-10 w-full ${
               currentUser ? "flex" : "hidden"
             } items-center justify-center text-[#7d1f2e] font-semibold border-2 border-[#7d1f2e] rounded-3xl`}
@@ -115,19 +118,18 @@ const UserAccount = (props: Props) => {
                 <MdPrivacyTip className="text-lg" />
                 <div>Privacy Policy</div>
               </Link>
-              <Link
-                href={""}
+              <button
                 onClick={toggleHelp}
                 className="popUpClick h-auto w-full flex items-center justify-start gap-4 text-[15px] text-[#fff] px-4"
               >
-                <MdHelp className="text-lg"/>
+                <MdHelp className="text-lg" />
                 <div>Help</div>
-              </Link>
+              </button>
               <Link
                 href={"/forgotPassword"}
                 className="popUpClick h-auto w-full flex items-center justify-start gap-4 text-[15px] text-[#fff] px-4"
               >
-                <FaUserLock className="text-lg"/>
+                <FaUserLock className="text-lg" />
                 <div>Reset Password</div>
               </Link>
             </div>
@@ -138,7 +140,7 @@ const UserAccount = (props: Props) => {
               href={"/login"}
               className="popUpClick h-8 w-full flex items-center justify-start gap-4 p-4 text-[15px] text-[#fff] font-medium"
             >
-              <MdLogout className="text-lg"/>
+              <MdLogout className="text-lg" />
               <button
                 type="button"
                 onClick={() => {

@@ -181,8 +181,7 @@ body {
 .pieChartBox .options {
   width: 100%;
   display: flex;
-  justify-content: space-between;
-  gap: 30px;
+  gap: 20px;
   font-size: 14px;
 }
 

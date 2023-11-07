@@ -68,7 +68,7 @@ const Dashboard = (props: Props) => {
           <div className="formShadow h-3/4 w-full flex flex-col items-center justify-center">
             <PieChartBox />
           </div>
-          <div className="formShadow h-1/4 w-full flex flex-col items-center justify-center">
+          <div className="formShadow h-1/4 w-full flex flex-col items-center justify-center overflow-hidden">
             <BarChartBox {...barChartBoxRevenue} />
           </div>
         </div>

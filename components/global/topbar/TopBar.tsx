@@ -3,11 +3,11 @@
 // react components
 import React, { useEffect } from "react";
 import Image, { StaticImageData } from "next/image";
-import { usePathname } from "next/navigation";
 import Link from "next/link";
 
 // components
 import { useAuth } from "@/context/AuthContext";
+import UserList from "@/components/global/topbar/UserList";
 
 // global states
 import { globalSideBar } from "@/globalStates/globalSideBar";
@@ -15,7 +15,6 @@ import usePopUpStore from "@/globalStates/globalPopUp";
 
 // assets
 import logo from "@/public/assets/shaw.png";
-import { UserList } from "@/components/global/topbar/UserList";
 
 // Icons
 import { HiMenu } from "react-icons/hi";
@@ -24,7 +23,6 @@ import { GoTriangleDown } from "react-icons/go";
 type Props = {};
 
 const Topbar = (props: Props) => {
-  const currentPathname = usePathname();
   const { user } = useAuth();
   let currentUser:
     | {
@@ -38,10 +36,11 @@ const Topbar = (props: Props) => {
     | undefined;
   const { isSidebarOpen, isSidebarHidden, toggleSideBar, HideSideBar } =
     globalSideBar();
-  const { isPopUpOpen1, setPopUpOpen1 } = usePopUpStore();
+  const { isPopUpOpen1, setPopUpOpen1, setPopUpOpen2 } = usePopUpStore();
 
   if (user && user.email) {
-    currentUser = UserList.find((u) => u.email === user.email);
+    const userList = UserList();
+    currentUser = userList.find((u: { email: any }) => u.email === user.email);
   }
 
   const togglePopUp = (popupNumber: number) => {
@@ -51,10 +50,11 @@ const Topbar = (props: Props) => {
   useEffect(() => {
     const closePopupsOnOutsideClick = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
-      if (
-        (!target.closest(".topbarPopup") && !target.closest(".popup")) ||
-        target.closest(".popUpClick")
-      ) {
+      if (!target.closest(".topbarPopup") && !target.closest(".popup")) {
+        setPopUpOpen1(false);
+        setPopUpOpen2(false);
+      }
+      if (target.closest(".popUpClick")) {
         setPopUpOpen1(false);
       }
     };
@@ -62,11 +62,8 @@ const Topbar = (props: Props) => {
     return () => {
       document.removeEventListener("click", closePopupsOnOutsideClick);
     };
-  }, [isPopUpOpen1, setPopUpOpen1]);
+  }, [isPopUpOpen1, setPopUpOpen1, setPopUpOpen2]);
 
-  if (currentPathname === "/login" || currentPathname === "/forgotPassword") {
-    return null;
-  }
   return (
     <div className="w-full flex items-center justify-between bg-[#fefefe] border-b border-slate-100">
       <Link
@@ -80,7 +77,6 @@ const Topbar = (props: Props) => {
           priority
         />
       </Link>
-
       <div className="h-full w-auto flex items-center justify-end gap-4 lg:gap-10 pr-2 lg:pr-8">
         <button
           type="button"
@@ -88,20 +84,18 @@ const Topbar = (props: Props) => {
           className="relative flex items-center justify-center"
         >
           {currentUser ? (
-            <div className="flex items-center justify-center">
+            <div className="flex items-center justify-center gap-2">
               <Image
                 src={currentUser.photo}
                 alt={`${currentUser.firstName} ${currentUser.lastName}`}
-                className="h-12 w-12"
+                className="h-8 w-8 rounded-full"
               />
               <div className="flex items-center justify-center gap-1">
                 <p className=" font-semibold">
                   {currentUser.title} {currentUser.firstName}{" "}
                   {currentUser.lastName}
                 </p>
-                <GoTriangleDown
-                  className="text-2xl text-[#7d1f2e] flex"
-                />
+                <GoTriangleDown className="text-2xl text-[#7d1f2e] flex" />
               </div>
             </div>
           ) : (
@@ -109,7 +103,7 @@ const Topbar = (props: Props) => {
           )}
         </button>
         <div
-          className={`cursor-pointer ${isSidebarOpen ? "hidden" : "flex"}`}
+          className={`cursor-pointer ${isSidebarHidden ? "hidden" : "flex"}`}
           onClick={() =>
             !isSidebarOpen && isSidebarHidden
               ? toggleSideBar()

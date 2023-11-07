@@ -5,7 +5,7 @@ import React from "react";
 import { usePathname } from "next/navigation";
 
 // icons
-import { AiOutlineClose, AiOutlineSetting } from "react-icons/ai";
+import { AiOutlineClose } from "react-icons/ai";
 
 // global states
 import usePopUpStore from "@/globalStates/globalPopUp";
@@ -27,7 +27,6 @@ const Help = (props: Props) => {
 
   return (
     <div
-      id="popup"
       className={`topbarPopup absolute top-60 left-[40%] h-[40rem] w-[40rem] flex-col items-center justify-start gap-2 text-black bg-[#fefefe] border rounded-2xl mr-8 ${
         isPopUpOpen2 ? "flex" : "hidden"
       }`}
@@ -35,7 +34,6 @@ const Help = (props: Props) => {
       <div className="h-[2.5rem] w-full flex items-center justify-between p-6">
         <h1 className="text-xl font-bold tracking-wider">Help</h1>
         <div className="flex items-center justify-center gap-4">
-          <AiOutlineSetting className="cursor-pointer" />
           <AiOutlineClose className="cursor-pointer" onClick={closePopUp} />
         </div>
       </div>
