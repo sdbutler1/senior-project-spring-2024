@@ -18,7 +18,7 @@ import TopBar from "@/components/global/topbar/TopBar";
 import Providers from "@/context/providers";
 import { AuthContextProvider } from "@/context/AuthContext";
 import PageWrapper from "@/components/global/PageWrapper";
-import PopUp from "@/components/global/PopUpNotifications/userProfile";
+import PopUp from "@/components/global/PopUpNotifications/userAccount";
 import Help from "@/components/global/PopUpNotifications/help";
 
 export default function RootLayout({
