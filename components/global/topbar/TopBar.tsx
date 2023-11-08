@@ -1,48 +1,28 @@
-"use client";
-
-// react components
 import React, { useEffect } from "react";
-import Image, { StaticImageData } from "next/image";
+import Image from "next/image";
 import Link from "next/link";
 
-// components
-import { useAuth } from "@/context/AuthContext";
-import UserList from "@/components/global/topbar/UserList";
-
 // global states
-import { globalSideBar } from "@/globalStates/globalSideBar";
+import { useGlobalSideBar } from "@/globalStates/useGlobalSideBar";
 import usePopUpStore from "@/globalStates/globalPopUp";
+
+//components
+import CurrentUser from "@/components/global/CurrentUser";
+import { useAuth } from "@/context/AuthContext";
 
 // assets
 import logo from "@/public/assets/shaw.png";
 
-// Icons
+
+// icons
 import { HiMenu } from "react-icons/hi";
 import { GoTriangleDown } from "react-icons/go";
 
-type Props = {};
-
-const Topbar = (props: Props) => {
+const Topbar = () => {
+  const currentUser = CurrentUser({});
   const { user } = useAuth();
-  let currentUser:
-    | {
-        id: number;
-        photo: StaticImageData;
-        email: string;
-        title: string;
-        firstName: string;
-        lastName: string;
-      }
-    | undefined;
-  const { isSidebarOpen, isSidebarHidden, toggleSideBar, HideSideBar } =
-    globalSideBar();
+  const { isSidebarOpen, isSidebarHidden, toggleSideBar, HideSideBar } = useGlobalSideBar();
   const { isPopUpOpen1, setPopUpOpen1, setPopUpOpen2 } = usePopUpStore();
-
-  if (user && user.email) {
-    const userList = UserList();
-    currentUser = userList.find((u: { email: any }) => u.email === user.email);
-  }
-
   const togglePopUp = (popupNumber: number) => {
     setPopUpOpen1(popupNumber === 1);
   };
@@ -66,10 +46,7 @@ const Topbar = (props: Props) => {
 
   return (
     <div className="w-full flex items-center justify-between bg-[#fefefe] border-b border-slate-100">
-      <Link
-        href={"/"}
-        className="h-20 w-64 flex items-center sm:justify-center px-2 cursor-pointer"
-      >
+      <Link href={"/"} className="h-20 w-64 flex items-center sm:justify-center px-2 cursor-pointer">
         <Image
           src={logo}
           alt="logo"
@@ -86,14 +63,15 @@ const Topbar = (props: Props) => {
           {currentUser ? (
             <div className="flex items-center justify-center gap-2">
               <Image
-                src={currentUser.photo}
+                src={currentUser.currentPhoto}
+                width={50}
+                height={50}
                 alt={`${currentUser.firstName} ${currentUser.lastName}`}
                 className="h-8 w-8 rounded-full"
               />
               <div className="flex items-center justify-center gap-1">
-                <p className=" font-semibold">
-                  {currentUser.title} {currentUser.firstName}{" "}
-                  {currentUser.lastName}
+                <p className="font-semibold">
+                  {currentUser.title} {currentUser.firstName} {currentUser.lastName}
                 </p>
                 <GoTriangleDown className="text-2xl text-[#7d1f2e] flex" />
               </div>
@@ -107,9 +85,7 @@ const Topbar = (props: Props) => {
           onClick={() =>
             !isSidebarOpen && isSidebarHidden
               ? toggleSideBar()
-              : !isSidebarOpen &&
-                !isSidebarHidden &&
-                (toggleSideBar(), HideSideBar())
+              : !isSidebarOpen && !isSidebarHidden && (toggleSideBar(), HideSideBar())
           }
         >
           <li className="h-full w-full flex items-center justify-center">

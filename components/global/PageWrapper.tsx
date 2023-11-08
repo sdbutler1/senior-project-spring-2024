@@ -11,12 +11,16 @@ import SideBar from "@/components/global/SideBar";
 import TopBar from "@/components/global/topbar/TopBar";
 
 // global states
-import { globalSideBar } from "@/globalStates/globalSideBar";
+import { useGlobalSideBar } from "@/globalStates/useGlobalSideBar";
 
 function PageWrapper({ children }: { children: React.ReactNode }) {
   const currentPathname = usePathname();
   const allowedPages = ["/dashboard", "/userProfile", "/student", "/"];
-  const { isSidebarOpen, isSidebarHidden } = globalSideBar();
+  const { isSidebarOpen, isSidebarHidden } = useGlobalSideBar();
+
+  if (currentPathname === "/login" || currentPathname === "/forgotPassword") {
+    return <>{children}</>;
+  }
   return (
     <>
       <div className="fixed top-0 left-0 h-auto w-full flex flex-col items-end justify-center gap-4 z-20">

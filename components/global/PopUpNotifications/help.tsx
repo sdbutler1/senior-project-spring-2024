@@ -37,30 +37,73 @@ const Help = (props: Props) => {
           <AiOutlineClose className="cursor-pointer" onClick={closePopUp} />
         </div>
       </div>
-      <form className="h-full w-11/12 flex flex-col items-center justify-start gap-4 text-[14px] font-semibold">
+      <form
+        id="help"
+        className="h-full w-11/12 flex flex-col items-center justify-start gap-4 text-[14px] font-semibold"
+      >
         <div className="h-auto w-full flex items-center justify-center gap-10">
-          <label className="h-auto w-full flex flex-col items-start justify-center">
+          <label
+            htmlFor="title"
+            className="h-auto w-full flex flex-col items-start justify-center"
+          >
             Title
-            <input className="h-12 w-full flex flex-col items-center justify-center border rounded-md" />
+            <input
+              id="title"
+              name="title"
+              autoComplete="on"
+              className="h-12 w-full flex flex-col items-center justify-center border rounded-md"
+            />
           </label>
-          <label className="h-auto w-full flex flex-col items-start justify-center">
+          <label
+            htmlFor="fullName"
+            className="h-auto w-full flex flex-col items-start justify-center"
+          >
             Full Name
-            <input className="h-12 w-full flex flex-col items-center justify-center border rounded-md" />
+            <input
+              id="fullName"
+              name="fullName"
+              autoComplete="on"
+              className="h-12 w-full flex flex-col items-center justify-center border rounded-md"
+            />
           </label>
         </div>
         <div className="h-auto w-full flex items-center justify-center gap-10">
-          <label className="h-auto w-full flex flex-col items-start justify-center">
+          <label
+            htmlFor="email"
+            className="h-auto w-full flex flex-col items-start justify-center"
+          >
             Email
-            <input className="h-12 w-full flex flex-col items-center justify-center border rounded-md" />
+            <input
+              id="email"
+              name="email"
+              autoComplete="on"
+              className="h-12 w-full flex flex-col items-center justify-center border rounded-md"
+            />
           </label>
-          <label className="h-auto w-full flex flex-col items-start justify-center">
+          <label
+            htmlFor="phoneNum"
+            className="h-auto w-full flex flex-col items-start justify-center"
+          >
             Phone Number
-            <input className="h-12 w-full flex flex-col items-center justify-center border rounded-md" />
+            <input
+              id="phoneNum"
+              name="phoneNum"
+              autoComplete="on"
+              className="h-12 w-full flex flex-col items-center justify-center border rounded-md"
+            />
           </label>
         </div>
-        <label className="h-4/6 w-full flex flex-col items-start justify-center">
+        <label
+          htmlFor="message"
+          className="h-4/6 w-full flex flex-col items-start justify-center"
+        >
           Message
-          <input className="h-full w-full flex flex-col items-center justify-center border rounded-md" />
+          <input
+            id="message"
+            name="message"
+            autoComplete="off"
+            className="h-full w-full flex flex-col items-center justify-center border rounded-md"
+          />
         </label>
       </form>
       <div className="h-auto w-full flex items-center justify-center py-3">

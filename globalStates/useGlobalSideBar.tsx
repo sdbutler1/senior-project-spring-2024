@@ -8,7 +8,7 @@ interface SideBarState {
   HideSideBar: () => void;
 }
 
-export const globalSideBar = create<SideBarState>()(
+export const useGlobalSideBar = create<SideBarState>()(
   devtools(
     persist(
       (set) => ({

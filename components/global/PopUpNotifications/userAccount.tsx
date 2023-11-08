@@ -8,12 +8,13 @@ import Image, { StaticImageData } from "next/image";
 
 // global states
 import usePopUpStore from "@/globalStates/globalPopUp";
+import globalUserPhoto from "@/globalStates/globalUserPhoto";
 
 // components
 import { useAuth } from "@/context/AuthContext";
+import CurrentUser from "@/components/global/CurrentUser";
 
 // assets
-import UserList from "@/components/global/topbar/UserList";
 
 // Icons
 import { AiOutlineClose } from "react-icons/ai";
@@ -23,26 +24,13 @@ import { FaUserLock } from "react-icons/fa6";
 type Props = {};
 
 const UserAccount = (props: Props) => {
-  const { logout, user } = useAuth();
+  const { logout } = useAuth();
   const currentPathname = usePathname();
-  const { isPopUpOpen1, isPopUpOpen2, setPopUpOpen1, setPopUpOpen2 } =
+  const currentUser = CurrentUser({});
+  const { currentPhotoState, addPhotoState } = globalUserPhoto();
+  const { isPopUpOpen1, setPopUpOpen1, setPopUpOpen2 } =
     usePopUpStore();
-  let currentUser:
-    | {
-        id: number;
-        photo: StaticImageData;
-        email: string;
-        title: string;
-        firstName: string;
-        lastName: string;
-      }
-    | undefined;
 
-  if (user && user.email) {
-    const userList = UserList();
-    currentUser = userList.find((u: { email: any }) => u.email === user.email);
-  }
-  
   const closePopUp = () => {
     setPopUpOpen1(false);
   };
@@ -74,7 +62,9 @@ const UserAccount = (props: Props) => {
           {currentUser ? (
             <div className="h-auto w-full flex items-center justify-start gap-3">
               <Image
-                src={currentUser.photo}
+                src={currentUser.currentPhoto}
+                width={50}
+                height={50}
                 alt={`${currentUser.firstName} ${currentUser.lastName}`}
                 className="h-16 w-16 rounded-full"
               />

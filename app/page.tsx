@@ -5,13 +5,11 @@ import React, { useEffect } from 'react'
 import { useRouter } from "next/navigation";
 
 // global states
-import { globalSideBar } from "../globalStates/globalSideBar";
 
 //components
 import { useAuth } from "@/context/AuthContext";
 
 export default function Home() {
-  const { isSidebarOpen, isSidebarHidden } = globalSideBar();
   const { user } = useAuth();
   const router = useRouter();
 

@@ -29,9 +29,7 @@ export default function RootLayout({
         <Providers>
           <div className="relative h-screen w-screen flex flex-col items-center justify-center">
             <AuthContextProvider>
-              <div className="relative h-full w-full flex items-center justify-center">
                 <PageWrapper>{children}</PageWrapper>
-              </div>
             </AuthContextProvider>
           </div>
         </Providers>

@@ -8,7 +8,7 @@ import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 
 // global states
-import { globalSideBar } from "../../globalStates/globalSideBar";
+import { useGlobalSideBar } from "../../globalStates/useGlobalSideBar";
 
 //components
 import ThemeSwitcher from "./ThemeSwitcher";
@@ -36,7 +36,7 @@ import { SiGoogleclassroom } from "react-icons/si";
 
 const SideBar = () => {
   const { isSidebarOpen, isSidebarHidden, toggleSideBar, HideSideBar } =
-    globalSideBar();
+    useGlobalSideBar();
   const currentPathname = usePathname();
   const { logout } = useAuth();
   const router = useRouter();
@@ -140,9 +140,7 @@ const SideBar = () => {
         <Link
           href={"/student"}
           className={`relative h-[3.5rem] w-full flex items-center justify-center rounded-md hover:text-[#f4b461] ${
-            currentPathname === ""
-              ? "bg-[#6e1d2a9f] text-[#f4b461]"
-              : undefined
+            currentPathname === "" ? "bg-[#6e1d2a9f] text-[#f4b461]" : undefined
           }`}
         >
           <li
