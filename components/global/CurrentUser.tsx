@@ -23,10 +23,10 @@ const CurrentUser = (props: Props) => {
   const { user } = useAuth();
   const [userData, setUserData] = React.useState<UserData | null>(null);
 
-  if (user) {
-    const docRef = doc(db, "authUsers", `${user.uid}`);
+  React.useEffect(() => {
+    if (user) {
+      const docRef = doc(db, "authUsers", `${user.uid}`);
 
-    React.useEffect(() => {
       const fetchData = async () => {
         try {
           const docSnapshot = await getDoc(docRef);
@@ -40,9 +40,10 @@ const CurrentUser = (props: Props) => {
           console.error("Error fetching document:", error);
         }
       };
+
       fetchData();
-    }, [docRef]);
-  }
+    }
+  }, [user]);
 
   return userData;
 };

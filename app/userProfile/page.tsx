@@ -1,7 +1,7 @@
 "use client";
 
 // react components
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { updateProfile, User } from "firebase/auth";
@@ -68,39 +68,41 @@ const Page = (props: Props) => {
     }
   };
 
-  const uploadNewPhoto = async (
-    file: File,
-    currentUser: User,
-    setLoading: {
-      (value: React.SetStateAction<boolean>): void;
-      (arg0: boolean): void;
-    }
-  ) => {
-    const fileRef = ref(
-      storage,
-      "emailImages/" + randomstring.generate() + ".png"
-    );
+  const uploadNewPhoto = useCallback(
+    async (
+      file: File,
+      currentUser: User,
+      setLoading: {
+        (value: React.SetStateAction<boolean>): void;
+      }
+    ) => {
+      const fileRef = ref(
+        storage,
+        "emailImages/" + randomstring.generate() + ".png"
+      );
 
-    setLoading(true);
-    try {
-      const snapshot = await uploadBytes(fileRef, file);
-      const photoURL = await getDownloadURL(fileRef);
-      setTimeout(() => {
-        updateProfile(currentUser, { photoURL });
-      }, 1000);
-      setLoading(false);
-      showTranslateAlert(true, "New photo added successfully", "success");
-    } catch (error) {
-      setLoading(false);
-      showTranslateAlert(true, "Error uploading photo", "error");
-    }
-  };
+      setLoading(true);
+      try {
+        const snapshot = await uploadBytes(fileRef, file);
+        const photoURL = await getDownloadURL(fileRef);
+        setTimeout(() => {
+          updateProfile(currentUser, { photoURL });
+        }, 1000);
+        setLoading(false);
+        showTranslateAlert(true, "New photo added successfully", "success");
+      } catch (error) {
+        setLoading(false);
+        showTranslateAlert(true, "Error uploading photo", "error");
+      }
+    },
+    [storage]
+  );
 
   useEffect(() => {
     if (photo) {
       uploadNewPhoto(photo, user, setLoading);
     }
-  }, [photo]);
+  }, [photo, uploadNewPhoto, user]);
 
   const handleSetEmailPhoto = async () => {
     try {
