@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist, devtools } from "zustand/middleware";
-// Define your state shape and initial values
+
 interface SideBarState {
   isSidebarOpen: boolean;
   isSidebarHidden: boolean;
@@ -8,7 +8,7 @@ interface SideBarState {
   HideSideBar: () => void;
 }
 
-export const globalSideBar = create<SideBarState>()(
+export const useGlobalSideBar = create<SideBarState>()(
   devtools(
     persist(
       (set) => ({

@@ -13,13 +13,10 @@ export const metadata: Metadata = {
 import "../styles/globals.css";
 
 // components
-import SideBar from "@/components/global/SideBar";
-import TopBar from "@/components/global/topbar/TopBar";
 import Providers from "@/context/providers";
 import { AuthContextProvider } from "@/context/AuthContext";
 import PageWrapper from "@/components/global/PageWrapper";
-import PopUp from "@/components/global/PopUpNotifications/userAccount";
-import Help from "@/components/global/PopUpNotifications/help";
+
 
 export default function RootLayout({
   children,
@@ -32,17 +29,7 @@ export default function RootLayout({
         <Providers>
           <div className="relative h-screen w-screen flex flex-col items-center justify-center">
             <AuthContextProvider>
-              <div className="fixed top-0 left-0 h-auto w-full flex flex-col items-end justify-center gap-4 z-20">
-                <TopBar />
-                <div>
-                  <PopUp />
-                  <Help />
-                </div>
-              </div>
-              <div className="relative h-full w-full flex items-center justify-center">
-                <SideBar />
                 <PageWrapper>{children}</PageWrapper>
-              </div>
             </AuthContextProvider>
           </div>
         </Providers>

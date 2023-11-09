@@ -3,18 +3,18 @@
 // react components
 import React, { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
-import { Switch } from "@headlessui/react";
+import { Switch } from '@headlessui/react'
 
 // Icons
 import { RiMoonLine, RiSunLine } from "react-icons/ri";
 
 // global states
-import { globalSideBar } from "@/globalStates/globalSideBar";
+import { useGlobalSideBar } from "@/globalStates/useGlobalSideBar";
 
 interface ThemeSwitcherProps {}
 
 const ThemeSwitcher: React.FC<ThemeSwitcherProps> = () => {
-  const { isSidebarOpen, isSidebarHidden } = globalSideBar();
+  const { isSidebarOpen, isSidebarHidden } = useGlobalSideBar();
   const [enabled, setEnabled] = useState(false);
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();

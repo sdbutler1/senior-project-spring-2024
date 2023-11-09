@@ -89,7 +89,7 @@ const Login = (props: Props) => {
         <div className="h-2/6 w-full flex items-center justify-center">
           <Image src={logo} alt="logo" className="w-4/6 h-auto" priority />
         </div>
-        <div className="h-1/6 w-full flex flex-col items-center justify-start text-3xl sm:text-4xl text-[#8c2333] font-sans font-bold">
+        <div className="h-1/6 w-full flex flex-col items-center justify-start text-3xl sm:text-4xl text-[#8c2333] font-sans font-bold mb-1">
           <h1>Department of</h1>
           <div>Computer Science</div>
         </div>
