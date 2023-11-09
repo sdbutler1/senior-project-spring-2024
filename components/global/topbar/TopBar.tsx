@@ -63,7 +63,7 @@ const Topbar = () => {
           {currentUser ? (
             <div className="flex items-center justify-center gap-2">
               <Image
-                src={currentUser.currentPhoto}
+                src={user.photoURL}
                 width={50}
                 height={50}
                 alt={`${currentUser.firstName} ${currentUser.lastName}`}

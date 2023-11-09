@@ -4,11 +4,10 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import Image, { StaticImageData } from "next/image";
+import Image from "next/image";
 
 // global states
 import usePopUpStore from "@/globalStates/globalPopUp";
-import globalUserPhoto from "@/globalStates/globalUserPhoto";
 
 // components
 import { useAuth } from "@/context/AuthContext";
@@ -24,10 +23,9 @@ import { FaUserLock } from "react-icons/fa6";
 type Props = {};
 
 const UserAccount = (props: Props) => {
-  const { logout } = useAuth();
+  const { logout, user } = useAuth();
   const currentPathname = usePathname();
   const currentUser = CurrentUser({});
-  const { currentPhotoState, addPhotoState } = globalUserPhoto();
   const { isPopUpOpen1, setPopUpOpen1, setPopUpOpen2 } =
     usePopUpStore();
 
@@ -62,7 +60,7 @@ const UserAccount = (props: Props) => {
           {currentUser ? (
             <div className="h-auto w-full flex items-center justify-start gap-3">
               <Image
-                src={currentUser.currentPhoto}
+                src={user.photoURL}
                 width={50}
                 height={50}
                 alt={`${currentUser.firstName} ${currentUser.lastName}`}

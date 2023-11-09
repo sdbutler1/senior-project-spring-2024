@@ -11,7 +11,7 @@ import { doc, getDoc } from "firebase/firestore";
 // components
 
 interface UserData {
-  currentPhoto: string;
+  emailPhoto: string;
   firstName: string;
   lastName: string;
   title: string;

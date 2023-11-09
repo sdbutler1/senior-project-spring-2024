@@ -4,15 +4,17 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { updateProfile, User } from "firebase/auth";
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 
 // global states
-import globalUserPhoto from "@/globalStates/globalUserPhoto";
 
 // components
 import CurrentUser from "@/components/global/CurrentUser";
 import { useAuth } from "@/context/AuthContext";
 
 // assets
+var randomstring = require("randomstring");
 
 // icons
 import { MdModeEdit } from "react-icons/md";
@@ -22,36 +24,122 @@ import { BiSolidUserCircle } from "react-icons/bi";
 type Props = {};
 
 const Page = (props: Props) => {
-  const [isEditPopUp, setEditPopUp] = useState(false);
-  const [isDeletePopUp, setDeletePopUp] = useState(false);
   const currentUser = CurrentUser({});
   const { user } = useAuth();
-  const [istranslateSuccessAlert, settranslateSuccessAlert] = useState(false);
-  const [istranslateErrorAlert, settranslateErrorAlert] = useState(false);
-  const {
-    setCurrentPhoto,
-    setNoPhoto,
-  } = globalUserPhoto();
+  const storage = getStorage();
+  const [EditPopUp, setEditPopUp] = useState(false);
+  const [DeletePopUp, setDeletePopUp] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [photo, setPhoto] = useState<File | null>(null);
+  const photoInputRef = React.createRef<HTMLInputElement>();
+  const [translateAlert, setTranslateAlert] = useState({
+    isOpen: false,
+    message: "",
+    type: "",
+  });
 
-  var randomstring = require("randomstring");
+  const showTranslateAlert = (
+    isOpen: boolean,
+    message: string,
+    type: string
+  ) => {
+    setTranslateAlert({
+      isOpen,
+      message,
+      type,
+    });
 
-  const translateSuccessAlert = () => {
-    settranslateSuccessAlert(!istranslateSuccessAlert);
+    if (isOpen) {
+      setTimeout(() => {
+        setTranslateAlert({ isOpen: false, message: message, type: type });
+      }, 3000);
+    }
   };
 
-  const translateErrorAlert = () => {
-    settranslateErrorAlert(!istranslateErrorAlert);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setPhoto(e.target.files[0]);
+    }
   };
 
-      // translateErrorAlert();
-      // setTimeout(() => {
-      //   translateErrorAlert();
-      // }, 3000);
+  const handleClick = () => {
+    if (photoInputRef.current) {
+      photoInputRef.current.click();
+    }
+  };
+
+  const uploadNewPhoto = async (
+    file: File,
+    currentUser: User,
+    setLoading: {
+      (value: React.SetStateAction<boolean>): void;
+      (arg0: boolean): void;
+    }
+  ) => {
+    const fileRef = ref(
+      storage,
+      "emailImages/" + randomstring.generate() + ".png"
+    );
+
+    setLoading(true);
+    try {
+      const snapshot = await uploadBytes(fileRef, file);
+      const photoURL = await getDownloadURL(fileRef);
+      setTimeout(() => {
+        updateProfile(currentUser, { photoURL });
+      }, 1000);
+      setLoading(false);
+      showTranslateAlert(true, "New photo added successfully", "success");
+    } catch (error) {
+      setLoading(false);
+      showTranslateAlert(true, "Error uploading photo", "error");
+    }
+  };
+
+  useEffect(() => {
+    if (photo) {
+      uploadNewPhoto(photo, user, setLoading);
+    }
+  }, [photo]);
+
+  const handleSetEmailPhoto = async () => {
+    try {
+      if (currentUser) {
+        const photoURL = currentUser.emailPhoto;
+        setTimeout(() => {
+          updateProfile(user, { photoURL });
+        }, 1000);
+        showTranslateAlert(true, "Default photo set successfully", "success");
+      }
+    } catch (error) {
+      console.error("Error setting default photo:", error);
+      showTranslateAlert(
+        true,
+        `Error setting default photo: ${error}`,
+        "error"
+      );
+    }
+    setEditPopUp(false);
+  };
+
+  const handleDeletePhoto = async () => {
+    try {
+      setTimeout(() => {
+        const photoURL =
+          "https://firebasestorage.googleapis.com/v0/b/com-sci-dep-auth-project.appspot.com/o/default.png?alt=media&token=bafe0340-24ec-4083-ba7d-5bd6e3319d02";
+        updateProfile(user, { photoURL });
+      }, 1000);
+      showTranslateAlert(true, "Photo deleted successfully", "success");
+    } catch (error) {
+      console.error("Error deleting user photo:", error);
+      showTranslateAlert(true, `Error deleting user photo: ${error}`, "error");
+    }
+  };
 
   useEffect(() => {
     const closePopupsOnOutsideClick = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
-      if (isDeletePopUp === true) {
+      if (DeletePopUp === true) {
         if (!target.closest(".deletePopUp")) {
           setDeletePopUp(false);
         }
@@ -65,23 +153,20 @@ const Page = (props: Props) => {
     return () => {
       document.removeEventListener("click", closePopupsOnOutsideClick);
     };
-  }, [isEditPopUp, setEditPopUp, isDeletePopUp, setDeletePopUp]);
+  }, [EditPopUp, setEditPopUp, DeletePopUp, setDeletePopUp]);
 
   return (
     <div className="relative h-full w-full flex flex-col items-start justify-start">
       <div
-        className={`absolute top-3 left-[39%] h-[3.25rem] w-80 flex items-center justify-center text-lg font-semibold bg-[#76ec93e7] z-50 ${
-          istranslateSuccessAlert ? "translate-y-0" : "translate-y-[-450%]"
+        className={`absolute top-3 left-[39%] h-[3.25rem] w-80 flex items-center justify-center text-lg font-semibold ${
+          translateAlert.type === "success"
+            ? "bg-[#76ec93e7] text-black"
+            : "bg-[#d93966] text-white"
+        } z-50 ${
+          translateAlert.isOpen ? "translate-y-0" : "translate-y-[-450%]"
         } transition duration-700 delay-700`}
       >
-        Image Uploaded
-      </div>
-      <div
-        className={`absolute top-3 left-[39%] h-[3.25rem] w-80 flex items-center justify-center text-lg font-semibold bg-[#eb5351] z-50 ${
-          istranslateSuccessAlert ? "translate-y-0" : "translate-y-[-450%]"
-        } transition duration-700 delay-700`}
-      >
-        Error: Image unable to be uploaded
+        {translateAlert.message}
       </div>
       <div className="h-auto w-full flex flex-col items-center justify-center gap-4 -mb-4">
         <div className="h-auto w-full flex items-center justify-between text-xl font-semibold bg-[#fff] px-4 py-3 rounded-lg">
@@ -89,10 +174,11 @@ const Page = (props: Props) => {
           {currentUser ? (
             <div className="flex items-center justify-center">
               <Image
-                src={currentUser.currentPhoto}
+                src={user.photoURL}
                 width={50}
                 height={50}
                 alt={`${currentUser.firstName} ${currentUser.lastName}`}
+                priority
                 className="rounded-full"
               />
             </div>
@@ -105,15 +191,16 @@ const Page = (props: Props) => {
             <div className="relative h-auto w-auto flex items-start">
               {currentUser ? (
                 <Image
-                  src={currentUser.currentPhoto}
+                  src={user.photoURL}
                   width={120}
                   height={120}
                   alt={`${currentUser.firstName} ${currentUser.lastName}`}
+                  priority
                   className="rounded-full"
                 />
               ) : (
-            <p>User not found</p>
-          )}
+                <p>User not found</p>
+              )}
               <button
                 onClick={() => setEditPopUp(true)}
                 className="editPopUp absolute bottom-2 right-2 h-6 w-6 flex items-center justify-center text-[#fff] bg-[#7d1f2e] rounded-full"
@@ -140,7 +227,7 @@ const Page = (props: Props) => {
       </div>
       <div
         className={`editPopUp absolute top-[11.3rem] left-[28.5%] h-[24.8rem] w-[41.4rem] ${
-          isEditPopUp ? "flex" : "hidden"
+          EditPopUp ? "flex" : "hidden"
         } flex-col items-center justify-center bg-[#fff] rounded-lg border`}
       >
         <div className="h-1/6 w-full flex items-center justify-between p-8">
@@ -153,10 +240,11 @@ const Page = (props: Props) => {
         {currentUser ? (
           <div className="h-4/6 w-full flex items-center justify-center">
             <Image
-              src={currentUser.currentPhoto}
+              src={user.photoURL}
               width={100}
               height={100}
               alt={`${currentUser.firstName} ${currentUser.lastName}`}
+              priority
               className="h-48 w-48 rounded-full"
             />
           </div>
@@ -166,26 +254,30 @@ const Page = (props: Props) => {
         <div className="h-1/6 w-full flex items-center justify-between text-sm font-semibold p-8 border">
           <div className="flex items-center justify-center gap-10">
             <button
-              // onClick={openFileInput}
+              onClick={handleClick}
+              disabled={loading}
               className="flex flex-col items-center justify-center"
             >
               <AiTwotoneCamera className="text-2xl" />
               Add Photo
             </button>
             <button
-              onClick={setCurrentPhoto}
+              onClick={handleSetEmailPhoto}
               className="flex flex-col items-center justify-center"
             >
               <BiSolidUserCircle className="text-2xl" />
               Default Photo
             </button>
-            <input
-              type="file"
-              accept="image/*"
-              // ref={fileInputRef}
-              style={{ display: "none" }}
-              // onChange={handleFileInputChange}
-            />
+            <label htmlFor="fileInput">
+              <input
+                ref={photoInputRef}
+                type="file"
+                accept="image/*"
+                onChange={handleChange}
+                id="fileInput"
+                style={{ display: "none" }}
+              />
+            </label>
           </div>
           <button
             onClick={() => setDeletePopUp(true)}
@@ -198,7 +290,7 @@ const Page = (props: Props) => {
       </div>
       <div
         className={`deletePopUp absolute top-[18rem] left-[40%] h-48 w-80 ${
-          isDeletePopUp ? "flex" : "hidden"
+          DeletePopUp ? "flex" : "hidden"
         } flex-col items-center justify-center bg-[#7d1f2e] text-[#fff] rounded-lg border`}
       >
         <div className="h-2/6 w-full flex items-center justify-between p-4">
@@ -222,7 +314,7 @@ const Page = (props: Props) => {
           </button>
           <button
             onClick={() => {
-              setDeletePopUp(false), setNoPhoto();
+              setDeletePopUp(false), handleDeletePhoto();
             }}
             className="flex items-center justify-center"
           >
