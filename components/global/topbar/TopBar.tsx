@@ -23,9 +23,12 @@ const Topbar = () => {
   const { user } = useAuth();
   const { isSidebarOpen, isSidebarHidden, toggleSideBar, HideSideBar } = useGlobalSideBar();
   const { isPopUpOpen1, setPopUpOpen1, setPopUpOpen2 } = usePopUpStore();
+  const userPhotoUrl =
+  "https://firebasestorage.googleapis.com/v0/b/com-sci-dep-auth-project.appspot.com/o/default.png?alt=media&token=bafe0340-24ec-4083-ba7d-5bd6e3319d02";
   const togglePopUp = (popupNumber: number) => {
     setPopUpOpen1(popupNumber === 1);
   };
+  
 
   useEffect(() => {
     const closePopupsOnOutsideClick = (event: MouseEvent) => {
@@ -60,10 +63,10 @@ const Topbar = () => {
           onClick={() => togglePopUp(1)}
           className="relative flex items-center justify-center"
         >
-          {currentUser ? (
+          {currentUser && user ? (
             <div className="flex items-center justify-center gap-2">
               <Image
-                src={user.photoURL}
+                src={user.photoURL ? user.photoURL : userPhotoUrl}
                 width={50}
                 height={50}
                 alt={`${currentUser.firstName} ${currentUser.lastName}`}

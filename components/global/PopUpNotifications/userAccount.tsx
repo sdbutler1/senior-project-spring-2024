@@ -28,6 +28,8 @@ const UserAccount = (props: Props) => {
   const currentPathname = usePathname();
   const currentUser = CurrentUser({});
   const { isPopUpOpen1, setPopUpOpen1, setPopUpOpen2 } = usePopUpStore();
+  const userPhotoUrl =
+    "https://firebasestorage.googleapis.com/v0/b/com-sci-dep-auth-project.appspot.com/o/default.png?alt=media&token=bafe0340-24ec-4083-ba7d-5bd6e3319d02";
 
   const closePopUp = () => {
     setPopUpOpen1(false);
@@ -57,10 +59,10 @@ const UserAccount = (props: Props) => {
               <AiOutlineClose className="cursor-pointer" onClick={closePopUp} />
             </div>
           </div>
-          {currentUser ? (
+          {currentUser && user ? (
             <div className="h-auto w-full flex items-center justify-start gap-3">
               <Image
-                src={user.photoURL}
+                src={user.photoURL ? user.photoURL : userPhotoUrl}
                 width={50}
                 height={50}
                 alt={`${currentUser.firstName} ${currentUser.lastName}`}
@@ -114,7 +116,7 @@ const UserAccount = (props: Props) => {
                 <div>Help</div>
               </button>
               <Link
-                href={"/forgotPassword"}
+                href={"/userProfile"}
                 className="popUpClick h-auto w-full flex items-center justify-start gap-4 text-[15px] text-[#fff] px-4"
               >
                 <BiSolidUserDetail className="text-xl" />

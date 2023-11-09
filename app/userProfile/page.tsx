@@ -32,6 +32,9 @@ const Page = (props: Props) => {
   const [loading, setLoading] = useState(false);
   const [photo, setPhoto] = useState<File | null>(null);
   const photoInputRef = React.createRef<HTMLInputElement>();
+  const userPhotoUrl =
+    "https://firebasestorage.googleapis.com/v0/b/com-sci-dep-auth-project.appspot.com/o/default.png?alt=media&token=bafe0340-24ec-4083-ba7d-5bd6e3319d02";
+
   const [translateAlert, setTranslateAlert] = useState({
     isOpen: false,
     message: "",
@@ -127,8 +130,7 @@ const Page = (props: Props) => {
   const handleDeletePhoto = async () => {
     try {
       setTimeout(() => {
-        const photoURL =
-          "https://firebasestorage.googleapis.com/v0/b/com-sci-dep-auth-project.appspot.com/o/default.png?alt=media&token=bafe0340-24ec-4083-ba7d-5bd6e3319d02";
+        const photoURL = "";
         updateProfile(user, { photoURL });
       }, 1000);
       showTranslateAlert(true, "Photo deleted successfully", "success");
@@ -173,10 +175,10 @@ const Page = (props: Props) => {
       <div className="h-auto w-full flex flex-col items-center justify-center gap-4 -mb-4">
         <div className="h-auto w-full flex items-center justify-between text-xl font-semibold bg-[#fff] px-4 py-3 rounded-lg">
           <h1>Update Profile</h1>
-          {currentUser ? (
+          {currentUser && user ? (
             <div className="flex items-center justify-center">
               <Image
-                src={user.photoURL}
+                src={user.photoURL ? user.photoURL : userPhotoUrl}
                 width={50}
                 height={50}
                 alt={`${currentUser.firstName} ${currentUser.lastName}`}
@@ -191,9 +193,9 @@ const Page = (props: Props) => {
         <div className="h-auto w-full flex items-center justify-center">
           <div className="relative h-full w-full flex items-start justify-center">
             <div className="relative h-auto w-auto flex items-start">
-              {currentUser ? (
+              {currentUser && user ? (
                 <Image
-                  src={user.photoURL}
+                  src={user.photoURL ? user.photoURL : userPhotoUrl}
                   width={120}
                   height={120}
                   alt={`${currentUser.firstName} ${currentUser.lastName}`}
@@ -239,10 +241,10 @@ const Page = (props: Props) => {
             onClick={() => setEditPopUp(false)}
           />
         </div>
-        {currentUser ? (
+        {currentUser && user ? (
           <div className="h-4/6 w-full flex items-center justify-center">
             <Image
-              src={user.photoURL}
+              src={user.photoURL ? user.photoURL : userPhotoUrl}
               width={100}
               height={100}
               alt={`${currentUser.firstName} ${currentUser.lastName}`}
