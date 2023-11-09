@@ -19,6 +19,7 @@ import CurrentUser from "@/components/global/CurrentUser";
 import { AiOutlineClose } from "react-icons/ai";
 import { MdHelp, MdLogout, MdPrivacyTip } from "react-icons/md";
 import { FaUserLock } from "react-icons/fa6";
+import { BiSolidUserDetail } from "react-icons/bi";
 
 type Props = {};
 
@@ -26,8 +27,7 @@ const UserAccount = (props: Props) => {
   const { logout, user } = useAuth();
   const currentPathname = usePathname();
   const currentUser = CurrentUser({});
-  const { isPopUpOpen1, setPopUpOpen1, setPopUpOpen2 } =
-    usePopUpStore();
+  const { isPopUpOpen1, setPopUpOpen1, setPopUpOpen2 } = usePopUpStore();
 
   const closePopUp = () => {
     setPopUpOpen1(false);
@@ -103,21 +103,28 @@ const UserAccount = (props: Props) => {
                 href={"https://www.shawu.edu/Privacy_and_Usage_Policy2.aspx"}
                 className="popUpClick h-auto w-full flex items-center justify-start gap-4 text-[15px] text-[#fff] px-4"
               >
-                <MdPrivacyTip className="text-lg" />
+                <MdPrivacyTip className="text-xl" />
                 <div>Privacy Policy</div>
               </Link>
               <button
                 onClick={toggleHelp}
                 className="popUpClick h-auto w-full flex items-center justify-start gap-4 text-[15px] text-[#fff] px-4"
               >
-                <MdHelp className="text-lg" />
+                <MdHelp className="text-xl" />
                 <div>Help</div>
               </button>
               <Link
                 href={"/forgotPassword"}
                 className="popUpClick h-auto w-full flex items-center justify-start gap-4 text-[15px] text-[#fff] px-4"
               >
-                <FaUserLock className="text-lg" />
+                <BiSolidUserDetail className="text-xl" />
+                <div>Update Profile</div>
+              </Link>
+              <Link
+                href={"/forgotPassword"}
+                className="popUpClick h-auto w-full flex items-center justify-start gap-4 text-[15px] text-[#fff] px-4"
+              >
+                <FaUserLock className="text-[1rem]" />
                 <div>Reset Password</div>
               </Link>
             </div>

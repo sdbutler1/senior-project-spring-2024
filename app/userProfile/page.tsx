@@ -172,7 +172,7 @@ const Page = (props: Props) => {
       </div>
       <div className="h-auto w-full flex flex-col items-center justify-center gap-4 -mb-4">
         <div className="h-auto w-full flex items-center justify-between text-xl font-semibold bg-[#fff] px-4 py-3 rounded-lg">
-          <h1>Edit Profile</h1>
+          <h1>Update Profile</h1>
           {currentUser ? (
             <div className="flex items-center justify-center">
               <Image
