@@ -7,7 +7,8 @@ import { usePathname } from "next/navigation";
 import Image from "next/image";
 
 // global states
-import usePopUpStore from "@/globalStates/globalPopUp";
+import { useglobalPopUp } from "@/globalStates/useglobalPopUp";
+import { useGlobalLoading } from "@/globalStates/useGlobalLoading";
 
 // components
 import { useAuth } from "@/context/AuthContext";
@@ -27,13 +28,10 @@ const UserAccount = (props: Props) => {
   const { logout, user } = useAuth();
   const currentPathname = usePathname();
   const currentUser = CurrentUser({});
-  const { isPopUpOpen1, setPopUpOpen1, setPopUpOpen2 } = usePopUpStore();
+  const { isPopUpOpen1, setPopUpOpen1, setPopUpOpen2 } = useglobalPopUp();
+  const { setLoading2 } = useGlobalLoading();
   const userPhotoUrl =
     "https://firebasestorage.googleapis.com/v0/b/com-sci-dep-auth-project.appspot.com/o/default.png?alt=media&token=bafe0340-24ec-4083-ba7d-5bd6e3319d02";
-
-  const closePopUp = () => {
-    setPopUpOpen1(false);
-  };
 
   const toggleHelp = () => {
     setPopUpOpen2(true);
@@ -56,7 +54,10 @@ const UserAccount = (props: Props) => {
               User Acount
             </h1>
             <div className="flex items-center justify-center">
-              <AiOutlineClose className="cursor-pointer" onClick={closePopUp} />
+              <AiOutlineClose
+                className="cursor-pointer"
+                onClick={() => setPopUpOpen1(false)}
+              />
             </div>
           </div>
           {currentUser && user ? (
@@ -141,6 +142,8 @@ const UserAccount = (props: Props) => {
               <button
                 type="button"
                 onClick={() => {
+                  setPopUpOpen1(false);
+                  setLoading2(true, 0, 1000);
                   logout();
                 }}
               >

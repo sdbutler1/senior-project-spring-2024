@@ -8,18 +8,14 @@ import { usePathname } from "next/navigation";
 import { AiOutlineClose } from "react-icons/ai";
 
 // global states
-import usePopUpStore from "@/globalStates/globalPopUp";
+import {useglobalPopUp} from "@/globalStates/useglobalPopUp";
 
 type Props = {};
 
 const Help = (props: Props) => {
   const currentPathname = usePathname();
 
-  const { isPopUpOpen2, setPopUpOpen2 } = usePopUpStore();
-
-  const closePopUp = () => {
-    setPopUpOpen2(false);
-  };
+  const { isPopUpOpen2, setPopUpOpen2 } = useglobalPopUp();
 
   if (currentPathname === "/login" || currentPathname === "/forgotPassword") {
     return null;
@@ -34,7 +30,10 @@ const Help = (props: Props) => {
       <div className="h-[2.5rem] w-full flex items-center justify-between p-6">
         <h1 className="text-xl font-bold tracking-wider">Help</h1>
         <div className="flex items-center justify-center gap-4">
-          <AiOutlineClose className="cursor-pointer" onClick={closePopUp} />
+          <AiOutlineClose
+            className="cursor-pointer"
+            onClick={() => setPopUpOpen2(false)}
+          />
         </div>
       </div>
       <form
