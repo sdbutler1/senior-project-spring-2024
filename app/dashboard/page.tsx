@@ -4,6 +4,9 @@
 import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
+// global states
+import { useGlobalLoading } from "@/globalStates/useGlobalLoading";
+
 //components
 import { useAuth } from "@/context/AuthContext";
 import BarChartBox from "@/components/barChartBox/BarChartBox";
@@ -25,15 +28,16 @@ import {
 type Props = {};
 
 const Dashboard = (props: Props) => {
+  const { setLoading } = useGlobalLoading();
   const { user } = useAuth();
   const router = useRouter();
-
+  
   useEffect(() => {
     if (!user) {
       router.push("/login");
     }
   }, [router, user]);
-
+  
   return (
     <>
       <div className="h-full w-full flex items-center justify-center gap-8">

@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 
 // global states
 import { useGlobalSideBar } from "../../globalStates/useGlobalSideBar";
+import { useGlobalLoading } from "@/globalStates/useGlobalLoading";
 
 //components
 import ThemeSwitcher from "./ThemeSwitcher";
@@ -37,6 +38,7 @@ import { SiGoogleclassroom } from "react-icons/si";
 const SideBar = () => {
   const { isSidebarOpen, isSidebarHidden, toggleSideBar, HideSideBar } =
     useGlobalSideBar();
+  const { setLoading2 } = useGlobalLoading();
   const currentPathname = usePathname();
   const { logout } = useAuth();
   const router = useRouter();
@@ -138,27 +140,6 @@ const SideBar = () => {
           </li>
         </Link>
         <Link
-          href={"/student"}
-          className={`relative h-[3.5rem] w-full flex items-center justify-center rounded-md hover:text-[#f4b461] ${
-            currentPathname === "" ? "bg-[#6e1d2a9f] text-[#f4b461]" : undefined
-          }`}
-        >
-          <li
-            className={`absolute left-0 h-full w-full flex items-center text-[1.4rem] ${
-              isSidebarOpen ? "justify-start pl-6" : "justify-center pl-0"
-            } `}
-          >
-            <SiGoogleclassroom />
-          </li>
-          <li
-            className={`absolute right-0 h-full w-full flex items-center justify-center text-[1.1rem] whitespace-nowrap pr-[1.5rem] ${
-              isSidebarOpen ? "opacity-100 delay-200" : "opacity-0"
-            } transition-opacity `}
-          >
-            Classes
-          </li>
-        </Link>
-        <Link
           href={""}
           className={`relative h-[3.5rem] w-full flex items-center justify-center rounded-md hover:text-[#f4b461] ${
             currentPathname === "" ? "bg-[#6e1d2a9f] text-[#f4b461]" : undefined
@@ -177,6 +158,27 @@ const SideBar = () => {
             } transition-opacity `}
           >
             Calendar
+          </li>
+        </Link>
+        <Link
+          href={"/student"}
+          className={`relative h-[3.5rem] w-full invisible flex items-center justify-center rounded-md hover:text-[#f4b461] ${
+            currentPathname === "" ? "bg-[#6e1d2a9f] text-[#f4b461]" : undefined
+          }`}
+        >
+          <li
+            className={`absolute left-0 h-full w-full flex items-center text-[1.4rem] ${
+              isSidebarOpen ? "justify-start pl-6" : "justify-center pl-0"
+            } `}
+          >
+            <SiGoogleclassroom />
+          </li>
+          <li
+            className={`absolute right-0 h-full w-full flex items-center justify-center text-[1.1rem] whitespace-nowrap pr-[1.5rem] ${
+              isSidebarOpen ? "opacity-100 delay-200" : "opacity-0"
+            } transition-opacity `}
+          >
+            Classes
           </li>
         </Link>
         <Link
@@ -352,7 +354,8 @@ const SideBar = () => {
             <button
               type="button"
               onClick={() => {
-                logout(), router.push("/login");
+                setLoading2(true, 0, 1000);
+                logout();
               }}
             >
               Sign Out

@@ -4,7 +4,8 @@ import Link from "next/link";
 
 // global states
 import { useGlobalSideBar } from "@/globalStates/useGlobalSideBar";
-import usePopUpStore from "@/globalStates/globalPopUp";
+import { useglobalPopUp } from "@/globalStates/useglobalPopUp";
+import { useGlobalLoading } from "@/globalStates/useGlobalLoading";
 
 //components
 import CurrentUser from "@/components/global/CurrentUser";
@@ -13,22 +14,22 @@ import { useAuth } from "@/context/AuthContext";
 // assets
 import logo from "@/public/assets/shaw.png";
 
-
 // icons
 import { HiMenu } from "react-icons/hi";
 import { GoTriangleDown } from "react-icons/go";
 
 const Topbar = () => {
+  const { loading, setLoading } = useGlobalLoading();
   const currentUser = CurrentUser({});
   const { user } = useAuth();
-  const { isSidebarOpen, isSidebarHidden, toggleSideBar, HideSideBar } = useGlobalSideBar();
-  const { isPopUpOpen1, setPopUpOpen1, setPopUpOpen2 } = usePopUpStore();
+  const { isSidebarOpen, isSidebarHidden, toggleSideBar, HideSideBar } =
+    useGlobalSideBar();
+  const { isPopUpOpen1, setPopUpOpen1, setPopUpOpen2 } = useglobalPopUp();
   const userPhotoUrl =
-  "https://firebasestorage.googleapis.com/v0/b/com-sci-dep-auth-project.appspot.com/o/default.png?alt=media&token=bafe0340-24ec-4083-ba7d-5bd6e3319d02";
+    "https://firebasestorage.googleapis.com/v0/b/com-sci-dep-auth-project.appspot.com/o/default.png?alt=media&token=bafe0340-24ec-4083-ba7d-5bd6e3319d02";
   const togglePopUp = (popupNumber: number) => {
     setPopUpOpen1(popupNumber === 1);
   };
-  
 
   useEffect(() => {
     const closePopupsOnOutsideClick = (event: MouseEvent) => {
@@ -47,9 +48,16 @@ const Topbar = () => {
     };
   }, [isPopUpOpen1, setPopUpOpen1, setPopUpOpen2]);
 
+  useEffect(() => {
+    setLoading(true, 0, 1000);
+  }, [setLoading]);
+
   return (
     <div className="w-full flex items-center justify-between bg-[#fefefe] border-b border-slate-100">
-      <Link href={"/"} className="h-20 w-64 flex items-center sm:justify-center px-2 cursor-pointer">
+      <Link
+        href={"/"}
+        className="h-20 w-64 flex items-center sm:justify-center px-2 cursor-pointer"
+      >
         <Image
           src={logo}
           alt="logo"
@@ -63,8 +71,12 @@ const Topbar = () => {
           onClick={() => togglePopUp(1)}
           className="relative flex items-center justify-center"
         >
-          {currentUser && user ? (
-            <div className="flex items-center justify-center gap-2">
+          {currentUser && user && (
+            <div
+              className={`${
+                loading ? "opacity-0" : "opacity-100"
+              }  flex items-center justify-center gap-2 transition-opacity`}
+            >
               <Image
                 src={user.photoURL ? user.photoURL : userPhotoUrl}
                 width={50}
@@ -74,13 +86,12 @@ const Topbar = () => {
               />
               <div className="flex items-center justify-center gap-1">
                 <p className="font-semibold">
-                  {currentUser.title} {currentUser.firstName} {currentUser.lastName}
+                  {currentUser.title} {currentUser.firstName}{" "}
+                  {currentUser.lastName}
                 </p>
                 <GoTriangleDown className="text-2xl text-[#7d1f2e] flex" />
               </div>
             </div>
-          ) : (
-            <p>User not found</p>
           )}
         </button>
         <div
@@ -88,7 +99,9 @@ const Topbar = () => {
           onClick={() =>
             !isSidebarOpen && isSidebarHidden
               ? toggleSideBar()
-              : !isSidebarOpen && !isSidebarHidden && (toggleSideBar(), HideSideBar())
+              : !isSidebarOpen &&
+                !isSidebarHidden &&
+                (toggleSideBar(), HideSideBar())
           }
         >
           <li className="h-full w-full flex items-center justify-center">

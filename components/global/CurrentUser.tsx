@@ -11,10 +11,14 @@ import { doc, getDoc } from "firebase/firestore";
 // components
 
 interface UserData {
+  city: string;
   emailPhoto: string;
   firstName: string;
   lastName: string;
+  number: string;
+  state: string;
   title: string;
+  zipCode: string;
 }
 
 type Props = {};

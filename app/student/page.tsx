@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 // global states
-import { useGlobalSideBar } from "@/globalStates/useGlobalSideBar";
+import { useGlobalLoading } from "@/globalStates/useGlobalLoading";
 
 //components
 import { useAuth } from "@/context/AuthContext";
@@ -73,7 +73,7 @@ const columns: GridColDef[] = [
 ];
 
 const StudentTable = (props: Props) => {
-  const { isSidebarOpen, isSidebarHidden } = useGlobalSideBar();
+  const { setLoading } = useGlobalLoading();
   const { user } = useAuth();
   const router = useRouter();
   const [open, setOpen] = useState(false);
@@ -109,7 +109,7 @@ const StudentTable = (props: Props) => {
       router.push("/login");
     }
   }, [router, user]);
-
+  
   return (
     <>
       {modalShown && (

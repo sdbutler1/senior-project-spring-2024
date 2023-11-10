@@ -6,8 +6,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { updateProfile, User } from "firebase/auth";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+import { useRouter } from "next/navigation";
 
 // global states
+import { useglobalPopUp } from "@/globalStates/useglobalPopUp";
+import { useGlobalLoading } from "@/globalStates/useGlobalLoading";
 
 // components
 import CurrentUser from "@/components/global/CurrentUser";
@@ -24,12 +27,13 @@ import { BiSolidUserCircle } from "react-icons/bi";
 type Props = {};
 
 const Page = (props: Props) => {
+  const { loading, setLoading } = useGlobalLoading();
   const currentUser = CurrentUser({});
   const { user } = useAuth();
+  const router = useRouter();
   const storage = getStorage();
   const [EditPopUp, setEditPopUp] = useState(false);
   const [DeletePopUp, setDeletePopUp] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [photo, setPhoto] = useState<File | null>(null);
   const photoInputRef = React.createRef<HTMLInputElement>();
   const userPhotoUrl =
@@ -63,6 +67,7 @@ const Page = (props: Props) => {
     if (e.target.files && e.target.files[0]) {
       setPhoto(e.target.files[0]);
     }
+    setEditPopUp(false);
   };
 
   const handleClick = () => {
@@ -75,26 +80,21 @@ const Page = (props: Props) => {
     async (
       file: File,
       currentUser: User,
-      setLoading: {
-        (value: React.SetStateAction<boolean>): void;
-      }
+      setLoading: (value: boolean, delay: number, wait: number) => void
     ) => {
       const fileRef = ref(
         storage,
         "emailImages/" + randomstring.generate() + ".png"
       );
-
-      setLoading(true);
       try {
         const snapshot = await uploadBytes(fileRef, file);
         const photoURL = await getDownloadURL(fileRef);
         setTimeout(() => {
           updateProfile(currentUser, { photoURL });
+          setLoading(true, 3000, 2000);
         }, 1000);
-        setLoading(false);
         showTranslateAlert(true, "New photo added successfully", "success");
       } catch (error) {
-        setLoading(false);
         showTranslateAlert(true, "Error uploading photo", "error");
       }
     },
@@ -114,6 +114,7 @@ const Page = (props: Props) => {
         setTimeout(() => {
           updateProfile(user, { photoURL });
         }, 1000);
+        setLoading(true, 3000, 2000);
         showTranslateAlert(true, "Default photo set successfully", "success");
       }
     } catch (error) {
@@ -133,6 +134,7 @@ const Page = (props: Props) => {
         const photoURL = "";
         updateProfile(user, { photoURL });
       }, 1000);
+      setLoading(true, 3000, 2000);
       showTranslateAlert(true, "Photo deleted successfully", "success");
     } catch (error) {
       console.error("Error deleting user photo:", error);
@@ -159,6 +161,16 @@ const Page = (props: Props) => {
     };
   }, [EditPopUp, setEditPopUp, DeletePopUp, setDeletePopUp]);
 
+  useEffect(() => {
+    setLoading(true, 0, 1000);
+  }, [setLoading]);
+
+  useEffect(() => {
+    if (!user) {
+      router.push("/login");
+    }
+  }, [router, user]);
+
   return (
     <div className="relative h-full w-full flex flex-col items-start justify-start">
       <div
@@ -168,7 +180,7 @@ const Page = (props: Props) => {
             : "bg-[#d93966] text-white"
         } z-50 ${
           translateAlert.isOpen ? "translate-y-0" : "translate-y-[-450%]"
-        } transition duration-700 delay-700`}
+        } transition duration-1000 delay-100`}
       >
         {translateAlert.message}
       </div>
@@ -214,18 +226,27 @@ const Page = (props: Props) => {
             </div>
           </div>
           <ul className="h-auto w-48 flex flex-col items-start justify-center gap-2 text-lg font-semibold bg-[#fff] p-6">
-            <Link href="">
-              <li className="hover:text-[#000]">About Us </li>
-            </Link>
-            <Link href="">
-              <li className="hover:text-[#000]">Help </li>
-            </Link>
-            <Link href="">
-              <li className="hover:text-[#000]">FAQ</li>
-            </Link>
-            <Link href="https://www.shawu.edu/Privacy_and_Usage_Policy2.aspx">
-              <li className="hover:text-[#000]">Privacy Policy</li>
-            </Link>
+            <li className="hover:text-[#000] cursor-pointer">
+              <Link href="https://www.shawcomputerscience.com/" target="_blank">
+                About Us
+              </Link>
+            </li>
+            <li className="hover:text-[#000] cursor-pointer">
+              <button>Help</button>
+            </li>
+            <li className="hover:text-[#000] cursor-pointer">
+              <Link href="" target="_blank">
+                FAQ
+              </Link>
+            </li>
+            <li className="hover:text-[#000] cursor-pointer">
+              <Link
+                href="https://www.shawu.edu/Privacy_and_Usage_Policy2.aspx"
+                target="_blank"
+              >
+                Privacy Policy
+              </Link>
+            </li>
           </ul>
         </div>
       </div>
@@ -337,7 +358,7 @@ const Page = (props: Props) => {
               id="title"
               name="title"
               autoComplete="on"
-              className="h-12 w-full flex flex-col items-center justify-center border rounded-md"
+              className="h-12 w-full flex flex-col items-center justify-center text-black p-4 border rounded-md"
             />
           </label>
           <label
@@ -349,7 +370,7 @@ const Page = (props: Props) => {
               id="fullName"
               name="fullName"
               autoComplete="on"
-              className="h-12 w-full flex flex-col items-center justify-center border rounded-md"
+              className="h-12 w-full flex flex-col items-center justify-center text-black p-4 border rounded-md"
             />
           </label>
         </div>
@@ -362,7 +383,7 @@ const Page = (props: Props) => {
             id="email"
             name="email"
             autoComplete="on"
-            className="h-12 w-full flex flex-col items-center justify-center border rounded-md"
+            className="h-12 w-full flex flex-col items-center justify-center text-black p-4 border rounded-md"
           />
         </label>
         <label
@@ -374,7 +395,7 @@ const Page = (props: Props) => {
             id="number"
             name="number"
             autoComplete="on"
-            className="h-12 w-full flex flex-col items-center justify-center border rounded-md"
+            className="h-12 w-full flex flex-col items-center justify-center text-black p-4 border rounded-md"
           />
         </label>
         <label
@@ -386,7 +407,7 @@ const Page = (props: Props) => {
             id="city"
             name="city"
             autoComplete="on"
-            className="h-12 w-full flex flex-col items-center justify-center border rounded-md"
+            className="h-12 w-full flex flex-col items-center justify-center text-black p-4 border rounded-md"
           />
         </label>
         <div className="h-auto w-full flex items-center justify-center gap-10 p-2">
@@ -399,7 +420,7 @@ const Page = (props: Props) => {
               id="state"
               name="state"
               autoComplete="on"
-              className="h-12 w-full flex flex-col items-center justify-center border rounded-md"
+              className="h-12 w-full flex flex-col items-center justify-center text-black p-4 border rounded-md"
             />
           </label>
           <label
@@ -411,7 +432,7 @@ const Page = (props: Props) => {
               id="zipCode"
               name="zipCode"
               autoComplete="on"
-              className="h-12 w-full flex flex-col items-center justify-center border rounded-md"
+              className="h-12 w-full flex flex-col items-center justify-center text-black p-4 border rounded-md"
             />
           </label>
         </div>
@@ -423,8 +444,10 @@ const Page = (props: Props) => {
           <input
             id="country"
             name="country"
-            autoComplete="on"
-            className="h-12 w-full flex flex-col items-center justify-center border rounded-md"
+            value="United States"
+            autoComplete="off"
+            readOnly
+            className="h-12 w-full flex flex-col items-center justify-center text-black p-4 border rounded-md focus-within:outline-none"
           />
         </label>
       </form>
