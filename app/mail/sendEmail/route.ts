@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   const {subject, body, recipients, attachments} = await request.json();
-  console.log(subject, body, recipients)
+  console.log(subject, body, recipients, attachments)
   console.log(process.env.NEXT_PUBLIC_EMAIL_ADDRESS)
   console.log(process.env.NEXT_PUBLIC_EMAIL_PASSWORD)
 
@@ -21,7 +21,7 @@ export async function POST(request: Request) {
 
   async function sendEmail() {
     // send mail with defined transport object
-    const info = await transporter.sendMail({
+    await transporter.sendMail({
       from: process.env.NEXT_PUBLIC_EMAIL_ADDRESS, // sender address
       to: 'carbymatthew808@gmail.com', // list of receivers
       subject: subject, // Subject line
