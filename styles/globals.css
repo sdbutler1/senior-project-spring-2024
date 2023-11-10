@@ -8,13 +8,13 @@ html {
 }
 
 body {
-  background-color: #f6f6f6;
+  background-color: #f7f7f7;
   color: #7d1f2e;
 }
 
 [data-theme="dark"] body {
   background-color: #2a3447;
-  color: #fff;
+  color: #000;
 }
 
 [data-theme="dark"] .sidebar {
@@ -181,8 +181,7 @@ body {
 .pieChartBox .options {
   width: 100%;
   display: flex;
-  justify-content: space-between;
-  gap: 30px;
+  gap: 20px;
   font-size: 14px;
 }
 

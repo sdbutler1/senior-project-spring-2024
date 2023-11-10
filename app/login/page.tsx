@@ -89,7 +89,7 @@ const Login = (props: Props) => {
         <div className="h-2/6 w-full flex items-center justify-center">
           <Image src={logo} alt="logo" className="w-4/6 h-auto" priority />
         </div>
-        <div className="h-1/6 w-full flex flex-col items-center justify-start text-3xl sm:text-4xl text-[#8c2333] font-sans font-bold">
+        <div className="h-1/6 w-full flex flex-col items-center justify-start text-3xl sm:text-4xl text-[#8c2333] font-sans font-bold mb-1">
           <h1>Department of</h1>
           <div>Computer Science</div>
         </div>
@@ -149,7 +149,7 @@ const Login = (props: Props) => {
                 className="disabled:opacity-50 w-28 h-12 flex items-center justify-center text-md text-[#000] font-semibold bg-[#fff] rounded-md p-4 hover:bg-[#f6f6f6] hover:scale-95 cursor-pointer "
                 disabled={
                   !formData.logEmail.includes("@") ||
-                  !formData.logEmail.includes(".shawu.edu") ||
+                  !formData.logEmail.includes("shawu.edu") ||
                   formData.logPassword.length < 8
                 }
               >
