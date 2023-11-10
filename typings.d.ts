@@ -7,14 +7,15 @@ type student = {
   gpa: number
 }
 
-type attachment = {
-  name: string,
-  path: string,
-}
-
 type email = {
+  cc?: string[],
   recipients: string[],
   subject: string,
   body: string,
   attachments?: attachment[],
+}
+
+type attachedFile = {
+  path: string | ArrayBuffer | null,
+  filename: string,
 }
