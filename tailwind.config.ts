@@ -17,6 +17,9 @@ const config: Config = {
       },
     },
   },
+  images: {
+    domains: ["firebasestorage.googleapis.com"],
+  },
   plugins: [],
 }
 export default config

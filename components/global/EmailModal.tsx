@@ -50,11 +50,12 @@ const EmailModal = ({recipients, modalShown, closeModal} : props) => {
   }
 
   useEffect(() => {
+    const form = emailForm.current
     const preventEnterSubmit = (e: KeyboardEvent) => {
       if (e.key === 'Enter') e.preventDefault();
     }
     
-    return () => emailForm.current?.removeEventListener('keydown', preventEnterSubmit);
+    return () => form?.removeEventListener('keydown', preventEnterSubmit);
   }, [emailForm])
 
 
@@ -213,7 +214,7 @@ const EmailModal = ({recipients, modalShown, closeModal} : props) => {
                         <div>
                           {
                             emailContent.cc!.map((email, key) => (
-                              <p>{email}</p>
+                              <p key={key}>{email}</p>
                             ))
                           }
                         </div>

@@ -35,7 +35,7 @@ const AttachmentDropzone = ({attachments, updateAttachments}: props) => {
   useEffect(() => {
     console.log('attachedFiles: ', attachedFiles)
     updateAttachments(attachedFiles);
-  }, [attachedFiles])
+  }, [attachedFiles, updateAttachments])
   // const files = acceptedFiles.map((file: File) => {
   //   const reader = new FileReader()
 
