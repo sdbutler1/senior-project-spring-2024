@@ -36,8 +36,13 @@ const Page = (props: Props) => {
   const [DeletePopUp, setDeletePopUp] = useState(false);
   const [photo, setPhoto] = useState<File | null>(null);
   const photoInputRef = React.createRef<HTMLInputElement>();
+  const [formButton, setFormButton] = useState(false);
   const userPhotoUrl =
     "https://firebasestorage.googleapis.com/v0/b/com-sci-dep-auth-project.appspot.com/o/default.png?alt=media&token=bafe0340-24ec-4083-ba7d-5bd6e3319d02";
+
+  const toggleFormButton = () => {
+    setFormButton(!formButton);
+  };
 
   const [translateAlert, setTranslateAlert] = useState({
     isOpen: false,
@@ -160,10 +165,6 @@ const Page = (props: Props) => {
       document.removeEventListener("click", closePopupsOnOutsideClick);
     };
   }, [EditPopUp, setEditPopUp, DeletePopUp, setDeletePopUp]);
-
-  useEffect(() => {
-    setLoading(true, 0, 1000);
-  }, [setLoading]);
 
   useEffect(() => {
     if (!user) {
@@ -452,18 +453,31 @@ const Page = (props: Props) => {
         </label>
       </form>
       <div className="h-auto w-3/6 flex items-center justify-end gap-8 p-2">
-        <button
-          type="button"
-          className="h-10 w-36 flex items-center justify-center font-semibold rounded hover:bg-[#fff]"
-        >
-          Cancel
-        </button>
-        <button
-          type="submit"
-          className="h-10 w-36 flex items-center justify-center text-[#fff] font-semibold bg-[#7d1f2e] rounded hover:bg-[#701b29]"
-        >
-          Save Changes
-        </button>
+        {formButton && (
+          <button
+            onClick={toggleFormButton}
+            type="button"
+            className="h-10 w-36 flex items-center justify-center font-semibold rounded hover:bg-[#fff]"
+          >
+            Cancel
+          </button>
+        )}
+        {formButton ? (
+          <button
+            type="submit"
+            className="h-10 w-36 flex items-center justify-center text-[#fff] font-semibold bg-[#7d1f2e] rounded hover:bg-[#701b29]"
+          >
+            Save Changes
+          </button>
+        ) : (
+          <button
+            onClick={toggleFormButton}
+            type="button"
+            className="h-10 w-36 flex items-center justify-center text-[#fff] font-semibold bg-[#7d1f2e] rounded hover:bg-[#701b29]"
+          >
+            Edit Profile
+          </button>
+        )}
       </div>
     </div>
   );

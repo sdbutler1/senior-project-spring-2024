@@ -42,7 +42,7 @@ function PageWrapper({ children }: { children: React.ReactNode }) {
           isSidebarOpen && isSidebarHidden // open full
             ? "w-full lg:ml-64 mt-[5rem] lg:w-[calc(100%-20rem)]"
             : !isSidebarOpen && !isSidebarHidden
-            ? "mt-[5rem]" // closed
+            ? "w-full mt-[5rem]" // closed
             : !isSidebarOpen &&
               isSidebarHidden && // open minimized
               "lg:ml-20 mt-[5rem] lg:w-[calc(100%-20rem)]"

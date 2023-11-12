@@ -5,12 +5,13 @@ import { useEffect, useState } from "react";
 
 // global states
 import { useGlobalLoading } from "@/globalStates/useGlobalLoading";
+import { useGlobalTimeOutPopUp } from "@/globalStates/useGlobalTimeOutPopUp";
 
 // components
 import { useAuth } from "@/context/AuthContext";
 
 const TimeoutPopup: React.FC = () => {
-  const [showPopup, setShowPopup] = useState(false);
+  const { showPopup, setShowPopup } = useGlobalTimeOutPopUp();
   const { logout, user } = useAuth();
   const { setLoading, setLoading2 } = useGlobalLoading();
 
@@ -19,17 +20,9 @@ const TimeoutPopup: React.FC = () => {
     // Gat Expire Time from Local Storage
     const expireTime = localStorage.getItem("expireTime");
 
-    // If Time is greater than Expire Time by 2 minutes, log out
-    if (showPopup) {
-      updateExpireTime(120000);
-      if (user && expireTime !== null && +expireTime < Date.now()) {
-        handleLogout();
-      }
-    } else {
-      // If Expire Time is earlier than now, show popup
-      if (user && expireTime !== null && +expireTime < Date.now()) {
-        setShowPopup(true);
-      }
+    // If Expire Time is earlier than now, log out
+    if (user && expireTime !== null && +expireTime < Date.now()) {
+      setShowPopup(true);
     }
   };
 
@@ -57,31 +50,45 @@ const TimeoutPopup: React.FC = () => {
 
   // Use Expire Time on any user activity
   useEffect(() => {
-    // Set Initial Expire Time if user is logged in
+    // Set Initial Expire Time if the user is logged in
     if (user && !showPopup) {
-      updateExpireTime(120000);
+      updateExpireTime(900000);
 
       // set event listeners
-      window.addEventListener("click", () => updateExpireTime(120000));
-      window.addEventListener("keypress", () => updateExpireTime(120000));
-      window.addEventListener("scroll", () => updateExpireTime(120000));
-      window.addEventListener("mousemove", () => updateExpireTime(120000));
+      const activityListener = () => updateExpireTime(900000);
+
+      window.addEventListener("click", activityListener);
+      window.addEventListener("keypress", activityListener);
+      window.addEventListener("scroll", activityListener);
+      window.addEventListener("mousemove", activityListener);
 
       // clean up
       return () => {
-        window.removeEventListener("click", () => updateExpireTime(120000));
-        window.removeEventListener("keypress", () => updateExpireTime(120000));
-        window.removeEventListener("scroll", () => updateExpireTime(120000));
-        window.removeEventListener("mousemove", () => updateExpireTime(120000));
+        window.removeEventListener("click", activityListener);
+        window.removeEventListener("keypress", activityListener);
+        window.removeEventListener("scroll", activityListener);
+        window.removeEventListener("mousemove", activityListener);
+      };
+    } else if (user && showPopup) {
+      // clear interval if 2 minutes pass
+      const timeoutInterval = setTimeout(() => {
+        setShowPopup(false);
+        setLoading2(true, 0, 1500);
+        logout();
+      }, 120000); // 2 minutes
+
+      // clean up
+      return () => {
+        clearTimeout(timeoutInterval);
       };
     }
-  }, [user]);
+  }, [user, showPopup]);
 
   const handleContinueWorking = () => {
     // remove popup
     setShowPopup(false);
     setLoading(true, 0, 1500);
-    updateExpireTime(120000);
+    updateExpireTime(900000);
   };
 
   const handleLogout = () => {

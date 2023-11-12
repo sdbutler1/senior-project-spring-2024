@@ -18,9 +18,9 @@ const LoggingInLoading = () => {
 
   return (
     <div
-      className={`fixed top-0 left-0 h-screen w-screen flex flex-col items-center justify-center gap-12 bg-[#ac824a] z-50 ${
-        loading2 ? "opacity-100 duration-0" : "opacity-0 invisible duration-100"
-      } transition`}
+      className={`fixed top-0 left-0 h-screen w-screen flex-col items-center justify-center gap-12 bg-[#ac824a] z-50 ${
+        loading2 ? "flex" : "hidden"
+      }`}
     >
       <div className="h-auto w-auto flex items-center justify-center">
         <h1 className="text-4xl text-white font-semibold">LOADING</h1>

@@ -26,6 +26,7 @@ type Props = {};
 
 const UserAccount = (props: Props) => {
   const { logout, user } = useAuth();
+  const { setLoading } = useGlobalLoading();
   const currentPathname = usePathname();
   const currentUser = CurrentUser({});
   const { isPopUpOpen1, setPopUpOpen1, setPopUpOpen2 } = useglobalPopUp();
@@ -86,6 +87,7 @@ const UserAccount = (props: Props) => {
             <p className="w-full">User not found</p>
           )}
           <Link
+            onClick={() => setLoading(true, 0, 500)}
             href={"/userProfile"}
             className={`popUpClick h-10 w-full ${
               currentUser ? "flex" : "hidden"
@@ -116,13 +118,6 @@ const UserAccount = (props: Props) => {
                 <MdHelp className="text-xl" />
                 <div>Help</div>
               </button>
-              <Link
-                href={"/userProfile"}
-                className="popUpClick h-auto w-full flex items-center justify-start gap-4 text-[15px] text-[#fff] px-4"
-              >
-                <BiSolidUserDetail className="text-xl" />
-                <div>Update Profile</div>
-              </Link>
               <Link
                 href={"/forgotPassword"}
                 className="popUpClick h-auto w-full flex items-center justify-start gap-4 text-[15px] text-[#fff] px-4"

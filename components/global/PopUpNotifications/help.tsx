@@ -1,25 +1,67 @@
 "use client";
 
 // react components
-import React from "react";
+import React, { useState } from "react";
 import { usePathname } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
+import { db } from "@/config/firebase";
+import { collection, doc, addDoc } from "firebase/firestore";
+
+// global states
+import { useglobalPopUp } from "@/globalStates/useglobalPopUp";
+import { useGlobalLoading } from "@/globalStates/useGlobalLoading";
 
 // icons
 import { AiOutlineClose } from "react-icons/ai";
 
-// global states
-import {useglobalPopUp} from "@/globalStates/useglobalPopUp";
-
 type Props = {};
 
 const Help = (props: Props) => {
+  const { user } = useAuth();
   const currentPathname = usePathname();
-
+  const { setLoading } = useGlobalLoading();
   const { isPopUpOpen2, setPopUpOpen2 } = useglobalPopUp();
 
   if (currentPathname === "/login" || currentPathname === "/forgotPassword") {
     return null;
   }
+
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+
+    // Get form data
+    const form = event.target as HTMLFormElement;
+    const formData = new FormData(form);
+
+    // Create an object from form data
+    const data: Record<string, string> = {};
+    formData.forEach((value, key) => {
+      data[key] = value as string;
+    });
+
+    try {
+      // Reference to the user's document
+      const userDocRef = doc(collection(db, "helpNotifications"), user.uid);
+
+      // Reference to the subcollection within the user's document
+      const subcollectionName = data.subject || "defaultSubcollectionName";
+      const subcollectionRef = collection(userDocRef, subcollectionName);
+
+      // Add a new document to the subcollection
+      const newDocRef = await addDoc(subcollectionRef, data);
+
+      console.log("Document added with ID: ", newDocRef.id);
+      setPopUpOpen2(false);
+      setLoading(true, 0, 2000);
+
+      // clear the form after submission
+      form.reset();
+    } catch (e) {
+      setPopUpOpen2(false);
+      setLoading(true, 0, 2000);
+      console.error("Error adding document to subcollection: ", e);
+    }
+  };
 
   return (
     <div
@@ -38,6 +80,7 @@ const Help = (props: Props) => {
       </div>
       <form
         id="help"
+        onSubmit={handleSubmit}
         className="h-full w-11/12 flex flex-col items-center justify-start gap-4 text-[14px] font-semibold"
       >
         <div className="h-auto w-full flex items-center justify-center gap-10">
@@ -50,7 +93,7 @@ const Help = (props: Props) => {
               id="title"
               name="title"
               autoComplete="on"
-              className="h-12 w-full flex flex-col items-center justify-center border rounded-md"
+              className="h-12 w-full flex flex-col items-center justify-center pl-4 border rounded-md"
             />
           </label>
           <label
@@ -62,7 +105,7 @@ const Help = (props: Props) => {
               id="fullName"
               name="fullName"
               autoComplete="on"
-              className="h-12 w-full flex flex-col items-center justify-center border rounded-md"
+              className="h-12 w-full flex flex-col items-center justify-center pl-4 border rounded-md"
             />
           </label>
         </div>
@@ -76,7 +119,7 @@ const Help = (props: Props) => {
               id="email"
               name="email"
               autoComplete="on"
-              className="h-12 w-full flex flex-col items-center justify-center border rounded-md"
+              className="h-12 w-full flex flex-col items-center justify-center pl-4 border rounded-md"
             />
           </label>
           <label
@@ -85,13 +128,25 @@ const Help = (props: Props) => {
           >
             Phone Number
             <input
-              id="phoneNum"
-              name="phoneNum"
+              id="phoneNumber"
+              name="phoneNumber"
               autoComplete="on"
-              className="h-12 w-full flex flex-col items-center justify-center border rounded-md"
+              className="h-12 w-full flex flex-col items-center justify-center pl-4 border rounded-md"
             />
           </label>
         </div>
+        <label
+          htmlFor="phoneNum"
+          className="h-auto w-full flex flex-col items-start justify-center"
+        >
+          Subject
+          <input
+            id="subject"
+            name="subject"
+            autoComplete="off"
+            className="h-12 w-full flex flex-col items-center justify-center pl-4 border rounded-md"
+          />
+        </label>
         <label
           htmlFor="message"
           className="h-4/6 w-full flex flex-col items-start justify-center"
@@ -101,18 +156,16 @@ const Help = (props: Props) => {
             id="message"
             name="message"
             autoComplete="off"
-            className="h-full w-full flex flex-col items-center justify-center border rounded-md"
+            className="h-full w-full flex flex-col items-center justify-center border rounded-md p-4"
           />
         </label>
-      </form>
-      <div className="h-auto w-full flex items-center justify-center py-3">
         <button
           type="submit"
-          className="h-10 w-36 flex items-center justify-center text-[#fff] font-semibold bg-[#7d1f2e] rounded hover:bg-[#701b29]"
+          className="h-12 w-36 flex items-center justify-center text-[#fff] font-semibold bg-[#7d1f2e] rounded hover:bg-[#701b29] mb-4"
         >
           Submit
         </button>
-      </div>
+      </form>
     </div>
   );
 };

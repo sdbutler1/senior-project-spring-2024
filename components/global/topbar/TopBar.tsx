@@ -19,7 +19,7 @@ import { HiMenu } from "react-icons/hi";
 import { GoTriangleDown } from "react-icons/go";
 
 const Topbar = () => {
-  const { loading, setLoading } = useGlobalLoading();
+  const { loading, setLoading, loading2 } = useGlobalLoading();
   const currentUser = CurrentUser({});
   const { user } = useAuth();
   const { isSidebarOpen, isSidebarHidden, toggleSideBar, HideSideBar } =
@@ -50,7 +50,7 @@ const Topbar = () => {
 
   useEffect(() => {
     setLoading(true, 0, 1000);
-  }, [setLoading]);
+  }, [setLoading, loading2]);
 
   return (
     <div className="w-full flex items-center justify-between bg-[#fefefe] border-b border-slate-100">
