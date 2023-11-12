@@ -16,9 +16,8 @@ import loadingGif from "@/public/assets/loading.gif";
 type Props = {};
 
 const NavPageLoading = () => {
-  const { user } = useAuth();
-  const { loading } = useGlobalLoading();
   const { isSidebarOpen, isSidebarHidden } = useGlobalSideBar();
+  const { loading, loading2 } = useGlobalLoading();
 
   return (
     <div
@@ -30,9 +29,9 @@ const NavPageLoading = () => {
           : !isSidebarOpen &&
             isSidebarHidden && // open minimized
             "w-full lg:w-[calc(100%-5rem)]"
-      } h-[calc(100%-5rem)] flex flex-col items-center justify-center gap-12 bg-[#ac824a] z-10 ${
-        loading ? "opacity-100 duration-0" : "opacity-0 invisible duration-100"
-      } transition-width duration-500`}
+      } h-[calc(100%-5rem)] ${
+        loading ? "flex" : "hidden"
+      } flex-col items-center justify-center gap-12 bg-[#ac824a] z-10 transition-width duration-500`}
     >
       <div className="h-auto w-auto flex items-center justify-center">
         <h1 className="text-4xl text-white font-semibold">LOADING</h1>

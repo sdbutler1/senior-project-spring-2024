@@ -56,9 +56,9 @@ const Login = (props: Props) => {
       if (err instanceof Error) {
         setAlertMessage({ message: err.message, type: "error" });
         translateAlertPopUp();
+        setLoading2(true, 0, 1000);
       }
     }
-    setLoading2(true, 0, 2000);
     setFormData({
       logEmail: "",
       logPassword: "",
@@ -67,7 +67,6 @@ const Login = (props: Props) => {
 
   useEffect(() => {
     if (user) {
-      setLoading2(true, 0, 1500);
       router.push("/");
     }
   }, [router, user]);
