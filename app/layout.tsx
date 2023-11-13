@@ -5,7 +5,7 @@ import React from "react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "To be Decided",
+  title: "Computer Science Dep | Shaw University",
   description: "Computer Science Department Website",
 };
 
@@ -26,7 +26,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Providers>
-          <div className="relative h-screen w-screen flex flex-col items-center justify-center">
+          <div className={`relative h-screen w-screen flex flex-col items-center justify-center`}>
             <AuthContextProvider>
               <PageWrapper>{children}</PageWrapper>
             </AuthContextProvider>

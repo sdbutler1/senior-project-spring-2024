@@ -65,6 +65,9 @@ const Topbar = () => {
           priority
         />
       </Link>
+      {/* <div>
+        <h1 className="text-4xl font-bold">Department of Computer Science</h1>
+      </div> */}
       <div className="h-full w-auto flex items-center justify-end gap-4 lg:gap-10 pr-2 lg:pr-8">
         <button
           type="button"

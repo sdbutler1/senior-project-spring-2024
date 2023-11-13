@@ -203,3 +203,8 @@ body {
   height: 10px;
   border-radius: 50%;
 }
+
+
+.blob {
+  border-radius: 40% 60% 65% 35% / 40% 35% 65% 60%;
+}
