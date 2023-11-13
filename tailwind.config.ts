@@ -9,7 +9,7 @@ const config: Config = {
   theme: {
     extend: {
       colors:{
-        'shaw-garnet': '#960A2C',
+        'shaw-garnet': '#7d1f2d',//'#960A2C',
         'shaw-yellow': '#F4B461',
       },
       fontFamily: {
