@@ -14,7 +14,7 @@ import CurrentUser from "./global/CurrentUser";
 
 type Props = {};
 
-const userProfile = (props: Props) => {
+const UserProfile = (props: Props) => {
   const { user } = useAuth();
   const { setLoading } = useGlobalLoading();
   const [formButton, setFormButton] = useState(false);
@@ -329,4 +329,4 @@ const userProfile = (props: Props) => {
   );
 };
 
-export default userProfile;
+export default UserProfile;

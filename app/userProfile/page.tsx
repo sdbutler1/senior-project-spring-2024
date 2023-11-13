@@ -104,7 +104,7 @@ const Page = (props: Props) => {
     if (photo) {
       uploadNewPhoto(photo, user, setLoading);
     }
-  }, [photo, uploadNewPhoto, user]);
+  }, [photo, uploadNewPhoto, user, setLoading]);
 
   const handleSetEmailPhoto = async () => {
     try {
