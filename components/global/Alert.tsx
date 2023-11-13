@@ -19,7 +19,7 @@ const Alert: React.FC<AlertProps> = ({ message, type, translateAlert }) => {
   return (
     <div
       className={`absolute top-8 h-16 w-auto flex items-center justify-center text-xl p-4 ${alertClass} font-mono rounded-md ${
-        translateAlert ? "translate-y-0" : "translate-y-[-200%]"
+        !translateAlert ? "translate-y-0" : "translate-y-[-200%]"
       } transition duration-500`}
     >
       {message}

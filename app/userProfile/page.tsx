@@ -174,7 +174,7 @@ const Page = (props: Props) => {
             ? "bg-[#76ec93e7] text-black"
             : "bg-[#d93966] text-white"
         } z-50 ${
-          translateAlert.isOpen ? "translate-y-0" : "translate-y-[-450%]"
+          !translateAlert.isOpen ? "translate-y-0" : "translate-y-[-450%]"
         } transition duration-1000 delay-100`}
       >
         {translateAlert.message}

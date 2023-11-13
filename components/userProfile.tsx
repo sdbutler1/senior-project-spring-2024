@@ -12,6 +12,10 @@ import { useGlobalLoading } from "@/globalStates/useGlobalLoading";
 // components
 import CurrentUser from "./global/CurrentUser";
 
+// icons
+import { TiInputChecked } from "react-icons/ti";
+import { GrFormClose } from "react-icons/gr";
+
 type Props = {};
 
 const UserProfile = (props: Props) => {
@@ -87,13 +91,14 @@ const UserProfile = (props: Props) => {
           <div className="h-auto w-full flex items-center justify-center gap-10 p-2">
             <label
               htmlFor="title"
-              className="h-auto w-full flex flex-col items-start justify-center"
+              className="relative h-auto w-full flex flex-col items-start justify-center"
             >
               Title
               <input
                 id="title"
                 name="title"
                 autoComplete="off"
+                required
                 value={
                   formButton
                     ? formData.title
@@ -112,6 +117,15 @@ const UserProfile = (props: Props) => {
                     : "text-[#858585] focus-within:outline-none"
                 } p-4 border rounded-md`}
               />
+              <button
+                onClick={() =>
+                  setSwitchButton((prevSwitchButton) => !prevSwitchButton)
+                }
+                type="button"
+                className="absolute top-8 right-4 h-8 w-8 flex items-center justify-center text-2xl text-black"
+              >
+                <TiInputChecked />  <GrFormClose />
+              </button>
             </label>
             <label
               htmlFor="fullName"

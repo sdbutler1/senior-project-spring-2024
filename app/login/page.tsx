@@ -178,18 +178,22 @@ const Login = (props: Props) => {
         </div>
         <div className="absolute top-8 right-8 h-auto w-96 flex items-center justify-center p-4 bg-white border z-50">
           <ul className="flex flex-col items-start justify-center gap-4 no-underline ">
+            <li>
+              * Fix alert so it just one set alert but can be changed depending
+              on props
+            </li>
             <li>* Need to fix update profile inputs</li>
             <li>* If inputs are empty disable submit button</li>
-            <li>* 
-              Add to update only inputs that are edited by adding an editing
+            <li>
+              * Add to update only inputs that are edited by adding an editing
               button to each button and use that instead of formButton
             </li>
             <li>* Fix table to get data from the database</li>
             <li>* Fix delete, edit, and add functionality</li>
             <li>* Matthew is still working on the home page</li>
             <li>* Probably create a calendar page</li>
-            <li>* 
-              Everything else works; the help pop-up sends the information to
+            <li>
+              * Everything else works; the help pop-up sends the information to
               the database. Will work on sending an email when the database gets
               a new document.
             </li>
