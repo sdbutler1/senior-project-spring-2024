@@ -3,18 +3,17 @@
 // react components
 import React, { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { updateProfile, User } from "firebase/auth";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { useRouter } from "next/navigation";
 
 // global states
-import { useglobalPopUp } from "@/globalStates/useglobalPopUp";
 import { useGlobalLoading } from "@/globalStates/useGlobalLoading";
 
 // components
 import CurrentUser from "@/components/global/CurrentUser";
 import { useAuth } from "@/context/AuthContext";
+import UserProfile from "@/components/userProfile";
 
 // assets
 var randomstring = require("randomstring");
@@ -36,13 +35,8 @@ const Page = (props: Props) => {
   const [DeletePopUp, setDeletePopUp] = useState(false);
   const [photo, setPhoto] = useState<File | null>(null);
   const photoInputRef = React.createRef<HTMLInputElement>();
-  const [formButton, setFormButton] = useState(false);
   const userPhotoUrl =
     "https://firebasestorage.googleapis.com/v0/b/com-sci-dep-auth-project.appspot.com/o/default.png?alt=media&token=bafe0340-24ec-4083-ba7d-5bd6e3319d02";
-
-  const toggleFormButton = () => {
-    setFormButton(!formButton);
-  };
 
   const [translateAlert, setTranslateAlert] = useState({
     isOpen: false,
@@ -173,7 +167,7 @@ const Page = (props: Props) => {
   }, [router, user]);
 
   return (
-    <div className="relative h-full w-full flex flex-col items-start justify-start">
+    <div className="relative h-full w-full flex flex-col items-start justify-start gap-12">
       <div
         className={`absolute top-3 left-[39%] h-[3.25rem] w-80 flex items-center justify-center text-lg font-semibold ${
           translateAlert.type === "success"
@@ -226,29 +220,6 @@ const Page = (props: Props) => {
               </button>
             </div>
           </div>
-          <ul className="h-auto w-48 flex flex-col items-start justify-center gap-2 text-lg font-semibold bg-[#fff] p-6">
-            <li className="hover:text-[#000] cursor-pointer">
-              <Link href="https://www.shawcomputerscience.com/" target="_blank">
-                About Us
-              </Link>
-            </li>
-            <li className="hover:text-[#000] cursor-pointer">
-              <button>Help</button>
-            </li>
-            <li className="hover:text-[#000] cursor-pointer">
-              <Link href="" target="_blank">
-                FAQ
-              </Link>
-            </li>
-            <li className="hover:text-[#000] cursor-pointer">
-              <Link
-                href="https://www.shawu.edu/Privacy_and_Usage_Policy2.aspx"
-                target="_blank"
-              >
-                Privacy Policy
-              </Link>
-            </li>
-          </ul>
         </div>
       </div>
       <div
@@ -348,137 +319,7 @@ const Page = (props: Props) => {
           </button>
         </div>
       </div>
-      <form className="h-full w-3/6 flex flex-col items-center justify-start text-[15px] font-semibold">
-        <div className="h-auto w-full flex items-center justify-center gap-10 p-2">
-          <label
-            htmlFor="title"
-            className="h-auto w-full flex flex-col items-start justify-center"
-          >
-            Title
-            <input
-              id="title"
-              name="title"
-              autoComplete="on"
-              className="h-12 w-full flex flex-col items-center justify-center text-black p-4 border rounded-md"
-            />
-          </label>
-          <label
-            htmlFor="fullName"
-            className="h-auto w-full flex flex-col items-start justify-center"
-          >
-            Full Name
-            <input
-              id="fullName"
-              name="fullName"
-              autoComplete="on"
-              className="h-12 w-full flex flex-col items-center justify-center text-black p-4 border rounded-md"
-            />
-          </label>
-        </div>
-        <label
-          htmlFor="email"
-          className="h-auto w-full flex flex-col items-start justify-center p-2"
-        >
-          Email
-          <input
-            id="email"
-            name="email"
-            autoComplete="on"
-            className="h-12 w-full flex flex-col items-center justify-center text-black p-4 border rounded-md"
-          />
-        </label>
-        <label
-          htmlFor="number"
-          className="h-auto w-full flex flex-col items-start justify-center p-2"
-        >
-          Number
-          <input
-            id="number"
-            name="number"
-            autoComplete="on"
-            className="h-12 w-full flex flex-col items-center justify-center text-black p-4 border rounded-md"
-          />
-        </label>
-        <label
-          htmlFor="city"
-          className="h-auto w-full flex flex-col items-start justify-center p-2"
-        >
-          City
-          <input
-            id="city"
-            name="city"
-            autoComplete="on"
-            className="h-12 w-full flex flex-col items-center justify-center text-black p-4 border rounded-md"
-          />
-        </label>
-        <div className="h-auto w-full flex items-center justify-center gap-10 p-2">
-          <label
-            htmlFor="state"
-            className="h-auto w-full flex flex-col items-start justify-center"
-          >
-            State
-            <input
-              id="state"
-              name="state"
-              autoComplete="on"
-              className="h-12 w-full flex flex-col items-center justify-center text-black p-4 border rounded-md"
-            />
-          </label>
-          <label
-            htmlFor="zipCode"
-            className="h-auto w-full flex flex-col items-start justify-center"
-          >
-            Zip Code
-            <input
-              id="zipCode"
-              name="zipCode"
-              autoComplete="on"
-              className="h-12 w-full flex flex-col items-center justify-center text-black p-4 border rounded-md"
-            />
-          </label>
-        </div>
-        <label
-          htmlFor="country"
-          className="h-auto w-full flex flex-col items-start justify-center p-2"
-        >
-          Country
-          <input
-            id="country"
-            name="country"
-            value="United States"
-            autoComplete="off"
-            readOnly
-            className="h-12 w-full flex flex-col items-center justify-center text-black p-4 border rounded-md focus-within:outline-none"
-          />
-        </label>
-      </form>
-      <div className="h-auto w-3/6 flex items-center justify-end gap-8 p-2">
-        {formButton && (
-          <button
-            onClick={toggleFormButton}
-            type="button"
-            className="h-10 w-36 flex items-center justify-center font-semibold rounded hover:bg-[#fff]"
-          >
-            Cancel
-          </button>
-        )}
-        {formButton ? (
-          <button
-            type="submit"
-            className="h-10 w-36 flex items-center justify-center text-[#fff] font-semibold bg-[#7d1f2e] rounded hover:bg-[#701b29]"
-          >
-            Save Changes
-          </button>
-        ) : (
-          <button
-            onClick={toggleFormButton}
-            type="button"
-            className="h-10 w-36 flex items-center justify-center text-[#fff] font-semibold bg-[#7d1f2e] rounded hover:bg-[#701b29]"
-          >
-            Edit Profile
-          </button>
-        )}
-      </div>
+      <UserProfile />
     </div>
   );
 };
