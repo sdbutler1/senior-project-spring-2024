@@ -18,9 +18,11 @@ import CurrentUser from "@/components/global/CurrentUser";
 
 // Icons
 import { AiOutlineClose } from "react-icons/ai";
-import { MdHelp, MdLogout, MdPrivacyTip } from "react-icons/md";
+import { MdLogout } from "react-icons/md";
 import { FaUserLock } from "react-icons/fa6";
-import { BiSolidUserDetail } from "react-icons/bi";
+import InfoIcon from '@mui/icons-material/Info';
+import PrivacyTipIcon from '@mui/icons-material/PrivacyTip';
+import HelpIcon from '@mui/icons-material/Help';
 
 type Props = {};
 
@@ -105,24 +107,31 @@ const UserAccount = (props: Props) => {
             </h1>
             <div className="h-auto w-full flex flex-col items-start justify-start gap-4">
               <Link
-                href={"https://www.shawu.edu/Privacy_and_Usage_Policy2.aspx"}
+                href="https://www.shawcomputerscience.com/"
                 className="popUpClick h-auto w-full flex items-center justify-start gap-4 text-[15px] text-[#fff] px-4"
               >
-                <MdPrivacyTip className="text-xl" />
+                <InfoIcon />
+                <div>About Us</div>
+              </Link>
+              <Link
+                href="https://www.shawu.edu/Privacy_and_Usage_Policy2.aspx"
+                className="popUpClick h-auto w-full flex items-center justify-start gap-4 text-[15px] text-[#fff] px-4"
+              >
+                <PrivacyTipIcon />
                 <div>Privacy Policy</div>
               </Link>
               <button
                 onClick={toggleHelp}
                 className="popUpClick h-auto w-full flex items-center justify-start gap-4 text-[15px] text-[#fff] px-4"
               >
-                <MdHelp className="text-xl" />
+                <HelpIcon />
                 <div>Help</div>
               </button>
               <Link
                 href={"/forgotPassword"}
-                className="popUpClick h-auto w-full flex items-center justify-start gap-4 text-[15px] text-[#fff] px-4"
+                className="popUpClick h-auto w-full flex items-center justify-start gap-4 text-[15px] text-[#fff] px-5"
               >
-                <FaUserLock className="text-[1rem]" />
+                <FaUserLock className="text-[1.3rem]" />
                 <div>Reset Password</div>
               </Link>
             </div>

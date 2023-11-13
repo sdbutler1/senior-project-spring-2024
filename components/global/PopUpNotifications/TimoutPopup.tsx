@@ -82,7 +82,7 @@ const TimeoutPopup: React.FC = () => {
         clearTimeout(timeoutInterval);
       };
     }
-  }, [user, showPopup]);
+  }, [user, showPopup, logout, setLoading2, setShowPopup]);
 
   const handleContinueWorking = () => {
     // remove popup

@@ -71,7 +71,7 @@ export default function ForgotPassword() {
       setLoading2(true, 0, 1500);
       router.push("/");
     }
-  }, [router, user]);
+  }, [router, user, setLoading2]);
 
   return (
     <>
