@@ -34,15 +34,6 @@ const Help = (props: Props) => {
     return null;
   }
 
-  useEffect(() => {
-    if (!isPopUpOpen2) {
-      setFormData({
-        subject: "",
-        message: "",
-      });
-    }
-  }, [isPopUpOpen2, setFormData]);
-
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 

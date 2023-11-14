@@ -165,7 +165,7 @@ const StudentTable = (props: Props) => {
     });
 
     setFormattedStudentData(data);
-  }, []);
+  }, [students]);
 
   const closeModal = () => {
     setModalShown((state) => !state);
