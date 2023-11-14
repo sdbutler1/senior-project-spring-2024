@@ -3,8 +3,10 @@
 // react components
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { getDatabase, ref, get, onValue } from "firebase/database";
 
 // global states
+import { useGlobalAlert } from "@/globalStates/useGlobalAlert";
 
 //components
 import { useAuth } from "@/context/AuthContext";
@@ -14,16 +16,25 @@ import EmailModal from "@/components/global/EmailModal";
 
 // assets
 import { GridColDef } from "@mui/x-data-grid";
-import { StudentData } from "@/app/student/studentData";
 
 // icons
 import { HiUserAdd } from "react-icons/hi";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
-import PersonAddAltOutlinedIcon from '@mui/icons-material/PersonAddAltOutlined';
+import PersonAddAltOutlinedIcon from "@mui/icons-material/PersonAddAltOutlined";
 import { BsSearch } from "react-icons/bs";
 import { MagnifyingGlassIcon, UserPlusIcon } from "@heroicons/react/20/solid";
 
 type Props = {};
+
+interface Student {
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  classification: string;
+  gpa: number;
+}
 
 type studentsFormatted = {
   [id: number]: student;
@@ -75,10 +86,68 @@ const StudentTable = (props: Props) => {
   const { user } = useAuth();
   const router = useRouter();
   const [open, setOpen] = useState(false);
+  const { setTranslateAlert } = useGlobalAlert();
   const [modalShown, setModalShown] = useState<boolean>(false);
   const [selectedRows, setSelectedRows] = useState<student[]>([]);
   const [formattedStudentData, setFormattedStudentData] =
     useState<studentsFormatted>();
+
+  const [students, setStudents] = useState<Student[]>([]);
+
+  // Helper function to compare arrays
+  function arraysEqual(a: Student[], b: Student[]): boolean {
+    return JSON.stringify(a) === JSON.stringify(b);
+  }
+
+  useEffect(() => {
+    if (user) {
+      const database = getDatabase();
+      const studentsRef = ref(database, "/");
+
+      const fetchData = async () => {
+        try {
+          const snapshot = await get(studentsRef);
+
+          // Explicitly define the type of studentList based on the Student interface
+          const studentList: Student[] = [];
+
+          snapshot.forEach((childSnapshot) => {
+            const studentData = childSnapshot.val();
+            studentList.push({
+              id: studentData.id,
+              firstName: studentData.firstName,
+              lastName: studentData.lastName,
+              email: studentData.email,
+              phone: studentData.phone,
+              classification: studentData.classification,
+              gpa: studentData.gpa,
+            });
+          });
+
+          setStudents(studentList);
+
+          // Compare previous and current states
+          if (students.length !== 0 && !arraysEqual(students, studentList)) {
+            setTranslateAlert(
+              true,
+              "One moment, the Student Table has been updated.",
+              "info"
+            );
+          }
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      };
+
+      // Set up a listener for real-time updates
+      const unsubscribe = onValue(studentsRef, fetchData);
+
+      // Cleanup function to unsubscribe when the component unmounts or when the user changes
+      return () => {
+        unsubscribe();
+      };
+    }
+  }, [user, students, setTranslateAlert]);
 
   const handleRowSelection = (data: any) => {
     const recipients: student[] = data.map(
@@ -91,7 +160,7 @@ const StudentTable = (props: Props) => {
   useEffect(() => {
     const data: studentsFormatted = {};
 
-    StudentData.forEach((student) => {
+    students.forEach((student) => {
       data[student.id] = student;
     });
 
@@ -107,12 +176,12 @@ const StudentTable = (props: Props) => {
       router.push("/login");
     }
   }, [router, user]);
-  
+
   return (
     <>
       {modalShown && (
         <EmailModal
-          recipients={selectedRows.length ? selectedRows : StudentData}
+          recipients={selectedRows.length ? selectedRows : students}
           modalShown={modalShown}
           closeModal={closeModal}
         />
@@ -137,10 +206,15 @@ const StudentTable = (props: Props) => {
                 <EmailOutlinedIcon className="w-6" />
               </button>
             </div>
-            </div>
+          </div>
         </div>
 
-        <DataTable handleRowSelection={handleRowSelection} slug="users" columns={columns} rows={StudentData} />
+        <DataTable
+          handleRowSelection={handleRowSelection}
+          slug="users"
+          columns={columns}
+          rows={students}
+        />
         {open && <Add slug="student" columns={columns} setOpen={setOpen} />}
       </div>
     </>
