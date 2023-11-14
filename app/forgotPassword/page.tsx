@@ -169,12 +169,13 @@ export default function ForgotPassword() {
                 </button>
                 <div
                   className="flex items-center justify-center gap-4 text-sm text-[#fff] hover:underline cursor-pointer"
-                  onClick={() => (
-                    router.push("/login"), setLoading2(true, 0, 500)
-                  )}
+                  onClick={() => {
+                    router.push(`${user ? "/" : "/login"}`);
+                    setLoading2(true, 0, 500);
+                  }}
                 >
                   <HiArrowLongLeft className="text-xl" />
-                  Go to Login
+                  {user ? "Go to Home" : "Go to Login"}
                 </div>
               </div>
             </form>
