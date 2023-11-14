@@ -89,7 +89,7 @@ const Topbar = () => {
               />
               <div className="flex items-center justify-center gap-1">
                 <p className="font-semibold">
-                  {currentUser.title} {currentUser.firstName}{" "}
+                  {currentUser.title} {currentUser.firstName}
                   {currentUser.lastName}
                 </p>
                 <GoTriangleDown className="text-2xl text-[#7d1f2e] flex" />

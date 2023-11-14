@@ -168,22 +168,35 @@ const Login = (props: Props) => {
           </div>
         </div>
         <div className="absolute top-8 left-8 h-auto w-96 flex items-center justify-center p-4 bg-white border z-45">
-          <ul className="flex flex-col items-start justify-center gap-4 no-underline ">
-            <li>* Fix table to get data from the database</li>
-            <li>* Fix delete, edit, and add functionality</li>
+          <ul className="flex flex-col items-start justify-center gap-4 text-sm no-underline ">
+            <li className="text-[#255a1d]">* Add alert to help popUp</li>
+            <li>* Fix delete, edit, and add functionality for table</li>
             <li>* Matthew is still working on the home page</li>
             <li>* Probably create a calendar page</li>
-            <li>
+            <li className="text-[#255a1d]">
               * Everything else works; the help pop-up sends the information to
-              the database. Loading also works, no glitches when trying to go back.
+              the database.
             </li>
-            <li>
-              * There are alerts, users can update profile information. Help
-              popup works just need to work on sending an email when the
+            <li className="text-[#255a1d]">
+              * Help popup works just need to work on sending an email when the
               database gets a new document.
             </li>
+            <li className="text-[#255a1d]">
+              * Loading also works, no glitches when trying to go back.
+            </li>
+            <li className="text-[#255a1d]">
+              * Table is now getting data directly from the firebase database
+              and automatically updates and alerts user.
+            </li>
+            <li className="text-[#255a1d]">
+              * There are alerts, users can update profile information.
+            </li>
             <li>
-              * After these tasks are finished, or during the process will work on the responsive aspect of the website to screen sizes (login and forget password not included)
+              * After these tasks are finished, or during the process will work
+              on the responsive aspect of the website to screen sizes{" "}
+              <span className="text-[#255a1d]">
+                (login and forget password not included)
+              </span>
             </li>
           </ul>
         </div>

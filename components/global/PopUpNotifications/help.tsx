@@ -1,7 +1,7 @@
 "use client";
 
 // react components
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import { db } from "@/config/firebase";
@@ -10,9 +10,11 @@ import { collection, doc, addDoc } from "firebase/firestore";
 // global states
 import { useglobalPopUp } from "@/globalStates/useglobalPopUp";
 import { useGlobalLoading } from "@/globalStates/useGlobalLoading";
+import { useGlobalAlert } from "@/globalStates/useGlobalAlert";
 
 // icons
 import { AiOutlineClose } from "react-icons/ai";
+import CurrentUser from "@/components/global/CurrentUser";
 
 type Props = {};
 
@@ -21,6 +23,12 @@ const Help = (props: Props) => {
   const currentPathname = usePathname();
   const { setLoading } = useGlobalLoading();
   const { isPopUpOpen2, setPopUpOpen2 } = useglobalPopUp();
+  const { setTranslateAlert } = useGlobalAlert();
+  const currentUser = CurrentUser({});
+  const [formData, setFormData] = useState({
+    subject: "",
+    message: "",
+  });
 
   if (currentPathname === "/login" || currentPathname === "/forgotPassword") {
     return null;
@@ -50,17 +58,31 @@ const Help = (props: Props) => {
       // Add a new document to the subcollection
       const newDocRef = await addDoc(subcollectionRef, data);
 
-      console.log("Document added with ID: ", newDocRef.id);
       setPopUpOpen2(false);
-      setLoading(true, 0, 2000);
+      setTranslateAlert(
+        true,
+        "Message sent. Someone will be in contact soon",
+        "success"
+      );
+
+      setTimeout(() => {
+        setLoading(true, 0, 1000);
+      }, 3000);
 
       // clear the form after submission
       form.reset();
     } catch (e) {
       setPopUpOpen2(false);
-      setLoading(true, 0, 2000);
-      console.error("Error adding document to subcollection: ", e);
+      setTranslateAlert(true, "Unable to send message. Try again", "error");
+      setTimeout(() => {
+        setLoading(true, 0, 1000);
+      }, 3000);
     }
+
+    setFormData({
+      subject: "",
+      message: "",
+    });
   };
 
   return (
@@ -93,7 +115,9 @@ const Help = (props: Props) => {
               id="title"
               name="title"
               autoComplete="on"
-              className="h-12 w-full flex flex-col items-center justify-center pl-4 border rounded-md"
+              value={currentUser && user && currentUser.title}
+              readOnly
+              className="h-12 w-full flex flex-col items-center justify-center text-[#858585] pl-4 border rounded-md focus-within:outline-none"
             />
           </label>
           <label
@@ -105,7 +129,13 @@ const Help = (props: Props) => {
               id="fullName"
               name="fullName"
               autoComplete="on"
-              className="h-12 w-full flex flex-col items-center justify-center pl-4 border rounded-md"
+              value={
+                currentUser &&
+                user &&
+                `${currentUser.firstName} ${currentUser.lastName}`
+              }
+              readOnly
+              className="h-12 w-full flex flex-col items-center justify-center text-[#858585] pl-4 border rounded-md focus-within:outline-none"
             />
           </label>
         </div>
@@ -119,7 +149,9 @@ const Help = (props: Props) => {
               id="email"
               name="email"
               autoComplete="on"
-              className="h-12 w-full flex flex-col items-center justify-center pl-4 border rounded-md"
+              value={currentUser && user && user.email}
+              readOnly
+              className="h-12 w-full flex flex-col items-center justify-center text-[#858585] pl-4 border rounded-md focus-within:outline-none"
             />
           </label>
           <label
@@ -131,7 +163,9 @@ const Help = (props: Props) => {
               id="phoneNumber"
               name="phoneNumber"
               autoComplete="on"
-              className="h-12 w-full flex flex-col items-center justify-center pl-4 border rounded-md"
+              value={currentUser && user && currentUser.number}
+              readOnly
+              className="h-12 w-full flex flex-col items-center justify-center text-[#858585] pl-4 border rounded-md focus-within:outline-none"
             />
           </label>
         </div>
@@ -144,6 +178,11 @@ const Help = (props: Props) => {
             id="subject"
             name="subject"
             autoComplete="off"
+            required
+            value={formData.subject}
+            onChange={(e) =>
+              setFormData({ ...formData, subject: e.target.value })
+            }
             className="h-12 w-full flex flex-col items-center justify-center pl-4 border rounded-md"
           />
         </label>
@@ -152,16 +191,22 @@ const Help = (props: Props) => {
           className="h-4/6 w-full flex flex-col items-start justify-center"
         >
           Message
-          <input
+          <textarea
             id="message"
             name="message"
             autoComplete="off"
-            className="h-full w-full flex flex-col items-center justify-center border rounded-md p-4"
+            required
+            value={formData.message}
+            onChange={(e) =>
+              setFormData({ ...formData, message: e.target.value })
+            }
+            className="h-full w-full flex items-start justify-start border rounded-md p-4"
           />
         </label>
         <button
           type="submit"
           className="h-12 w-36 flex items-center justify-center text-[#fff] font-semibold bg-[#7d1f2e] rounded hover:bg-[#701b29] mb-4"
+          disabled={!formData.subject || !formData.message}
         >
           Submit
         </button>

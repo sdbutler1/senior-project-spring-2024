@@ -11,7 +11,7 @@ import { useGlobalLoading } from "@/globalStates/useGlobalLoading";
 import { useGlobalAlert } from "@/globalStates/useGlobalAlert";
 
 // components
-import CurrentUser from "./global/CurrentUser";
+import CurrentUser from "@/components/global/CurrentUser";
 
 const UserProfile = () => {
   const { user } = useAuth();
@@ -94,14 +94,16 @@ const UserProfile = () => {
       });
 
       setTranslateAlert(true, "User Profile updated", "success");
-      setLoading(true, 0, 2000);
 
       // clear the form after submission
       form.reset();
     } catch (e) {
       setTranslateAlert(true, "Error updating user document", "error");
-      setLoading(true, 0, 2000);
     }
+
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000);
   };
 
   return (
