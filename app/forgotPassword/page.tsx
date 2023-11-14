@@ -1,18 +1,19 @@
 "use client";
 
 // React components
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { sendPasswordResetEmail } from "firebase/auth";
+import { collection, getDocs } from "firebase/firestore";
 
 // global states
 import { useGlobalLoading } from "@/globalStates/useGlobalLoading";
+import { useGlobalAlert } from "@/globalStates/useGlobalAlert";
 
 // Components
 import { useAuth } from "@/context/AuthContext";
-import { auth } from "@/config/firebase";
-import Alert from "@/components/global/Alert";
+import { auth, db } from "@/config/firebase";
 import LoggingInLoading from "@/components/global/LoggingInLoading";
 
 // Assets
@@ -22,56 +23,91 @@ import logo from "../../public/assets/shawlogin.png";
 // icons
 import { HiAtSymbol, HiArrowLongLeft } from "react-icons/hi2";
 
+interface UserData {
+  email: string;
+}
+
 export default function ForgotPassword() {
   const { setLoading2 } = useGlobalLoading();
-  const { user } = useAuth();
+  const { setTranslateAlert } = useGlobalAlert();
+  const { logout, user } = useAuth();
+  const [userList, setUserList] = React.useState<UserData[] | null>(null);
   const router = useRouter();
-  const [alertMessage, setAlertMessage] = useState({
-    message: "",
-    type: "",
-  });
-  const [translateAlert, setTranslateAlert] = useState(false);
-
   const [formData, setFormData] = useState({
     forgetEmail: "",
   });
 
-  const translateAlertPopUp = () => {
-    setTranslateAlert(!translateAlert);
-    const timer = setTimeout(() => {
-      setTranslateAlert(!translateAlert);
-      setLoading2(true, 0, 1500);
-      router.push("/login");
-    }, 3000);
+  React.useEffect(() => {
+    const collectionRef = collection(db, "authEmails");
 
-    return () => {
-      clearTimeout(timer);
+    const fetchData = async () => {
+      try {
+        const querySnapshot = await getDocs(collectionRef);
+        const userDataList: UserData[] = [];
+
+        querySnapshot.forEach((doc) => {
+          if (doc.exists()) {
+            const data = doc.data() as UserData;
+            userDataList.push(data);
+          } else {
+            console.log("Document does not exist");
+          }
+        });
+        setUserList(userDataList);
+      } catch (error) {
+        console.error("Error fetching documents:", error);
+      }
     };
-  };
+
+    fetchData();
+  }, []);
+
+  const isEmailInUserList =
+    userList && userList.some((user) => user.email === formData.forgetEmail);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    try {
-      await sendPasswordResetEmail(auth, formData.forgetEmail);
-      setAlertMessage({ message: "Check your email", type: "success" });
-      translateAlertPopUp();
-    } catch (err) {
-      if (err instanceof Error) {
-        setAlertMessage({ message: err.message, type: "error" });
-      }
-    }
 
-    setFormData({
-      forgetEmail: "",
-    });
+    if (isEmailInUserList) {
+      try {
+        await sendPasswordResetEmail(auth, formData.forgetEmail);
+        setTranslateAlert(
+          true,
+          "Check email to continue reset process",
+          "success"
+        );
+        setTimeout(() => {
+          setLoading2(true, 0, 1000);
+          router.push("/login");
+          logout();
+        }, 4000);
+      } catch (err) {
+        if (err instanceof Error) {
+          setTranslateAlert(
+            true,
+            "Unable to reset password. Try again",
+            "error"
+          );
+          setTimeout(() => {
+            setLoading2(true, 0, 1000);
+          }, 4000);
+        }
+      }
+
+      setFormData({
+        forgetEmail: "",
+      });
+    } else {
+      setTranslateAlert(true, "Email not found. Try again", "error");
+    }
   };
 
   useEffect(() => {
-    if (user) {
-      setLoading2(true, 0, 1500);
-      router.push("/");
-    }
-  }, [router, user, setLoading2]);
+    setLoading2(true, 0, 1000);
+    setFormData({
+      forgetEmail: "",
+    });
+  }, [setLoading2, setFormData]);
 
   return (
     <>
@@ -86,21 +122,13 @@ export default function ForgotPassword() {
             className="h-full w-full object-fit"
           />
         </div>
-        {alertMessage && (
-          <Alert
-            translateAlert={translateAlert}
-            message={alertMessage.message}
-            type={alertMessage.type}
-          />
-        )}
         <div className="h-auto w-80 sm:w-96 flex flex-col items-center justify-center gap-4 bg-[#fefefe] rounded-xl">
           <div className="h-auto w-full flex items-center justify-center my-4">
             <Image src={logo} alt="logo" className="w-4/6 h-auto" priority />
           </div>
-          <div className="">
-            <h2 className="text-center text-2xl sm:text-3xl font-bold leading-9 tracking-tight">
-              Forgot Password
-            </h2>
+          <div className="h-1/6 w-full flex flex-col items-center justify-start text-3xl sm:text-4xl text-[#8c2333] font-sans font-bold mb-1">
+            <h1>Department of</h1>
+            <div>Computer Science</div>
           </div>
           <div className="h-full w-80 sm:w-full flex items-center justify-center bg-[#8c2333] p-8 rounded-b-xl">
             <form

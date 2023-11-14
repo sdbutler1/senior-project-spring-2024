@@ -7,10 +7,10 @@ import { useRouter } from "next/navigation";
 
 // global states
 import { useGlobalLoading } from "@/globalStates/useGlobalLoading";
+import { useGlobalAlert } from "@/globalStates/useGlobalAlert";
 
 // Components
 import { useAuth } from "@/context/AuthContext";
-import Alert from "@/components/global/Alert";
 import LoggingInLoading from "@/components/global/LoggingInLoading";
 
 // Assets
@@ -25,51 +25,49 @@ type Props = {};
 
 const Login = (props: Props) => {
   const { setLoading2 } = useGlobalLoading();
+  const { isOpen, setTranslateAlert } = useGlobalAlert();
   const { login, user } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
-  const [translateAlert, setTranslateAlert] = useState(false);
   const router = useRouter();
   const [formData, setFormData] = useState({
     logEmail: "",
     logPassword: "",
   });
-  const [alertMessage, setAlertMessage] = useState({
-    message: "",
-    type: "",
-  });
-
-  const translateAlertPopUp = () => {
-    setTranslateAlert(!translateAlert);
-    const timer = setTimeout(() => {
-      setTranslateAlert(false);
-    }, 3000);
-    return () => {
-      clearTimeout(timer);
-    };
-  };
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       await login(formData.logEmail, formData.logPassword);
+      setTranslateAlert(true, "Successfully logged in", "success");
     } catch (err) {
       if (err instanceof Error) {
-        setAlertMessage({ message: err.message, type: "error" });
-        translateAlertPopUp();
-        setLoading2(true, 0, 1000);
+        setTranslateAlert(true, "Invalid login credentials", "error");
+        setTimeout(() => {
+          setLoading2(true, 0, 1000);
+          setFormData({
+            logEmail: "",
+            logPassword: "",
+          });
+        }, 4000);
       }
     }
-    setFormData({
-      logEmail: "",
-      logPassword: "",
-    });
   };
 
   useEffect(() => {
-    if (user) {
+    if (!user) {
+      setLoading2(true, 0, 1000);
+      setFormData({
+        logEmail: "",
+        logPassword: "",
+      });
+    }
+  }, [setFormData, setLoading2, user]);
+
+  useEffect(() => {
+    if (user && !isOpen) {
       router.push("/");
     }
-  }, [router, user]);
+  }, [router, user, isOpen]);
 
   return (
     <>
@@ -83,13 +81,6 @@ const Login = (props: Props) => {
             className="h-full w-full object-cover"
           />
         </div>
-        {alertMessage && (
-          <Alert
-            translateAlert={translateAlert}
-            message={alertMessage.message}
-            type={alertMessage.type}
-          />
-        )}
         <div className="h-[33rem] w-[20rem] md:h-[35rem] md:w-[26rem] flex flex-col items-center justify-between bg-[#fefefe] rounded-xl z-40">
           <div className="h-2/6 w-full flex items-center justify-center">
             <Image src={logo} alt="logo" className="w-4/6 h-auto" priority />
@@ -176,26 +167,23 @@ const Login = (props: Props) => {
             </form>
           </div>
         </div>
-        <div className="absolute top-8 right-8 h-auto w-96 flex items-center justify-center p-4 bg-white border z-50">
+        <div className="absolute top-8 left-8 h-auto w-96 flex items-center justify-center p-4 bg-white border z-45">
           <ul className="flex flex-col items-start justify-center gap-4 no-underline ">
-            <li>
-              * Fix alert so it just one set alert but can be changed depending
-              on props
-            </li>
-            <li>* Need to fix update profile inputs</li>
-            <li>* If inputs are empty disable submit button</li>
-            <li>
-              * Add to update only inputs that are edited by adding an editing
-              button to each button and use that instead of formButton
-            </li>
             <li>* Fix table to get data from the database</li>
             <li>* Fix delete, edit, and add functionality</li>
             <li>* Matthew is still working on the home page</li>
             <li>* Probably create a calendar page</li>
             <li>
               * Everything else works; the help pop-up sends the information to
-              the database. Will work on sending an email when the database gets
-              a new document.
+              the database. Loading also works, no glitches when trying to go back.
+            </li>
+            <li>
+              * There are alerts, users can update profile information. Help
+              popup works just need to work on sending an email when the
+              database gets a new document.
+            </li>
+            <li>
+              * After these tasks are finished, or during the process will work on the responsive aspect of the website to screen sizes (login and forget password not included)
             </li>
           </ul>
         </div>

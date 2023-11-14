@@ -1,28 +1,43 @@
-import React from "react";
+"use client";
 
-// Define the class mapping
-const alertClasses = {
-  success: "bg-[#2ea93c] text-[#fff]",
-  error: "bg-red-100 text-red-700",
-  info: "bg-blue-100 text-blue-700",
-};
+// react components
+import React, { useState } from "react";
 
-interface AlertProps {
-  message: string;
-  type: String;
-  translateAlert: boolean;
-}
+// global states
+import { useGlobalAlert } from "@/globalStates/useGlobalAlert";
 
-const Alert: React.FC<AlertProps> = ({ message, type, translateAlert }) => {
-  const alertClass = alertClasses[type as "success" | "error" | "info"];
+// icons
+import { MdError } from "react-icons/md";
+import { AiFillCheckCircle } from "react-icons/ai";
+import { FaCircleInfo } from "react-icons/fa6";
+
+type Props = {};
+
+const Alert = (props: Props) => {
+  const { isOpen, message, type } = useGlobalAlert();
 
   return (
     <div
-      className={`absolute top-8 h-16 w-auto flex items-center justify-center text-xl p-4 ${alertClass} font-mono rounded-md ${
-        !translateAlert ? "translate-y-0" : "translate-y-[-200%]"
-      } transition duration-500`}
+      className={`alertShadow flex items-center justify-center text-[#fff] font-semibold px-2 rounded ${
+        type === "success"
+          ? "bg-[#4bc77b]"
+          : type === "error"
+          ? "bg-[#ee4b5c]"
+          : type === "info" && "bg-[#3790b9]"
+      } ${
+        isOpen ? "translate-x-0" : "translate-x-[200%]"
+      } z-40 shadow-md transition duration-1000 delay-100`}
     >
-      {message}
+      <div className="h-full w-2/12 flex items-center justify-center">
+        {type === "success" && <AiFillCheckCircle className="text-xl" />}
+        {type === "error" && <MdError className="text-xl" />}
+        {type !== "success" && type !== "error" && (
+          <FaCircleInfo className="text-xl" />
+        )}
+      </div>
+      <div className="h-full w-10/12 flex items-center justify-start pt-[2px]">
+        {message}
+      </div>
     </div>
   );
 };

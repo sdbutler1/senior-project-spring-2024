@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 
 // global states
 import { useGlobalLoading } from "@/globalStates/useGlobalLoading";
+import { useGlobalAlert } from "@/globalStates/useGlobalAlert";
 
 // components
 import CurrentUser from "@/components/global/CurrentUser";
@@ -27,6 +28,7 @@ type Props = {};
 
 const Page = (props: Props) => {
   const { loading, setLoading } = useGlobalLoading();
+  const { setTranslateAlert } = useGlobalAlert();
   const currentUser = CurrentUser({});
   const { user } = useAuth();
   const router = useRouter();
@@ -37,30 +39,6 @@ const Page = (props: Props) => {
   const photoInputRef = React.createRef<HTMLInputElement>();
   const userPhotoUrl =
     "https://firebasestorage.googleapis.com/v0/b/com-sci-dep-auth-project.appspot.com/o/default.png?alt=media&token=bafe0340-24ec-4083-ba7d-5bd6e3319d02";
-
-  const [translateAlert, setTranslateAlert] = useState({
-    isOpen: false,
-    message: "",
-    type: "",
-  });
-
-  const showTranslateAlert = (
-    isOpen: boolean,
-    message: string,
-    type: string
-  ) => {
-    setTranslateAlert({
-      isOpen,
-      message,
-      type,
-    });
-
-    if (isOpen) {
-      setTimeout(() => {
-        setTranslateAlert({ isOpen: false, message: message, type: type });
-      }, 3000);
-    }
-  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -92,9 +70,9 @@ const Page = (props: Props) => {
           updateProfile(currentUser, { photoURL });
           setLoading(true, 3000, 2000);
         }, 1000);
-        showTranslateAlert(true, "New photo added successfully", "success");
+        setTranslateAlert(true, "New photo added successfully", "success");
       } catch (error) {
-        showTranslateAlert(true, "Error uploading photo", "error");
+        setTranslateAlert(true, "Error uploading photo", "error");
       }
     },
     [storage]
@@ -114,15 +92,11 @@ const Page = (props: Props) => {
           updateProfile(user, { photoURL });
         }, 1000);
         setLoading(true, 3000, 2000);
-        showTranslateAlert(true, "Default photo set successfully", "success");
+        setTranslateAlert(true, "Default photo set successfully", "success");
       }
     } catch (error) {
-      console.error("Error setting default photo:", error);
-      showTranslateAlert(
-        true,
-        `Error setting default photo: ${error}`,
-        "error"
-      );
+      console.error("Error setting default photo");
+      setTranslateAlert(true, "Error setting default photo", "error");
     }
     setEditPopUp(false);
   };
@@ -134,10 +108,10 @@ const Page = (props: Props) => {
         updateProfile(user, { photoURL });
       }, 1000);
       setLoading(true, 3000, 2000);
-      showTranslateAlert(true, "Photo deleted successfully", "success");
+      setTranslateAlert(true, "Photo deleted successfully", "success");
     } catch (error) {
-      console.error("Error deleting user photo:", error);
-      showTranslateAlert(true, `Error deleting user photo: ${error}`, "error");
+      console.error("Error deleting user photo:");
+      setTranslateAlert(true, "Error deleting user photo", "error");
     }
   };
 
@@ -167,20 +141,9 @@ const Page = (props: Props) => {
   }, [router, user]);
 
   return (
-    <div className="relative h-full w-full flex flex-col items-start justify-start gap-12">
-      <div
-        className={`absolute top-3 left-[39%] h-[3.25rem] w-80 flex items-center justify-center text-lg font-semibold ${
-          translateAlert.type === "success"
-            ? "bg-[#76ec93e7] text-black"
-            : "bg-[#d93966] text-white"
-        } z-50 ${
-          !translateAlert.isOpen ? "translate-y-0" : "translate-y-[-450%]"
-        } transition duration-1000 delay-100`}
-      >
-        {translateAlert.message}
-      </div>
+    <div className="relative h-auto w-full flex flex-col items-start xl:items-center justify-start gap-16 mt-40 sm:mt-0">
       <div className="h-auto w-full flex flex-col items-center justify-center gap-4 -mb-4">
-        <div className="h-auto w-full flex items-center justify-between text-xl font-semibold bg-[#fff] px-4 py-3 rounded-lg">
+        <div className="h-auto w-full md:w-11/12 xl:w-3/6 flex items-center justify-between text-xl font-semibold bg-[#fff] px-4 py-3 rounded-lg">
           <h1>Update Profile</h1>
           {currentUser && user ? (
             <div className="flex items-center justify-center">
@@ -223,7 +186,7 @@ const Page = (props: Props) => {
         </div>
       </div>
       <div
-        className={`editPopUp absolute top-[11.3rem] left-[28.5%] h-[24.8rem] w-[41.4rem] ${
+        className={`editPopUp absolute top-[11.3rem] left-2 md:left-60 xl:left-[32%] h-96 w-[20rem] md:w-[35rem] xl:w-[41.4rem] ${
           EditPopUp ? "flex" : "hidden"
         } flex-col items-center justify-center bg-[#fff] rounded-lg border`}
       >

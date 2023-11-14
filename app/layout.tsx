@@ -16,6 +16,7 @@ import "../styles/globals.css";
 import Providers from "@/context/providers";
 import { AuthContextProvider } from "@/context/AuthContext";
 import PageWrapper from "@/components/global/PageWrapper";
+import Alert from "@/components/global/Alert";
 
 export default function RootLayout({
   children,
@@ -28,7 +29,10 @@ export default function RootLayout({
         <Providers>
           <div className="relative h-screen w-screen flex flex-col items-center justify-center">
             <AuthContextProvider>
-              <PageWrapper>{children}</PageWrapper>
+              <Alert />
+              <PageWrapper>
+                {children}
+                </PageWrapper>
             </AuthContextProvider>
           </div>
         </Providers>
