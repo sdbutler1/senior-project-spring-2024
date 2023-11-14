@@ -36,6 +36,15 @@ body {
   scrollbar-width: thin;
 }
 
+.alertShadow {
+  position: absolute;
+  top: 2rem;
+  right: 1rem;
+  height: 4rem;
+  width: 20rem;
+  box-shadow: 15px 15px 10px rgba(0, 0, 0, 0.1), -5px -5px 20px #fffb;
+}
+
 .formShadow::-webkit-scrollbar {
   width: 4px;
 }

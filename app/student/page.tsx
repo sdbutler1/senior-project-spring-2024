@@ -5,7 +5,6 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 // global states
-import { useGlobalLoading } from "@/globalStates/useGlobalLoading";
 
 //components
 import { useAuth } from "@/context/AuthContext";
@@ -73,7 +72,6 @@ const columns: GridColDef[] = [
 ];
 
 const StudentTable = (props: Props) => {
-  const { setLoading } = useGlobalLoading();
   const { user } = useAuth();
   const router = useRouter();
   const [open, setOpen] = useState(false);

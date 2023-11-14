@@ -41,7 +41,7 @@ const NavPageLoading = () => {
           <div className="h-2 w-2 bg-white animate-pulse border rounded-full ml-2"></div>
         </div>
       </div>
-      <Image src={loadingGif} alt="Loading" className="h-auto w-60" />
+      <Image src={loadingGif} alt="Loading" className="h-auto w-60" priority/>
     </div>
   );
 };

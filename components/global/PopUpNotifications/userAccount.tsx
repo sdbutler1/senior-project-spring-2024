@@ -3,12 +3,13 @@
 // react components
 import React from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 
 // global states
 import { useglobalPopUp } from "@/globalStates/useglobalPopUp";
 import { useGlobalLoading } from "@/globalStates/useGlobalLoading";
+import { useGlobalAlert } from "@/globalStates/useGlobalAlert";
 
 // components
 import { useAuth } from "@/context/AuthContext";
@@ -20,19 +21,20 @@ import CurrentUser from "@/components/global/CurrentUser";
 import { AiOutlineClose } from "react-icons/ai";
 import { MdLogout } from "react-icons/md";
 import { FaUserLock } from "react-icons/fa6";
-import InfoIcon from '@mui/icons-material/Info';
-import PrivacyTipIcon from '@mui/icons-material/PrivacyTip';
-import HelpIcon from '@mui/icons-material/Help';
+import InfoIcon from "@mui/icons-material/Info";
+import PrivacyTipIcon from "@mui/icons-material/PrivacyTip";
+import HelpIcon from "@mui/icons-material/Help";
 
 type Props = {};
 
 const UserAccount = (props: Props) => {
   const { logout, user } = useAuth();
-  const { setLoading } = useGlobalLoading();
+  const { setLoading, setLoading2 } = useGlobalLoading();
+  const { setTranslateAlert } = useGlobalAlert();
   const currentPathname = usePathname();
+  const router = useRouter();
   const currentUser = CurrentUser({});
   const { isPopUpOpen1, setPopUpOpen1, setPopUpOpen2 } = useglobalPopUp();
-  const { setLoading2 } = useGlobalLoading();
   const userPhotoUrl =
     "https://firebasestorage.googleapis.com/v0/b/com-sci-dep-auth-project.appspot.com/o/default.png?alt=media&token=bafe0340-24ec-4083-ba7d-5bd6e3319d02";
 
@@ -127,13 +129,19 @@ const UserAccount = (props: Props) => {
                 <HelpIcon />
                 <div>Help</div>
               </button>
-              <Link
-                href={"/forgotPassword"}
+              <button
+                type="button"
+                onClick={() => {
+                  setTranslateAlert(true, "You will be logged out at some point during this process", "info");
+                  setTimeout(() => {
+                    router.push("/forgotPassword");
+                  }, 3000);
+                }}
                 className="popUpClick h-auto w-full flex items-center justify-start gap-4 text-[15px] text-[#fff] px-5"
               >
                 <FaUserLock className="text-[1.3rem]" />
                 <div>Reset Password</div>
-              </Link>
+              </button>
             </div>
           </div>
           <hr className="w-full" />

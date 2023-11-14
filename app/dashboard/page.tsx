@@ -9,11 +9,11 @@ import { useGlobalLoading } from "@/globalStates/useGlobalLoading";
 
 //components
 import { useAuth } from "@/context/AuthContext";
-import BarChartBox from "@/components/barChartBox/BarChartBox";
+import BarChartBox from "@/components/BarChartBox";
 import BigChartBox from "@/components/bigChartBox/BigChartBox";
-import ChartBox from "@/components/chartBox/ChartBox";
-import PieChartBox from "@/components/pieCartBox/PieChartBox";
-import TopBox from "@/components/topBox/TopBox";
+import ChartBox from "@/components/ChartBox";
+import PieChartBox from "@/components/PieChartBox";
+import TopBox from "@/components/TopBox";
 
 // assets
 import {

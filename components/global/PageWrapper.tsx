@@ -46,7 +46,9 @@ function PageWrapper({ children }: { children: React.ReactNode }) {
             : !isSidebarOpen &&
               isSidebarHidden && // open minimized
               "lg:ml-20 mt-[5rem] lg:w-[calc(100%-20rem)]"
-        } h-[calc(100vh-10rem)] px-8 ${user ? "flex" : "hidden"} items-center justify-center gap-8 transition-width duration-500`}
+        } h-[calc(100%-10rem)] px-8 ${
+          user ? "flex" : "hidden"
+        } items-center justify-center gap-8 transition-width duration-500`}
       >
         {allowedPages.includes(currentPathname) && user ? <SideBar /> : null}
         {children}

@@ -8,38 +8,57 @@ import { collection, doc, updateDoc } from "firebase/firestore";
 
 // global states
 import { useGlobalLoading } from "@/globalStates/useGlobalLoading";
+import { useGlobalAlert } from "@/globalStates/useGlobalAlert";
 
 // components
 import CurrentUser from "./global/CurrentUser";
 
-type Props = {};
-
-const UserProfile = (props: Props) => {
+const UserProfile = () => {
   const { user } = useAuth();
   const { setLoading } = useGlobalLoading();
+  const { setTranslateAlert } = useGlobalAlert();
   const [formButton, setFormButton] = useState(false);
   const currentUser = CurrentUser({});
+  const [editTitle, setEditTitle] = useState("");
+  const [editFullName, setEditFullName] = useState("");
+  const [editNumber, setEditNumber] = useState("");
+  const [editCity, setEditCity] = useState("");
+  const [editState, setEditState] = useState("");
+  const [editZipCode, setEditZipCode] = useState("");
+
   const [formData, setFormData] = useState({
     title: "",
     fullName: "",
-    email: "",
     number: "",
     city: "",
     state: "",
     zipCode: "",
   });
 
-  const toggleFormButton = () => {
+  const editProfile = () => {
     setFormButton(!formButton);
     setFormData({
       title: "",
       fullName: "",
-      email: "",
       number: "",
       city: "",
       state: "",
       zipCode: "",
     });
+  };
+
+  const cancelEdit = () => {
+    setFormButton(false);
+    setEditTitle("");
+    setEditFullName("");
+    setEditNumber("");
+    setEditCity("");
+    setEditState("");
+    setEditZipCode("");
+  };
+
+  const isFormDataEmpty = () => {
+    return Object.values(formData).every((value) => value === "");
   };
 
   const handleSubmit = async (event: React.FormEvent) => {
@@ -51,7 +70,7 @@ const UserProfile = (props: Props) => {
 
     // Create an object from form data
     const data: Record<string, string> = {};
-    const fieldsToUpdate = ["city", "number", "state", "zipCode"];
+    const fieldsToUpdate = ["city", "number", "state", "title", "zipCode"];
 
     formData.forEach((value, key) => {
       if (fieldsToUpdate.includes(key)) {
@@ -59,21 +78,29 @@ const UserProfile = (props: Props) => {
       }
     });
 
+    // Split fullName into firstName and lastName
+    const fullName = formData.get("fullName") as string;
+    const [firstName, lastName] = fullName.split(" ");
+
     try {
       // Reference to the user's document
       const userDocRef = doc(collection(db, "authUsers"), user.uid);
 
       // Update the specified fields in the user's document with the form data
-      await updateDoc(userDocRef, data);
+      await updateDoc(userDocRef, {
+        ...data,
+        firstName,
+        lastName,
+      });
 
-      console.log("User document updated");
+      setTranslateAlert(true, "User Profile updated", "success");
       setLoading(true, 0, 2000);
 
       // clear the form after submission
       form.reset();
     } catch (e) {
+      setTranslateAlert(true, "Error updating user document", "error");
       setLoading(true, 0, 2000);
-      console.error("Error updating user document: ", e);
     }
   };
 
@@ -81,7 +108,7 @@ const UserProfile = (props: Props) => {
     <>
       <form
         onSubmit={handleSubmit}
-        className="h-full w-3/6 flex flex-col items-start justify-center"
+        className="h-full w-full xl:w-3/6 flex flex-col items-start justify-center"
       >
         <div className="h-full w-full flex flex-col items-start justify-start gap-2 text-[15px] font-semibold">
           <div className="h-auto w-full flex items-center justify-center gap-10 p-2">
@@ -94,10 +121,13 @@ const UserProfile = (props: Props) => {
                 id="title"
                 name="title"
                 autoComplete="off"
+                required
                 value={
-                  formButton
-                    ? formData.title
-                    : currentUser && user && currentUser.title
+                  !formButton && editTitle !== "title"
+                    ? currentUser && user && currentUser.title
+                    : formButton && editTitle !== "title"
+                    ? currentUser && user && currentUser.title
+                    : formButton && editTitle === "title" && formData.title
                 }
                 onChange={(e: any) =>
                   setFormData((formData) => ({
@@ -105,6 +135,7 @@ const UserProfile = (props: Props) => {
                     title: e.target.value,
                   }))
                 }
+                onFocus={() => formButton && setEditTitle("title")}
                 readOnly={!formButton}
                 className={`h-12 w-full flex flex-col items-center justify-center ${
                   formButton
@@ -122,12 +153,19 @@ const UserProfile = (props: Props) => {
                 id="fullName"
                 name="fullName"
                 autoComplete="off"
+                required
                 value={
-                  formButton
-                    ? formData.fullName
-                    : currentUser &&
+                  !formButton && editFullName !== "fullName"
+                    ? currentUser &&
                       user &&
                       `${currentUser.firstName} ${currentUser.lastName}`
+                    : formButton && editFullName !== "fullName"
+                    ? currentUser &&
+                      user &&
+                      `${currentUser.firstName} ${currentUser.lastName}`
+                    : formButton &&
+                      editFullName === "fullName" &&
+                      formData.fullName
                 }
                 onChange={(e: any) =>
                   setFormData((formData) => ({
@@ -135,6 +173,7 @@ const UserProfile = (props: Props) => {
                     fullName: e.target.value,
                   }))
                 }
+                onFocus={() => formButton && setEditFullName("fullName")}
                 readOnly={!formButton}
                 className={`h-12 w-full flex flex-col items-center justify-center ${
                   formButton
@@ -153,21 +192,10 @@ const UserProfile = (props: Props) => {
               id="email"
               name="email"
               autoComplete="off"
-              value={
-                formButton ? formData.email : currentUser && user && user.email
-              }
-              onChange={(e: any) =>
-                setFormData((formData) => ({
-                  ...formData,
-                  email: e.target.value,
-                }))
-              }
-              readOnly={!formButton}
-              className={`h-12 w-full flex flex-col items-center justify-center ${
-                formButton
-                  ? "text-[#464646]"
-                  : "text-[#858585] focus-within:outline-none"
-              } p-4 border rounded-md`}
+              required
+              value={user && user.email}
+              readOnly
+              className="h-12 w-full flex flex-col items-center justify-center text-[#858585] p-4 border rounded-md focus-within:outline-none"
             />
           </label>
           <label
@@ -179,10 +207,13 @@ const UserProfile = (props: Props) => {
               id="number"
               name="number"
               autoComplete="off"
+              required
               value={
-                formButton
-                  ? formData.number
-                  : currentUser && user && currentUser.number
+                !formButton && editNumber !== "number"
+                  ? currentUser && user && currentUser.number
+                  : formButton && editNumber !== "number"
+                  ? currentUser && user && currentUser.number
+                  : formButton && editNumber === "number" && formData.number
               }
               onChange={(e: any) =>
                 setFormData((formData) => ({
@@ -190,6 +221,7 @@ const UserProfile = (props: Props) => {
                   number: e.target.value,
                 }))
               }
+              onFocus={() => formButton && setEditNumber("number")}
               readOnly={!formButton}
               className={`h-12 w-full flex flex-col items-center justify-center ${
                 formButton
@@ -207,10 +239,13 @@ const UserProfile = (props: Props) => {
               id="city"
               name="city"
               autoComplete="off"
+              required
               value={
-                formButton
-                  ? formData.city
-                  : currentUser && user && currentUser.city
+                !formButton && editCity !== "city"
+                  ? currentUser && user && currentUser.city
+                  : formButton && editCity !== "city"
+                  ? currentUser && user && currentUser.city
+                  : formButton && editCity === "city" && formData.city
               }
               onChange={(e: any) =>
                 setFormData((formData) => ({
@@ -218,6 +253,7 @@ const UserProfile = (props: Props) => {
                   city: e.target.value,
                 }))
               }
+              onFocus={() => formButton && setEditCity("city")}
               readOnly={!formButton}
               className={`h-12 w-full flex flex-col items-center justify-center ${
                 formButton
@@ -236,10 +272,13 @@ const UserProfile = (props: Props) => {
                 id="state"
                 name="state"
                 autoComplete="off"
+                required
                 value={
-                  formButton
-                    ? formData.state
-                    : currentUser && user && currentUser.state
+                  !formButton && editState !== "state"
+                    ? currentUser && user && currentUser.state
+                    : formButton && editState !== "state"
+                    ? currentUser && user && currentUser.state
+                    : formButton && editState === "state" && formData.state
                 }
                 onChange={(e: any) =>
                   setFormData((formData) => ({
@@ -247,6 +286,7 @@ const UserProfile = (props: Props) => {
                     state: e.target.value,
                   }))
                 }
+                onFocus={() => formButton && setEditState("state")}
                 readOnly={!formButton}
                 className={`h-12 w-full flex flex-col items-center justify-center ${
                   formButton
@@ -264,10 +304,15 @@ const UserProfile = (props: Props) => {
                 id="zipCode"
                 name="zipCode"
                 autoComplete="off"
+                required
                 value={
-                  formButton
-                    ? formData.zipCode
-                    : currentUser && user && currentUser.zipCode
+                  !formButton && editZipCode !== "zipCode"
+                    ? currentUser && user && currentUser.zipCode
+                    : formButton && editZipCode !== "zipCode"
+                    ? currentUser && user && currentUser.zipCode
+                    : formButton &&
+                      editZipCode === "zipCode" &&
+                      formData.zipCode
                 }
                 onChange={(e: any) =>
                   setFormData((formData) => ({
@@ -275,6 +320,7 @@ const UserProfile = (props: Props) => {
                     zipCode: e.target.value,
                   }))
                 }
+                onFocus={() => formButton && setEditZipCode("zipCode")}
                 readOnly={!formButton}
                 className={`h-12 w-full flex flex-col items-center justify-center ${
                   formButton
@@ -302,7 +348,7 @@ const UserProfile = (props: Props) => {
         <div className="h-full w-full flex items-center justify-end gap-20 p-2">
           {formButton && (
             <div
-              onClick={toggleFormButton}
+              onClick={cancelEdit}
               className="h-10 w-36 flex items-center justify-center font-semibold rounded hover:bg-[#fff] cursor-pointer"
             >
               Cancel
@@ -312,12 +358,13 @@ const UserProfile = (props: Props) => {
             <button
               type="submit"
               className="h-10 w-36 flex items-center justify-center text-[#fff] font-semibold bg-[#7d1f2e] rounded hover:bg-[#701b29]"
+              disabled={isFormDataEmpty()}
             >
               Save Changes
             </button>
           ) : (
             <div
-              onClick={toggleFormButton}
+              onClick={editProfile}
               className="h-10 w-36 flex items-center justify-center text-[#fff] font-semibold bg-[#7d1f2e] rounded hover:bg-[#701b29] cursor-pointer"
             >
               Edit Profile
