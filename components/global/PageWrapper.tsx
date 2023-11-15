@@ -19,7 +19,7 @@ import { useAuth } from "@/context/AuthContext";
 function PageWrapper({ children }: { children: React.ReactNode }) {
   const { login, user } = useAuth();
   const currentPathname = usePathname();
-  const allowedPages = ["/dashboard", "/userProfile", "/student", "/"];
+  const allowedPages = ["/", "/dashboard", "/student", "/calendar", "/userProfile"];
   const { isSidebarOpen, isSidebarHidden } = useGlobalSideBar();
 
   if (currentPathname === "/login" || currentPathname === "/forgotPassword") {

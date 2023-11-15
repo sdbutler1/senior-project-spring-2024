@@ -141,7 +141,7 @@ const SideBar = () => {
           </li>
         </Link>
         <Link
-          href={""}
+          href={"/calendar"}
           className={`relative h-[3.5rem] w-full flex items-center justify-center rounded-md hover:text-[#f4b461] ${
             currentPathname === "" ? "bg-[#6e1d2a9f] text-[#f4b461]" : undefined
           }`}
