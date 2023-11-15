@@ -150,7 +150,7 @@ const StudentTable = (props: Props) => {
         unsubscribe();
       };
     }
-  }, [user, students, setTranslateAlert]);
+  }, [user, students, setTranslateAlert, setLoading]);
 
   const handleRowSelection = (data: any) => {
     const recipients: student[] = data.map(
@@ -226,7 +226,6 @@ const StudentTable = (props: Props) => {
         </div>
         <DataTable
           handleRowSelection={handleRowSelection}
-          slug="users"
           columns={columns}
           rows={students}
         />
