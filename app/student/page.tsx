@@ -7,11 +7,12 @@ import { getDatabase, ref, get, onValue } from "firebase/database";
 
 // global states
 import { useGlobalAlert } from "@/globalStates/useGlobalAlert";
+import { useGlobalLoading } from "@/globalStates/useGlobalLoading";
 
 //components
 import { useAuth } from "@/context/AuthContext";
-import Add from "@/components/add/Add";
-import DataTable from "@/components/dataTable/DataTable";
+import AddStudent from "@/components/global/PopUpNotifications/AddStudent";
+import DataTable from "@/components/DataTable";
 import EmailModal from "@/components/global/EmailModal";
 
 // assets
@@ -85,8 +86,9 @@ const columns: GridColDef[] = [
 const StudentTable = (props: Props) => {
   const { user } = useAuth();
   const router = useRouter();
-  const [open, setOpen] = useState(false);
+  const [addPopUp, setAddPopUp] = useState(false);
   const { setTranslateAlert } = useGlobalAlert();
+  const { setLoading } = useGlobalLoading();
   const [modalShown, setModalShown] = useState<boolean>(false);
   const [selectedRows, setSelectedRows] = useState<student[]>([]);
   const [formattedStudentData, setFormattedStudentData] =
@@ -133,6 +135,7 @@ const StudentTable = (props: Props) => {
               "One moment, the Student Table has been updated.",
               "info"
             );
+            setLoading(true, 2000, 1000);
           }
         } catch (error) {
           console.error("Error fetching data:", error);
@@ -147,7 +150,7 @@ const StudentTable = (props: Props) => {
         unsubscribe();
       };
     }
-  }, [user, students, setTranslateAlert]);
+  }, [user, students, setTranslateAlert, setLoading]);
 
   const handleRowSelection = (data: any) => {
     const recipients: student[] = data.map(
@@ -177,6 +180,19 @@ const StudentTable = (props: Props) => {
     }
   }, [router, user]);
 
+  useEffect(() => {
+    const closePopupsOnOutsideClick = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      if (!target.closest(".addPopup")) {
+        setAddPopUp(false);
+      }
+    };
+    document.addEventListener("click", closePopupsOnOutsideClick);
+    return () => {
+      document.removeEventListener("click", closePopupsOnOutsideClick);
+    };
+  }, [setAddPopUp]);
+
   return (
     <>
       {modalShown && (
@@ -192,8 +208,8 @@ const StudentTable = (props: Props) => {
           <div className="h-full w-full flex items-center justify-between">
             <div className="flex items-center justify-start gap-4">
               <button
-                onClick={() => setOpen(true)}
-                className="w-auto flex items-center justify-center gap-2 text-sm 2xl:text-lg rounded-md bg-shaw-garnet hover:opacity-100 opacity-90 text-white px-2 py-1"
+                onClick={() => setAddPopUp(!addPopUp)}
+                className="addPopup w-auto flex items-center justify-center gap-2 text-sm 2xl:text-lg rounded-md bg-shaw-garnet hover:opacity-100 opacity-90 text-white px-2 py-1"
               >
                 <span>Add Student</span>
                 <PersonAddAltOutlinedIcon className="w-6" />
@@ -208,15 +224,13 @@ const StudentTable = (props: Props) => {
             </div>
           </div>
         </div>
-
         <DataTable
           handleRowSelection={handleRowSelection}
-          slug="users"
           columns={columns}
           rows={students}
         />
-        {open && <Add slug="student" columns={columns} setOpen={setOpen} />}
       </div>
+      <AddStudent addPopUp={addPopUp} setAddPopUp={setAddPopUp} />;
     </>
   );
 };

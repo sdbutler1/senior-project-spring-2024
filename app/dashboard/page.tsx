@@ -10,7 +10,7 @@ import { useGlobalLoading } from "@/globalStates/useGlobalLoading";
 //components
 import { useAuth } from "@/context/AuthContext";
 import BarChartBox from "@/components/BarChartBox";
-import BigChartBox from "@/components/bigChartBox/BigChartBox";
+import BigChartBox from "@/components/BigChartBox";
 import ChartBox from "@/components/ChartBox";
 import PieChartBox from "@/components/PieChartBox";
 import TopBox from "@/components/TopBox";

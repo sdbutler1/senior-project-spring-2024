@@ -359,7 +359,7 @@ const UserProfile = () => {
           {formButton ? (
             <button
               type="submit"
-              className="h-10 w-36 flex items-center justify-center text-[#fff] font-semibold bg-[#7d1f2e] rounded hover:bg-[#701b29]"
+              className="disabled:opacity-90 h-10 w-36 flex items-center justify-center text-[#fff] font-semibold bg-[#7d1f2e] rounded hover:bg-[#701b29]"
               disabled={isFormDataEmpty()}
             >
               Save Changes

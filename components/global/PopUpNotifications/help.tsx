@@ -160,7 +160,7 @@ const Help = (props: Props) => {
           >
             Phone Number
             <input
-              id="phoneNumber"
+              id="phoneNum"
               name="phoneNumber"
               autoComplete="on"
               value={currentUser && user && currentUser.number}
@@ -170,7 +170,7 @@ const Help = (props: Props) => {
           </label>
         </div>
         <label
-          htmlFor="phoneNum"
+          htmlFor="subject"
           className="h-auto w-full flex flex-col items-start justify-center"
         >
           Subject
@@ -205,7 +205,7 @@ const Help = (props: Props) => {
         </label>
         <button
           type="submit"
-          className="h-12 w-36 flex items-center justify-center text-[#fff] font-semibold bg-[#7d1f2e] rounded hover:bg-[#701b29] mb-4"
+          className="disabled:opacity-80 h-12 w-36 flex items-center justify-center text-[#fff] font-semibold bg-[#7d1f2e] rounded hover:bg-[#701b29] mb-4"
           disabled={!formData.subject || !formData.message}
         >
           Submit

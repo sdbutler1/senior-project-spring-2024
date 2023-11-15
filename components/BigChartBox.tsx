@@ -6,7 +6,6 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import "./bigChartBox.css";
 
 const data = [
   { year: "2017", average: 40 },
