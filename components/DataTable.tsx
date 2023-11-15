@@ -1,6 +1,7 @@
 "use client";
 
 // react components
+import React, { useState } from "react";
 import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
 import {
   getDatabase,
@@ -16,9 +17,13 @@ import {
 // global states
 import { useGlobalAlert } from "@/globalStates/useGlobalAlert";
 
+// components
+import EditStudent from "@/components/global/PopUpNotifications/EditStudent";
+
 //icons
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/DeleteOutlined";
+import { MdEdit, MdDelete } from "react-icons/md";
+import { TiUserDelete } from "react-icons/ti";
+import { IoClose } from "react-icons/io5";
 
 type Props = {
   columns: GridColDef[];
@@ -28,7 +33,15 @@ type Props = {
 
 const DataTable = (props: Props) => {
   const { setTranslateAlert } = useGlobalAlert();
-  
+  const [selectedRowId, setSelectedRowId] = useState<number | null>(null);
+  const [selectedRowData, setSelectedRowData] = useState<any | null>(null);
+  const [editPopUp, setEditPopUp] = useState(false);
+
+  const handleEdit = (rowData: any) => {
+    setSelectedRowData(rowData);
+    setEditPopUp(true);
+  };
+
   const deleteStudentById = async (studentId: number) => {
     try {
       const database = getDatabase();
@@ -64,7 +77,7 @@ const DataTable = (props: Props) => {
   const handleDelete = async (studentId: number) => {
     try {
       await deleteStudentById(studentId);
-      console.log("Student deleted successfully.");
+      setSelectedRowId(null);
     } catch (error) {
       console.error("Error deleting student:", error);
     }
@@ -76,54 +89,78 @@ const DataTable = (props: Props) => {
     headerAlign: "left",
     width: 200,
     renderCell: (params) => {
+      const isRowSelected = selectedRowId === params.row.id;
+
       return (
-        <div className="w-40 flex items-center justify-start gap-4">
-          <button
-            type="button"
-            onClick={() => console.log(params.row.id)}
-            className="cursor-pointer"
-          >
-            <EditIcon className="text-[#327123]" />
-          </button>
-          <button
-            type="button"
-            onClick={() => handleDelete(params.row.id)}
-            className="cursor-pointer"
-          >
-            <DeleteIcon className="text-[#7d1f2e]" />
-          </button>
+        <div className="w-40 flex items-center justify-start">
+          {isRowSelected ? (
+            <div className="flex items-center justify-center gap-1">
+              <button type="button" onClick={() => handleDelete(params.row.id)}>
+                <TiUserDelete className="text-xl text-[#7d1f2e]" />
+              </button>
+              <button type="button" onClick={() => setSelectedRowId(null)}>
+                <IoClose className="text-xl" />
+              </button>
+            </div>
+          ) : (
+            <div className="flex items-center justify-center gap-1">
+              <button
+                type="button"
+                onClick={() => (
+                  setEditPopUp(!editPopUp), handleEdit(params.row)
+                )}
+                className="addPopup"
+              >
+                <MdEdit className="text-xl text-[#327123]" />
+              </button>
+              <button
+                type="button"
+                onClick={() => setSelectedRowId(params.row.id)}
+              >
+                <MdDelete className="text-xl text-[#7d1f2e]" />
+              </button>
+            </div>
+          )}
         </div>
       );
     },
   };
+
   return (
-    <div className="dataTable w-full max-h-[90%] overflow-y-auto">
-      <DataGrid
-        className="dataGrid"
-        rows={props.rows}
-        columns={[...props.columns, actionColumn]}
-        initialState={{
-          pagination: {
-            paginationModel: {
-              pageSize: 15,
+    <>
+      <div className="dataTable w-full max-h-[90%] overflow-y-auto">
+        <DataGrid
+          className="dataGrid"
+          rows={props.rows}
+          columns={[...props.columns, actionColumn]}
+          initialState={{
+            pagination: {
+              paginationModel: {
+                pageSize: 15,
+              },
             },
-          },
-        }}
-        slots={{ toolbar: GridToolbar }}
-        slotProps={{
-          toolbar: {
-            showQuickFilter: true,
-            quickFilterProps: { debounceMs: 100 },
-          },
-        }}
-        onRowSelectionModelChange={props.handleRowSelection}
-        pageSizeOptions={[15]}
-        checkboxSelection
-        disableRowSelectionOnClick
-        disableDensitySelector
-        disableColumnSelector
+          }}
+          slots={{ toolbar: GridToolbar }}
+          slotProps={{
+            toolbar: {
+              showQuickFilter: true,
+              quickFilterProps: { debounceMs: 100 },
+            },
+          }}
+          onRowSelectionModelChange={props.handleRowSelection}
+          pageSizeOptions={[15]}
+          checkboxSelection
+          disableRowSelectionOnClick
+          disableDensitySelector
+          disableColumnSelector
+        />
+      </div>
+      <EditStudent
+        editPopUp={editPopUp}
+        setEditPopUp={setEditPopUp}
+        rowData={selectedRowData}
       />
-    </div>
+    </>
   );
 };
 

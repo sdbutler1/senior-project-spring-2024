@@ -117,7 +117,7 @@ const SideBar = () => {
           </li>
         </Link>
         <Link
-          onClick={() => setLoading(true, 0, 1000)}
+          onClick={() => setLoading(true, 0, 2000)}
           href={"/student"}
           className={`relative h-[3.5rem] w-full flex items-center justify-center rounded-md hover:text-[#f4b461] ${
             currentPathname === "/student"
