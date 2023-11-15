@@ -11,7 +11,7 @@ import { useGlobalSideBar } from "@/globalStates/useGlobalSideBar";
 import PopUp from "@/components/global/PopUpNotifications/userAccount";
 import Help from "@/components/global/PopUpNotifications/help";
 import SideBar from "@/components/global/SideBar";
-import TopBar from "@/components/global/topbar/TopBar";
+import TopBar from "@/components/global/TopBar";
 import TimeoutPopup from "@/components/global/PopUpNotifications/TimoutPopup";
 import NavPageLoading from "@/components/global/NavPageLoading";
 import { useAuth } from "@/context/AuthContext";

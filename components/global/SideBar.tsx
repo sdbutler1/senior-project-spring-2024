@@ -38,7 +38,7 @@ import { SiGoogleclassroom } from "react-icons/si";
 const SideBar = () => {
   const { isSidebarOpen, isSidebarHidden, toggleSideBar, HideSideBar } =
     useGlobalSideBar();
-  const { setLoading2 } = useGlobalLoading();
+  const { setLoading, setLoading2 } = useGlobalLoading();
   const currentPathname = usePathname();
   const { logout } = useAuth();
   const router = useRouter();
@@ -117,6 +117,7 @@ const SideBar = () => {
           </li>
         </Link>
         <Link
+          onClick={() => setLoading(true, 0, 1000)}
           href={"/student"}
           className={`relative h-[3.5rem] w-full flex items-center justify-center rounded-md hover:text-[#f4b461] ${
             currentPathname === "/student"
@@ -354,7 +355,6 @@ const SideBar = () => {
             <button
               type="button"
               onClick={() => {
-                setLoading2(true, 0, 1000);
                 logout();
               }}
             >
