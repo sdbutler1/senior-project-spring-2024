@@ -169,9 +169,8 @@ const Login = (props: Props) => {
         </div>
         <div className="absolute top-8 left-8 h-auto w-96 flex items-center justify-center p-4 bg-white border z-45">
           <ul className="flex flex-col items-start justify-center gap-4 text-sm no-underline ">
-            <li>* Fix edit functionality for table</li>
             <li className="text-[#255a1d]">
-              * Users now can add and delete students from database
+              * Users now can add, edit and delete students from database
             </li>
             <li>* Matthew is still working on the home page</li>
             <li>* Probably create a calendar page</li>
