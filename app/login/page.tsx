@@ -169,16 +169,18 @@ const Login = (props: Props) => {
         </div>
         <div className="absolute top-8 left-8 h-auto w-96 flex items-center justify-center p-4 bg-white border z-45">
           <ul className="flex flex-col items-start justify-center gap-4 text-sm no-underline ">
-            <li className="text-[#255a1d]">* Add alert to help popUp</li>
-            <li>* Fix delete, edit, and add functionality for table</li>
+            <li>* Fix edit functionality for table</li>
+            <li className="text-[#255a1d]">
+              * Users now can add and delete students from database
+            </li>
             <li>* Matthew is still working on the home page</li>
             <li>* Probably create a calendar page</li>
             <li className="text-[#255a1d]">
-              * Everything else works; the help pop-up sends the information to
+              * The help pop-up sends the information to
               the database.
             </li>
-            <li className="text-[#255a1d]">
-              * Help popup works just need to work on sending an email when the
+            <li>
+              * Need to work on Help popup sending an email when the
               database gets a new document.
             </li>
             <li className="text-[#255a1d]">
@@ -193,7 +195,7 @@ const Login = (props: Props) => {
             </li>
             <li>
               * After these tasks are finished, or during the process will work
-              on the responsive aspect of the website to screen sizes{" "}
+              on the responsive aspect of the website to screen sizes
               <span className="text-[#255a1d]">
                 (login and forget password not included)
               </span>

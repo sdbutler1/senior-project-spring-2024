@@ -231,10 +231,10 @@ const Page = (props: Props) => {
             <label htmlFor="fileInput">
               <input
                 ref={photoInputRef}
+                id="fileInput"
                 type="file"
                 accept="image/*"
                 onChange={handleChange}
-                id="fileInput"
                 style={{ display: "none" }}
               />
             </label>

@@ -15,6 +15,7 @@ const config: Config = {
       fontFamily: {
         'sans': ['Source Sans Pro', 'sans-serif'],
       },
+      montserrat: ["Montserrat", "sans-serif"],
     },
   },
   images: {
