@@ -89,7 +89,7 @@ const EmailModal = ({recipients, modalShown, closeModal} : props) => {
     <Dialog
       open={modalShown}
       onClose={() => closeModal()}
-      className="relative z-20"
+      className="relative z-50"
     >
       {/* The backdrop, rendered as a fixed sibling to the panel container */}
       <div className="fixed inset-0 bg-black/50" aria-hidden="true" />

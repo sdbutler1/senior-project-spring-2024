@@ -26,7 +26,7 @@ const Alert = (props: Props) => {
           : type === "info" && "bg-[#3790b9]"
       } ${
         isOpen ? "translate-x-0" : "translate-x-[200%]"
-      } z-40 shadow-md transition duration-1000 delay-100`}
+      } z-50 shadow-md transition duration-1000 delay-100`}
     >
       <div className="h-full w-2/12 flex items-center justify-center">
         {type === "success" && <AiFillCheckCircle className="text-xl" />}

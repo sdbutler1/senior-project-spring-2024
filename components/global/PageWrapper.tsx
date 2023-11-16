@@ -1,7 +1,7 @@
 "use client";
 
 // react components
-import React, { useEffect } from "react";
+import React  from "react";
 import { usePathname } from "next/navigation";
 
 // global states
@@ -17,7 +17,7 @@ import NavPageLoading from "@/components/global/NavPageLoading";
 import { useAuth } from "@/context/AuthContext";
 
 function PageWrapper({ children }: { children: React.ReactNode }) {
-  const { login, user } = useAuth();
+  const { user } = useAuth();
   const currentPathname = usePathname();
   const allowedPages = [
     "/",
@@ -28,6 +28,10 @@ function PageWrapper({ children }: { children: React.ReactNode }) {
   ];
 
   const { isSidebarOpen, isSidebarHidden } = useGlobalSideBar();
+  
+  if (currentPathname === "/login" || currentPathname === "/forgotPassword") {
+    return <>{children}</>;
+  }
 
   return (
     <div

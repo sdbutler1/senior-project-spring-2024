@@ -31,7 +31,7 @@ const NavPageLoading = () => {
             "w-full lg:w-[calc(100%-5rem)]"
       } h-[calc(100%-5rem)] ${
         loading ? "flex" : "hidden"
-      } flex-col items-center justify-center gap-12 bg-[#ac824a] z-10 transition-width duration-500`}
+      } flex-col items-center justify-center gap-12 bg-[#ac824a] z-50 transition-width duration-500`}
     >
       <div className="h-auto w-auto flex items-center justify-center">
         <h1 className="text-4xl text-white font-semibold">LOADING</h1>

@@ -33,12 +33,13 @@ body {
   background-color: #fff;
   color: #7d1f2e;
   border: 2px solid #fff;
-  overflow-x: hidden;
   scrollbar-width: thin;
+  overflow: scroll;
 }
 
 .formShadow::-webkit-scrollbar {
   width: 4px;
+  height: 4px;
 }
 
 .formShadow::-webkit-scrollbar-thumb {

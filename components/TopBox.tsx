@@ -11,7 +11,7 @@ const TopBox = () => {
       <div className="w-full flex flex-col items-start justify-center gap-4">
         {StudentData.map((student) => (
           <div
-            className="h-full w-full flex items-start justify-between"
+            className="h-full w-full flex flex-col md:flex-row items-start md:justify-between"
             key={student.id}
           >
             <div>

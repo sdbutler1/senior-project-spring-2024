@@ -47,7 +47,7 @@ const UserAccount = (props: Props) => {
   }
 
   return (
-    <div className="absolute top-16 right-0 flex items-center justify-center z-50">
+    <div className="absolute top-16 -right-10 md:right-0 flex items-center justify-center z-50">
       <div
         className={`popup h-auto w-[20rem] flex-col items-center justify-center text-black bg-[#fffefe] border rounded-2xl mr-8 ${
           isPopUpOpen1 ? "flex" : "hidden"
