@@ -19,9 +19,9 @@ const data = [
 
 const BigChartBox = () => {
   return (
-    <div className="bigChartBox">
+    <div className="formShadow h-full w-full flex flex-col items-start justify-start gap-">
       <h1 className="topboxheader">Graduate employment rate</h1>
-      <div className="chart">
+      <div className="h-4/5 w-full">
         <ResponsiveContainer width="99%" height="100%">
           <AreaChart
             data={data}

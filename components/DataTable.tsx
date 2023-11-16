@@ -127,40 +127,38 @@ const DataTable = (props: Props) => {
   };
 
   return (
-    <>
-      <div className="dataTable w-full max-h-[90%] overflow-y-auto">
-        <DataGrid
-          className="dataGrid"
-          rows={props.rows}
-          columns={[...props.columns, actionColumn]}
-          initialState={{
-            pagination: {
-              paginationModel: {
-                pageSize: 15,
-              },
+    <div className="dataTable w-full h-[45rem] px-8">
+      <DataGrid
+        className="dataGrid"
+        rows={props.rows}
+        columns={[...props.columns, actionColumn]}
+        initialState={{
+          pagination: {
+            paginationModel: {
+              pageSize: 15,
             },
-          }}
-          slots={{ toolbar: GridToolbar }}
-          slotProps={{
-            toolbar: {
-              showQuickFilter: true,
-              quickFilterProps: { debounceMs: 100 },
-            },
-          }}
-          onRowSelectionModelChange={props.handleRowSelection}
-          pageSizeOptions={[15]}
-          checkboxSelection
-          disableRowSelectionOnClick
-          disableDensitySelector
-          disableColumnSelector
-        />
-      </div>
+          },
+        }}
+        slots={{ toolbar: GridToolbar }}
+        slotProps={{
+          toolbar: {
+            showQuickFilter: true,
+            quickFilterProps: { debounceMs: 100 },
+          },
+        }}
+        onRowSelectionModelChange={props.handleRowSelection}
+        pageSizeOptions={[15]}
+        checkboxSelection
+        disableRowSelectionOnClick
+        disableDensitySelector
+        disableColumnSelector
+      />
       <EditStudent
         editPopUp={editPopUp}
         setEditPopUp={setEditPopUp}
         rowData={selectedRowData}
       />
-    </>
+    </div>
   );
 };
 

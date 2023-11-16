@@ -9,9 +9,9 @@ type Props = {
 
 const BarChartBox = (props: Props) => {
   return (
-    <div className="barChartBox">
-      <h1>{props.title}</h1>
-      <div className="chart">
+    <div className="formShadow h-2/6 w-full">
+      <h1 className="text-2xl font-bold">{props.title}</h1>
+      <div>
         <ResponsiveContainer width="99%" height={150}>
           <BarChart data={props.chartData}>
             <Tooltip

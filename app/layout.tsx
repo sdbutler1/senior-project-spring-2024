@@ -27,14 +27,10 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Providers>
-          <div className={`relative h-screen w-screen flex flex-col items-center justify-center`}>
-            <AuthContextProvider>
-              <Alert />
-              <PageWrapper>
-                {children}
-                </PageWrapper>
-            </AuthContextProvider>
-          </div>
+          <AuthContextProvider>
+            <Alert />
+            <PageWrapper>{children}</PageWrapper>
+          </AuthContextProvider>
         </Providers>
       </body>
     </html>

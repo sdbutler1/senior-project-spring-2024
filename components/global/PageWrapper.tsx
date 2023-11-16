@@ -19,41 +19,37 @@ import { useAuth } from "@/context/AuthContext";
 function PageWrapper({ children }: { children: React.ReactNode }) {
   const { login, user } = useAuth();
   const currentPathname = usePathname();
-  const allowedPages = ["/dashboard", "/userProfile", "/student", "/"];
+  const allowedPages = [
+    "/",
+    "/dashboard",
+    "/student",
+    "/calendar",
+    "/userProfile",
+  ];
+
   const { isSidebarOpen, isSidebarHidden } = useGlobalSideBar();
 
-  if (currentPathname === "/login" || currentPathname === "/forgotPassword") {
-    return <>{children}</>;
-  }
-
   return (
-    <>
-      <div className="fixed top-0 left-0 h-auto w-full flex flex-col items-end justify-center gap-4 z-20">
-        {allowedPages.includes(currentPathname) && user ? <TopBar /> : null}
-        <div>
-          <PopUp />
-          <Help />
-          <TimeoutPopup />
-        </div>
-      </div>
-      <NavPageLoading />
-      <div
-        className={`${
-          isSidebarOpen && isSidebarHidden // open full
-            ? "w-full lg:ml-64 mt-[5rem] lg:w-[calc(100%-20rem)]"
-            : !isSidebarOpen && !isSidebarHidden
-            ? "w-full mt-[5rem]" // closed
-            : !isSidebarOpen &&
-              isSidebarHidden && // open minimized
-              "lg:ml-20 mt-[5rem] lg:w-[calc(100%-20rem)]"
-        } h-[calc(100%-10rem)] px-8 ${
+    <div
+      className={`h-[calc(100%-5rem)] ${
+        isSidebarOpen && isSidebarHidden // open full
+          ? "w-full lg:w-[calc(100%-16rem)] ml-0 lg:ml-64"
+          : !isSidebarOpen && isSidebarHidden // open minimized
+          ? "w-full lg:w-[calc(100%-5rem)] ml-0 lg:ml-20"
+          : !isSidebarOpen && !isSidebarHidden && "w-full" // closed
+      }
+        ${
           user ? "flex" : "hidden"
-        } items-center justify-center gap-8 transition-width duration-500`}
-      >
-        {allowedPages.includes(currentPathname) && user ? <SideBar /> : null}
-        {children}
-      </div>
-    </>
+        } flex-col items-start justify-start mt-20 transition-width duration-700`}
+    >
+      <NavPageLoading />
+      {allowedPages.includes(currentPathname) && user ? <TopBar /> : null}
+      <PopUp />
+      <Help />
+      <TimeoutPopup />
+      {allowedPages.includes(currentPathname) && user ? <SideBar /> : null}
+      {children}
+    </div>
   );
 }
 

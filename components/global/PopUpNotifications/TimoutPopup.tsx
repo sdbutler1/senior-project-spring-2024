@@ -102,30 +102,28 @@ const TimeoutPopup: React.FC = () => {
     <div
       className={`fixed top-0 left-0 h-screen inset-0 ${
         showPopup ? "flex" : "hidden"
-      } items-center justify-center bg-gray-900 bg-opacity-50`}
+      } items-center justify-center bg-gray-900 bg-opacity-50 z-50`}
     >
-      {showPopup && (
-        <div className="timePopup h-48 w-96 flex flex-col items-center justify-center gap-8 bg-[#fff] p-6 rounded-lg shadow-md">
-          <p className="text-lg text-black font-medium">
-            Are you still there? We&apos;ll log you out unless you confirm
-            you&apos;re still working on this page.
-          </p>
-          <div className="flex space-x-4">
-            <button
-              className="bg-[#d8a462] text-black px-4 py-2 rounded hover:bg-blue-600"
-              onClick={handleContinueWorking}
-            >
-              Continue Working
-            </button>
-            <button
-              className="bg-[#7d1f2e] text-white px-4 py-2 rounded hover:bg-red-600"
-              onClick={handleLogout}
-            >
-              Log Out
-            </button>
-          </div>
+      <div className="timePopup h-48 w-96 flex flex-col items-center justify-center gap-8 bg-[#fff] p-6 rounded-lg shadow-md">
+        <p className="text-lg text-black font-medium">
+          Are you still there? We&apos;ll log you out unless you confirm
+          you&apos;re still working on this page.
+        </p>
+        <div className="flex space-x-4">
+          <button
+            className="bg-[#d8a462] text-black px-4 py-2 rounded hover:bg-blue-600"
+            onClick={handleContinueWorking}
+          >
+            Continue Working
+          </button>
+          <button
+            className="bg-[#7d1f2e] text-white px-4 py-2 rounded hover:bg-red-600"
+            onClick={handleLogout}
+          >
+            Log Out
+          </button>
         </div>
-      )}
+      </div>
     </div>
   );
 };

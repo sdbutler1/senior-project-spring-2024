@@ -3,7 +3,8 @@
 @tailwind utilities;
 
 html {
-  overflow-x: hidden;
+  padding: 0;
+  box-sizing: border-box;
   scroll-behavior: smooth;
 }
 
@@ -36,15 +37,6 @@ body {
   scrollbar-width: thin;
 }
 
-.alertShadow {
-  position: absolute;
-  top: 2rem;
-  right: 1rem;
-  height: 4rem;
-  width: 20rem;
-  box-shadow: 15px 15px 10px rgba(0, 0, 0, 0.1), -5px -5px 20px #fffb;
-}
-
 .formShadow::-webkit-scrollbar {
   width: 4px;
 }
@@ -67,6 +59,16 @@ body {
   background: #ccc;
 }
 
+/* -------------- */
+
+.alertShadow {
+  position: fixed;
+  top: 2rem;
+  right: 1rem;
+  height: 4rem;
+  width: 20rem;
+  box-shadow: 15px 15px 10px rgba(0, 0, 0, 0.1), -5px -5px 20px #fffb;
+}
 /* -------------- */
 
 .popUp::-webkit-scrollbar {
@@ -92,7 +94,7 @@ body {
 }
 
 .topboxheader {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   font-size: 2rem;
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
 }
@@ -106,113 +108,7 @@ body {
     "Lucida Sans", Arial, sans-serif;
   font-size: 1.1rem;
   font-weight: 700;
-  font-style: italic;
 }
-
-.barChartBox {
-  width: 100%;
-  height: 100%;
-}
-
-.barChartBox h1 {
-  font-size: 20px;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.chartBox {
-  display: flex;
-  height: 100%;
-  width: 100%;
-}
-
-.chartBox .boxInfo {
-  flex: 3;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.chartBox .boxInfo .title {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 1.2rem;
-  font-weight: bold;
-}
-
-.chartBox .boxInfo h1 {
-  font-size: 24px;
-}
-
-.chartBox .chartInfo {
-  flex: 2;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.chartBox .chartInfo .chart {
-  width: 100%;
-  height: 100%;
-}
-
-.chartBox .chartInfo .texts {
-  display: flex;
-  flex-direction: column;
-  text-align: right;
-}
-
-.chartBox .chartInfo .texts .percentage {
-  font-weight: bold;
-  font-size: 20px;
-}
-
-.chartBox .chartInfo .texts .duration {
-  font-size: 14px;
-}
-
-.pieChartBox {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.pieChartBox .chart {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-}
-
-.pieChartBox .options {
-  width: 100%;
-  display: flex;
-  gap: 20px;
-  font-size: 14px;
-}
-
-.pieChartBox .options .option {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  align-items: center;
-}
-
-.pieChartBox .options .option .title {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-
-.pieChartBox .options .option .title .dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-}
-
 
 .blob {
   border-radius: 40% 60% 65% 35% / 40% 35% 65% 60%;
@@ -235,19 +131,53 @@ body {
   font-size: 1.5rem;
 }
 
-.bigChartBox {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
 h1 {
   font-size: 24px;
 }
 
-.chart {
-  width: 100%;
-  height: 300px;
+input {
+  @apply px-2;
+}
+  .fc-header-toolbar {
+    display: inline-block;
+    padding: 4px 4px;
+    
+    @apply space-x-8;
+}
+
+.fc-day {
+  @apply m-8;
+}
+
+.fc-scrollgrid-sync-table {
+  @apply w-full;
+}
+
+.fc-view {
+  @apply w-full h-full lg:h-3/4 xl:h-2/3 bg-white;
+}
+
+.fc-h-event {
+  @apply bg-violet-500 border border-violet-600 ;
+  
+}
+
+.fc .fc-daygrid-day.fc-day-today {
+  @apply bg-violet-100 ;
+}
+
+.fc .fc-button{
+  @apply bg-violet-800 hover:bg-violet-900  ;
+}
+
+.fc .fc-button-primary:not(:disabled).fc-button-active {
+  @apply bg-violet-600;
+}
+
+.fc .fc-button-primary:disabled {
+  @apply bg-violet-600;
+}
+.fc-v-event {
+  @apply bg-violet-500 border border-violet-600 ;
+  
 }
