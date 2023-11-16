@@ -9,10 +9,10 @@ type Props = {
 
 const BarChartBox = (props: Props) => {
   return (
-    <div className="formShadow h-2/6 w-full">
+    <div className="formShadow h-2/6 w-full flex flex-col items-center justify-center">
       <h1 className="text-2xl font-bold">{props.title}</h1>
-      <div>
-        <ResponsiveContainer width="99%" height={150}>
+      <div className="h-full w-full flex items-center justify-center">
+        <ResponsiveContainer width="99%" height={120}>
           <BarChart data={props.chartData}>
             <Tooltip
               contentStyle={{

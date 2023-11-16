@@ -141,7 +141,7 @@ const Page = (props: Props) => {
   }, [router, user]);
 
   return (
-    <div className="relative h-auto w-full flex flex-col items-start xl:items-center justify-start gap-16 mt-40 sm:mt-0">
+    <div className="relative h-auto w-full flex flex-col items-start xl:items-center justify-start gap-16 p-4">
       <div className="h-auto w-full flex flex-col items-center justify-center gap-4 -mb-4">
         <div className="h-auto w-full md:w-11/12 xl:w-3/6 flex items-center justify-between text-xl font-semibold bg-[#fff] px-4 py-3 rounded-lg">
           <h1>Update Profile</h1>

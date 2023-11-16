@@ -53,7 +53,7 @@ const Topbar = () => {
   }, [setLoading, loading2]);
 
   return (
-    <div className="fixed top-0 left-0 h-20 w-full flex items-center justify-between bg-[#fefefe] border-b border-slate-100">
+    <div className="fixed top-0 left-0 h-20 w-full flex items-center justify-between bg-[#fefefe] border-b border-slate-100 z-50">
       <Link
         href={"/"}
         className="h-full w-64 flex items-center sm:justify-center px-2 cursor-pointer"
@@ -65,7 +65,7 @@ const Topbar = () => {
           priority
         />
       </Link>
-      <div className="h-full w-auto flex items-center justify-end gap-4 lg:gap-10 pr-2 lg:pr-8">
+      <div className="h-full w-80 flex items-center justify-end gap-4 pr-4 lg:pr-8">
         <button
           type="button"
           onClick={() => togglePopUp(1)}
