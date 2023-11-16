@@ -9,9 +9,9 @@ const data = [
 
 const PieChartBox = () => {
   return (
-    <div className="pieChartBox">
+    <div className="formShadow h-4/6 w-full flex flex-col items-start justify-start">
       <h1 className="topboxheader">Internships</h1>
-      <div className="chart">
+      <div className="h-full w-full">
         <ResponsiveContainer width="99%" height={300}>
           <PieChart>
             <Tooltip
@@ -31,14 +31,20 @@ const PieChartBox = () => {
           </PieChart>
         </ResponsiveContainer>
       </div>
-      <div className="options">
+      <div className="w-full flex items-center justify-center">
         {data.map((item) => (
-          <div className="option" key={item.name}>
-            <div className="title">
-              <div className="dot" style={{ backgroundColor: item.color }} />
-              <span>{item.name}</span>
+          <div
+            className="w-full flex flex-col items-center justify-center gap-2"
+            key={item.name}
+          >
+            <div className="w-full flex items-center justify-start gap-1 ml-2">
+              <span
+                className="h-2 w-2 rounded-full"
+                style={{ backgroundColor: item.color }}
+              ></span>
+              <span className="text-sm">{item.name}</span>
             </div>
-            <span>{item.value}</span>
+            <span className="text-sm">{item.value}</span>
           </div>
         ))}
       </div>

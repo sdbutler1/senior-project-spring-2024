@@ -6,7 +6,7 @@ import HowToRegIcon from "@mui/icons-material/HowToReg";
 
 const TopBox = () => {
   return (
-    <div className="w-full flex flex-col items-start justify-center">
+    <div className="formShadow h-4/6 w-full flex flex-col items-start justify-start">
       <h1 className="w-full topboxheader">Students</h1>
       <div className="w-full flex flex-col items-start justify-center gap-4">
         {StudentData.map((student) => (
@@ -14,13 +14,13 @@ const TopBox = () => {
             className="h-full w-full flex items-start justify-between"
             key={student.id}
           >
-            <div className="">
-              <div className="">
+            <div>
+              <div>
                 <div className="topboxNames ">
-                  <span className="">{student.firstName}</span>
-                  <span className="">{student.lastName}</span>
+                  <span>{student.firstName}</span>
+                  <span>{student.lastName}</span>
                 </div>
-                <span className=" text-[0.85rem] font-semibold">{student.email}</span>
+                <span className="text-[0.85rem] font-semibold">{student.email}</span>
               </div>
             </div>
             <span className="h-12 flex items-center justify-center gap-1 font-semibold">

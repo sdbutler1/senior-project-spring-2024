@@ -1,5 +1,4 @@
 // react components
-import Image from "next/image";
 import Link from "next/link";
 import { Line, LineChart, ResponsiveContainer, Tooltip } from "recharts";
 
@@ -15,10 +14,9 @@ type Props = {
 
 const ChartBox = (props: Props) => {
   return (
-    <div className="chartBox">
-      <div className="boxInfo">
-        <div className="title">
-          {/* <Image className="h-full w-full object-cover" src={props.icon} alt="" priority/> */}
+    <div className="formShadow h-full w-full flex items-center justify-center gap-4">
+      <div className="h-full w-5/12 flex flex-col items-start justify-center gap-2">
+        <div className="text-lg font-semibold">
           <span>{props.title}</span>
         </div>
         <h1>{props.number}</h1>
@@ -26,8 +24,8 @@ const ChartBox = (props: Props) => {
           View all
         </Link>
       </div>
-      <div className="chartInfo">
-        <div className="chart">
+      <div className="h-full w-full flex flex-col items-center justify-center">
+        <div className="h-full w-full flex items-center justify-center">
           <ResponsiveContainer width="99%" height="100%">
             <LineChart data={props.chartData}>
               <Tooltip
@@ -50,14 +48,13 @@ const ChartBox = (props: Props) => {
             </LineChart>
           </ResponsiveContainer>
         </div>
-        <div className="texts">
+        <div className="h-auto w-full flex flex-col items-start justify-center">
           <span
-            className="percentage"
             style={{ color: props.percentage < 0 ? "tomato" : "limegreen" }}
           >
             {props.percentage}%
           </span>
-          <span className="duration">this academic year </span>
+          <span>this academic year </span>
         </div>
       </div>
     </div>

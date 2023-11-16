@@ -27,7 +27,7 @@ interface Event {
 
 type Props = {};
 
-const page = (props: Props) => {
+const Calendar = (props: Props) => {
   const { user } = useAuth();
   const router = useRouter();
   const [events, setEvents] = useState([
@@ -345,4 +345,4 @@ const page = (props: Props) => {
   );
 };
 
-export default page;
+export default Calendar;

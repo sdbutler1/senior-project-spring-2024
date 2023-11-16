@@ -202,8 +202,8 @@ const StudentTable = (props: Props) => {
           closeModal={closeModal}
         />
       )}
-      <div className="w-full h-full flex flex-col">
-        <div className="w-full flex flex-col items-start justify-center gap-2 mb-2 2xl:gap-4 2xl:mb-6">
+      <div className="h-2/6 w-full flex flex-col items-center justify-center gap-2 overflow-x-auto">
+        <div className="w-full flex flex-col items-start justify-center gap-2 py-4 px-8 mb-2 2xl:gap-4 2xl:mb-6">
           <h1 className="text-2xl md:text-4xl font-bold">Students</h1>
           <div className="h-full w-full flex items-center justify-between">
             <div className="flex items-center justify-start gap-4">
@@ -219,7 +219,7 @@ const StudentTable = (props: Props) => {
                 className="w-auto flex items-center justify-center gap-2 text-sm 2xl:text-lg rounded-md bg-shaw-garnet hover:opacity-100 opacity-90 text-white px-2 py-1"
               >
                 <span>Send email</span>
-                <EmailOutlinedIcon className="w-6" />
+                <EmailOutlinedIcon className="h-6 w-6" />
               </button>
             </div>
           </div>

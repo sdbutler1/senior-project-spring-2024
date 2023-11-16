@@ -53,10 +53,10 @@ const Topbar = () => {
   }, [setLoading, loading2]);
 
   return (
-    <div className="w-full flex items-center justify-between bg-[#fefefe] border-b border-slate-100">
+    <div className="fixed top-0 left-0 h-20 w-full flex items-center justify-between bg-[#fefefe] border-b border-slate-100">
       <Link
         href={"/"}
-        className="h-20 w-64 flex items-center sm:justify-center px-2 cursor-pointer"
+        className="h-full w-64 flex items-center sm:justify-center px-2 cursor-pointer"
       >
         <Image
           src={logo}
@@ -65,9 +65,6 @@ const Topbar = () => {
           priority
         />
       </Link>
-      {/* <div>
-        <h1 className="text-4xl font-bold">Department of Computer Science</h1>
-      </div> */}
       <div className="h-full w-auto flex items-center justify-end gap-4 lg:gap-10 pr-2 lg:pr-8">
         <button
           type="button"
