@@ -10,7 +10,7 @@ html {
 
 body {
   background-color: #f7f7f7;
-  color: #7d1f2e;
+  color: #000;
 }
 
 [data-theme="dark"] body {
@@ -181,4 +181,22 @@ input {
 .fc-v-event {
   @apply bg-violet-500 border border-violet-600 ;
   
+}
+
+.notepadLines {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.notepadLines::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, transparent 1.5em, #ccc 1.5em, #ccc 1.6em, transparent 1.6em);
+  background-size: 100% 1.6em;
+  pointer-events: none;
 }

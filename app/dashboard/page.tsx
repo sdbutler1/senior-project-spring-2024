@@ -8,11 +8,11 @@ import { useRouter } from "next/navigation";
 
 //components
 import { useAuth } from "@/context/AuthContext";
-import BarChartBox from "@/components/BarChartBox";
-import BigChartBox from "@/components/BigChartBox";
-import ChartBox from "@/components/ChartBox";
-import PieChartBox from "@/components/PieChartBox";
-import TopBox from "@/components/TopBox";
+import BarChartBox from "@/components/dashboard/BarChartBox";
+import BigChartBox from "@/components/dashboard/BigChartBox";
+import ChartBox from "@/components/dashboard/ChartBox";
+import PieChartBox from "@/components/dashboard/PieChartBox";
+import TopBox from "@/components/dashboard/TopBox";
 
 // assets
 import {
