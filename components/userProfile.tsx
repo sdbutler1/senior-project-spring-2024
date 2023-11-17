@@ -365,12 +365,13 @@ const UserProfile = () => {
               Save Changes
             </button>
           ) : (
-            <div
+            <button
+              type="button"
               onClick={editProfile}
-              className="h-10 w-36 flex items-center justify-center text-[#fff] font-semibold bg-[#7d1f2e] rounded hover:bg-[#701b29] cursor-pointer"
+              className="h-10 w-36 flex items-center justify-center text-[#fff] font-semibold bg-[#7d1f2e] rounded hover:bg-[#701b29]"
             >
               Edit Profile
-            </div>
+            </button>
           )}
         </div>
       </form>

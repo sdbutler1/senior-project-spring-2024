@@ -200,7 +200,7 @@ const Help = (props: Props) => {
             onChange={(e) =>
               setFormData({ ...formData, message: e.target.value })
             }
-            className="h-full w-full flex items-start justify-start border rounded-md p-4"
+            className="h-full w-full flex items-start justify-start border rounded-md p-4 resize-none"
           />
         </label>
         <button
