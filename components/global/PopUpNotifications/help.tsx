@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import { db } from "@/config/firebase";
-import { collection, doc, addDoc } from "firebase/firestore";
+import { collection, doc, setDoc } from "firebase/firestore";
 
 // global states
 import { useglobalPopUp } from "@/globalStates/useglobalPopUp";
@@ -48,15 +48,18 @@ const Help = (props: Props) => {
     });
 
     try {
-      // Reference to the user's document
+      // Reference to the user's document in authEvents collection
       const userDocRef = doc(collection(db, "helpNotifications"), user.uid);
 
-      // Reference to the subcollection within the user's document
-      const subcollectionName = data.subject || "defaultSubcollectionName";
-      const subcollectionRef = collection(userDocRef, subcollectionName);
+      // Reference to the supportRequests collection within the user's document
+      const supportRequestsRef = collection(userDocRef, "supportRequests");
 
-      // Add a new document to the subcollection
-      const newDocRef = await addDoc(subcollectionRef, data);
+      // Use the subject as the document ID
+      const subject = data.subject || "defaultSubject";
+      const newDocRef = doc(supportRequestsRef, subject);
+
+      // Set the document data
+      await setDoc(newDocRef, data);
 
       setPopUpOpen2(false);
       setTranslateAlert(
@@ -87,7 +90,7 @@ const Help = (props: Props) => {
 
   return (
     <div
-      className={`topbarPopup absolute top-60 left-[40%] h-[40rem] w-[40rem] flex-col items-center justify-start gap-2 text-black bg-[#fefefe] border rounded-2xl mr-8 z-50 ${
+      className={`topbarPopup absolute top-60 left-[40%] h-[40rem] w-[40rem] flex-col items-center justify-start gap-2 text-black bg-[#fefefe] border rounded-2xl mr-8 ${
         isPopUpOpen2 ? "flex" : "hidden"
       }`}
     >
@@ -200,7 +203,7 @@ const Help = (props: Props) => {
             onChange={(e) =>
               setFormData({ ...formData, message: e.target.value })
             }
-            className="h-full w-full flex items-start justify-start border rounded-md p-4 resize-none"
+            className="h-full w-full flex items-start justify-start border rounded-md p-4"
           />
         </label>
         <button

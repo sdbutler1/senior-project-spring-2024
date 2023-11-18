@@ -53,7 +53,7 @@ const Topbar = () => {
   }, [setLoading, loading2]);
 
   return (
-    <div className="fixed top-0 left-0 h-20 w-full flex items-center justify-between bg-[#fefefe] border-b border-slate-100 z-50">
+    <div className="fixed top-0 left-0 h-20 w-full flex items-center justify-between bg-[#fefefe] border-b border-slate-100 z-40">
       <Link
         href={"/"}
         className="h-full w-64 flex items-center sm:justify-center px-2 cursor-pointer"
