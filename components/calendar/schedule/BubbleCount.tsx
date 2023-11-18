@@ -48,7 +48,6 @@ const BubbleCount = (props: Props) => {
         setEvents(eventsArray);
         setLoading(false);
 
-        console.log("All events:", eventsArray);
       } catch (error) {
         console.error("Error getting events:", error);
         setLoading(false);

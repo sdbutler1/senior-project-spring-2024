@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 // global states
 import { useGlobalSideBar } from "../../globalStates/useGlobalSideBar";
@@ -13,6 +14,7 @@ import { useGlobalLoading } from "@/globalStates/useGlobalLoading";
 
 //components
 import ThemeSwitcher from "./ThemeSwitcher";
+import CurrentUser from "@/components/global/CurrentUser";
 
 // assets
 
@@ -38,10 +40,13 @@ import { SiGoogleclassroom } from "react-icons/si";
 const SideBar = () => {
   const { isSidebarOpen, isSidebarHidden, toggleSideBar, HideSideBar } =
     useGlobalSideBar();
-  const { setLoading, setLoading2 } = useGlobalLoading();
+  const { logout, user } = useAuth();
+  const currentUser = CurrentUser({});
+  const { setLoading } = useGlobalLoading();
   const currentPathname = usePathname();
-  const { logout } = useAuth();
   const router = useRouter();
+  const userPhotoUrl =
+    "https://firebasestorage.googleapis.com/v0/b/com-sci-dep-auth-project.appspot.com/o/default.png?alt=media&token=bafe0340-24ec-4083-ba7d-5bd6e3319d02";
 
   return (
     <div
@@ -303,6 +308,28 @@ const SideBar = () => {
               isSidebarOpen ? "justify-start pl-6" : "justify-center pl-0"
             } `}
           >
+            <MdSettings />
+          </li>
+          <li
+            className={`absolute right-0 h-full w-full flex items-center justify-center text-[1.1rem] whitespace-nowrap pr-[1.4rem] ${
+              isSidebarOpen ? "opacity-100 delay-200" : "opacity-0"
+            } transition-opacity `}
+          >
+            Settings
+          </li>
+        </Link>
+        <Link
+          href={"https://www.shawcomputerscience.com/"}
+          target="blank"
+          className="relative h-[3.5rem] w-full flex items-center justify-center rounded-md hover:text-[#f4b461]"
+        >
+          <li
+            className={`absolute left-0 h-full w-full flex items-center text-[1.75rem] ${
+              isSidebarOpen
+                ? "justify-start pl-[1.25rem]"
+                : "justify-center pl-0"
+            } `}
+          >
             <MdOutlineHelp />
           </li>
           <li
@@ -314,24 +341,35 @@ const SideBar = () => {
           </li>
         </Link>
         <Link
-          href={""}
-          className={`relative h-[3.5rem] w-full invisible flex items-center justify-center rounded-md text-[#fefefe93] ${
-            currentPathname === "" ? "bg-[#6e1d2a9f] text-[#f4b461]" : undefined
+          href={"/userProfile"}
+          onClick={() => setLoading(true, 0, 500)}
+          className={`relative h-[3.5rem] w-full flex items-center justify-center rounded-md hover:text-[#f4b461] ${
+            currentPathname === "/userProfile" ? "text-[#f4b461]" : undefined
           }`}
         >
           <li
             className={`absolute left-0 h-full w-full flex items-center text-[1.4rem] ${
-              isSidebarOpen ? "justify-start pl-6" : "justify-center pl-0"
+              isSidebarOpen
+                ? "justify-start pl-[1.4rem]"
+                : "justify-center pl-0"
             } `}
           >
-            <MdSettings />
+            {currentUser && user && (
+              <Image
+                src={user.photoURL ? user.photoURL : userPhotoUrl}
+                width={10}
+                height={10}
+                alt={`${currentUser.firstName} ${currentUser.lastName}`}
+                className="h-[1.6rem] w-[1.6rem] rounded-full"
+              />
+            )}
           </li>
           <li
-            className={`absolute right-0 h-full w-full flex items-center justify-center text-[1.1rem] whitespace-nowrap pr-[1.4rem] ${
+            className={`absolute right-0 h-full w-full flex items-center justify-center text-[1.1rem] whitespace-nowrap pr-[2.2rem] ${
               isSidebarOpen ? "opacity-100 delay-200" : "opacity-0"
             } transition-opacity `}
           >
-            Settings
+            Profile
           </li>
         </Link>
         <Link
@@ -363,11 +401,11 @@ const SideBar = () => {
           </li>
         </Link>
       </ul>
-      <div
+      {/* <div
         className={`h-12 w-[80%] sm:w-10/12 flex items-center justify-center text-xl bg-[#6e1d2a9f] rounded-md my-4`}
       >
         <ThemeSwitcher />
-      </div>
+      </div> */}
     </div>
   );
 };
