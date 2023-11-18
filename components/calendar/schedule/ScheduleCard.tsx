@@ -52,7 +52,6 @@ const ScheduleCard = (props: Props) => {
 
         // Set the events state with the fetched data
         setEvents(eventsArray);
-        console.log("All events:", eventsArray);
       } catch (error) {
         console.error("Error getting events:", error);
       }
@@ -113,38 +112,52 @@ const ScheduleCard = (props: Props) => {
       className="popUp h-full w-full flex flex-col gap-4 overflow-y-scroll"
       ref={popUpRef}
     >
-      {filteredSchedule.map((event) => (
-        <div
-          key={event.id}
-          id={`notification-${event.id}`}
-          className="h-auto w-full flex items-center justify-start bg-[#eeeeee] cursor-pointer"
-        >
-          <div className="h-full w-2 bg-[#d8a462] rounded-l-[0.1rem]"></div>
-          <div className="h-full w-11/12 flex items-center justify-between">
-            <div className="h-full w-1/6 flex items-center justify-center text-3xl">
-              <span className="rounded-full bg-[#b3b3b36c] p-1">
-                <MdTimer className="text-[#631e29]" />
-              </span>
-            </div>
-            <div className="h-full w-11/12 flex flex-col items-center justify-start gap-2 p-2">
-              <div className="h-auto w-full font-semibold">
-                {event.eventName}
+      {events.length > 0 ? (
+        <div>
+          {" "}
+          {filteredSchedule.map((event) => (
+            <div
+              key={event.id}
+              id={`notification-${event.id}`}
+              className="h-auto w-full flex items-center justify-start bg-[#eeeeee] cursor-pointer"
+            >
+              <div className="h-full w-2 bg-[#d8a462] rounded-l-[0.1rem]"></div>
+              <div className="h-full w-11/12 flex items-center justify-between">
+                <div className="h-full w-1/6 flex items-center justify-center text-3xl">
+                  <span className="rounded-full bg-[#b3b3b36c] p-1">
+                    <MdTimer className="text-[#631e29]" />
+                  </span>
+                </div>
+                <div className="h-full w-11/12 flex flex-col items-center justify-start gap-2 p-2">
+                  <div className="h-auto w-full font-semibold">
+                    {event.eventName}
+                  </div>
+                  <div className="h-4/6 w-full text-sm">{event.addNote}</div>
+                  <div className="h-auto w-full flex items-center justify-between text-[0.7rem] font-semibold tracking-wide">
+                    <span>{event.selectedDate}</span>
+                    <span> {event.selectedTime}</span>
+                  </div>
+                </div>
               </div>
-              <div className="h-4/6 w-full text-sm">{event.addNote}</div>
-              <div className="h-auto w-full flex items-center justify-between text-[0.7rem] font-semibold tracking-wide">
-                <span>{event.selectedDate}</span>
-                <span> {event.selectedTime}</span>
-              </div>
+              <button
+                type="button"
+                className="h-full w-auto flex items-start justify-center py-2"
+              >
+                <GoKebabHorizontal className="rotate-90" />
+              </button>
             </div>
-          </div>
-          <button
-            type="button"
-            className="h-full w-auto flex items-start justify-center py-2"
-          >
-            <GoKebabHorizontal className="rotate-90" />
-          </button>
+          ))}
         </div>
-      ))}
+      ) : (
+        <div>
+          {props.popUpSection === "today"
+            ? "There are no scheduled events for"
+            : props.popUpSection === "week"
+            ? "There are no scheduled events for"
+            : props.popUpSection === "month" &&
+              "There are no scheduled events for"}
+        </div>
+      )}
     </div>
   );
 };

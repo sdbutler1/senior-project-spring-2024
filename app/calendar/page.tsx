@@ -5,6 +5,9 @@ import React, { useEffect, useState, ChangeEvent } from "react";
 import { useRouter } from "next/navigation";
 import dayjs from "dayjs";
 
+// global states
+import { useGlobalTime } from "@/globalStates/useGlobalTime";
+
 // components
 import { useAuth } from "@/context/AuthContext";
 import NewEvent from "@/components/calendar/NewEvent";
@@ -43,6 +46,7 @@ const Calendar = (props: Props) => {
   const [changeDateColor, setChangeDateColor] = useState(false);
   const [currentMonth, setCurrentMonth] = useState<number>(0);
   const [selectYear, setSelectYear] = useState(new Date().getFullYear());
+  const { date, setDate } = useGlobalTime();
   const [selectedMonthView, setSelectedMonthView] = useState<{
     month: number;
     year: number;
@@ -57,6 +61,11 @@ const Calendar = (props: Props) => {
     return years;
   };
 
+  useEffect(() => {
+    setDate(today);
+    console.log(date);
+  }, [today]);
+
   const handleMonthView = (index: number) => {
     // Calculate the month offset from the current month
     const monthOffset = index - 5;
@@ -68,9 +77,6 @@ const Calendar = (props: Props) => {
       year: displayDate.year(),
     };
 
-    console.log(
-      `${displayDate.format("MMMM")} ${displayDate.format("YYYY")} clicked`
-    );
     setSelectedMonthView(selectedMonthYear);
 
     // Set today to the selected month and year
@@ -92,21 +98,22 @@ const Calendar = (props: Props) => {
   useEffect(() => {
     const closePopupsOnOutsideClick = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
-      if (
-        !target.closest(".calendarArea") &&
-        !target.closest(".viewPopUp") &&
-        !target.closest(".labelPopUp") &&
-        !target.closest(".monthList")
-      ) {
+      if (!target.closest(".calendarArea") && !target.closest(".monthList")) {
         setSelectDate(currentDate);
         setToday(currentDate);
-        setSelectView(false);
         setSelectMonth(false);
         setChangeDateColor(false);
         setCurrentMonth(0);
+      }
+      if (!target.closest(".viewPopUp")) {
+        setSelectView(false);
+      }
+
+      if (!target.closest(".labelPopUp")) {
         setLabelView(false);
       }
     };
+
     document.addEventListener("click", closePopupsOnOutsideClick);
     return () => {
       document.removeEventListener("click", closePopupsOnOutsideClick);
@@ -190,7 +197,7 @@ const Calendar = (props: Props) => {
             />
             <FaListUl
               onClick={() => setLabelView(!labelView)}
-              className="viewPopUp text-2xl cursor-pointer"
+              className="labelPopUp text-2xl cursor-pointer"
             />
           </div>
           <div

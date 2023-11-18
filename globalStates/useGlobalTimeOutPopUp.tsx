@@ -1,12 +1,12 @@
 import { create } from "zustand";
 import { persist, devtools } from "zustand/middleware";
 
-interface SideBarState {
+interface timePopup {
   showPopup: boolean;
   setShowPopup: (value: boolean) => void;
 }
 
-export const useGlobalTimeOutPopUp = create<SideBarState>()(
+export const useGlobalTimeOutPopUp = create<timePopup>()(
   devtools(
     persist(
       (set) => ({

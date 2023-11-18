@@ -170,7 +170,11 @@ const Login = (props: Props) => {
         <ul className="flex flex-col items-start justify-center gap-4 text-sm no-underline ">
           <li className="text-[#255a1d]">
             * Users can now create events and they are uploaded to the database.
-            Need to work on the other functions.
+            Need to work on the other functions and shown on schedule.
+            <span className="text-[#c64242]">
+              Need to change create button for schedule, and allow input for
+              date ad time
+            </span>
           </li>
           <li className="text-[#255a1d]">
             * Users now can add, edit and delete students from database
