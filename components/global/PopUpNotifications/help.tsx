@@ -90,7 +90,7 @@ const Help = (props: Props) => {
 
   return (
     <div
-      className={`topbarPopup absolute top-60 left-[40%] h-[40rem] w-[40rem] flex-col items-center justify-start gap-2 text-black bg-[#fefefe] border rounded-2xl mr-8 ${
+      className={`topbarPopup absolute top-60 left-[40%] h-[40rem] w-[40rem] flex-col items-center justify-start gap-2 text-black bg-[#fefefe] border rounded-2xl mr-8 z-40 ${
         isPopUpOpen2 ? "flex" : "hidden"
       }`}
     >
@@ -120,7 +120,7 @@ const Help = (props: Props) => {
               autoComplete="on"
               value={currentUser && user && currentUser.title}
               readOnly
-              className="h-12 w-full flex flex-col items-center justify-center text-[#858585] pl-4 border rounded-md focus-within:outline-none"
+              className="h-12 w-full flex flex-col items-center justify-center text-[#858585] bg-transparent pl-4 border rounded-md focus-within:outline-none"
             />
           </label>
           <label
@@ -138,7 +138,7 @@ const Help = (props: Props) => {
                 `${currentUser.firstName} ${currentUser.lastName}`
               }
               readOnly
-              className="h-12 w-full flex flex-col items-center justify-center text-[#858585] pl-4 border rounded-md focus-within:outline-none"
+              className="h-12 w-full flex flex-col items-center justify-center text-[#858585] bg-transparent pl-4 border rounded-md focus-within:outline-none"
             />
           </label>
         </div>
@@ -154,7 +154,7 @@ const Help = (props: Props) => {
               autoComplete="on"
               value={currentUser && user && user.email}
               readOnly
-              className="h-12 w-full flex flex-col items-center justify-center text-[#858585] pl-4 border rounded-md focus-within:outline-none"
+              className="h-12 w-full flex flex-col items-center justify-center text-[#858585] bg-transparent pl-4 border rounded-md focus-within:outline-none"
             />
           </label>
           <label
@@ -168,7 +168,7 @@ const Help = (props: Props) => {
               autoComplete="on"
               value={currentUser && user && currentUser.number}
               readOnly
-              className="h-12 w-full flex flex-col items-center justify-center text-[#858585] pl-4 border rounded-md focus-within:outline-none"
+              className="h-12 w-full flex flex-col items-center justify-center text-[#858585] bg-transparent pl-4 border rounded-md focus-within:outline-none"
             />
           </label>
         </div>
@@ -186,7 +186,7 @@ const Help = (props: Props) => {
             onChange={(e) =>
               setFormData({ ...formData, subject: e.target.value })
             }
-            className="h-12 w-full flex flex-col items-center justify-center pl-4 border rounded-md"
+            className="h-12 w-full flex flex-col items-center justify-center bg-transparent pl-4 border rounded-md"
           />
         </label>
         <label
@@ -203,7 +203,7 @@ const Help = (props: Props) => {
             onChange={(e) =>
               setFormData({ ...formData, message: e.target.value })
             }
-            className="h-full w-full flex items-start justify-start border rounded-md p-4"
+            className="h-full w-full flex items-start justify-start border rounded-md p-4 bg-transparent"
           />
         </label>
         <button

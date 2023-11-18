@@ -143,7 +143,7 @@ const UserProfile = () => {
                   formButton
                     ? "text-[#464646]"
                     : "text-[#858585] focus-within:outline-none"
-                } p-4 border rounded-md`}
+                } p-4 bg-transparent border rounded-md`}
               />
             </label>
             <label
@@ -181,7 +181,7 @@ const UserProfile = () => {
                   formButton
                     ? "text-[#464646]"
                     : "text-[#858585] focus-within:outline-none"
-                } p-4 border rounded-md`}
+                } p-4 bg-transparent border rounded-md`}
               />
             </label>
           </div>
@@ -197,7 +197,7 @@ const UserProfile = () => {
               required
               value={user && user.email}
               readOnly
-              className="h-12 w-full flex flex-col items-center justify-center text-[#858585] p-4 border rounded-md focus-within:outline-none"
+              className="h-12 w-full flex flex-col items-center justify-center text-[#858585] bg-transparent p-4 border rounded-md focus-within:outline-none"
             />
           </label>
           <label
@@ -229,7 +229,7 @@ const UserProfile = () => {
                 formButton
                   ? "text-[#464646]"
                   : "text-[#858585] focus-within:outline-none"
-              } p-4 border rounded-md`}
+              } p-4 bg-transparent border rounded-md`}
             />
           </label>
           <label
@@ -261,7 +261,7 @@ const UserProfile = () => {
                 formButton
                   ? "text-[#464646]"
                   : "text-[#858585] focus-within:outline-none"
-              } p-4 border rounded-md`}
+              } p-4 bg-transparent border rounded-md`}
             />
           </label>
           <div className="h-auto w-full flex items-center justify-center gap-10 p-2">
@@ -294,7 +294,7 @@ const UserProfile = () => {
                   formButton
                     ? "text-[#464646]"
                     : "text-[#858585] focus-within:outline-none"
-                } p-4 border rounded-md`}
+                } p-4 bg-transparent border rounded-md`}
               />
             </label>
             <label
@@ -328,7 +328,7 @@ const UserProfile = () => {
                   formButton
                     ? "text-[#464646]"
                     : "text-[#858585] focus-within:outline-none"
-                } p-4 border rounded-md`}
+                } p-4 bg-transparent border rounded-md`}
               />
             </label>
           </div>
@@ -343,7 +343,7 @@ const UserProfile = () => {
               value="United States"
               autoComplete="off"
               readOnly
-              className="h-12 w-full flex flex-col items-center justify-center text-[#858585] p-4 border rounded-md focus-within:outline-none"
+              className="h-12 w-full flex flex-col items-center justify-center text-[#858585] bg-transparent p-4 border rounded-md focus-within:outline-none"
             />
           </label>
         </div>

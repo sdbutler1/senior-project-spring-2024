@@ -113,13 +113,13 @@ export default function ForgotPassword() {
     <>
       <LoggingInLoading />
       <div className="h-screen w-screen flex flex-col items-center justify-center gap-12">
-        <div className="absolute h-screen w-screen flex items-center justify-center z-[-1000]">
+        <div className="absolute top-0 left-0 h-screen w-screen flex items-center justify-center z-[-1000]">
           <div className="absolute h-screen w-screen flex items-center justify-center bg-black/30"></div>
           <Image
             src={ShawU}
             alt="logo"
             priority
-            className="h-full w-full object-fit"
+            className="h-full w-full object-cover"
           />
         </div>
         <div className="h-auto w-80 sm:w-96 flex flex-col items-center justify-center gap-4 bg-[#fefefe] rounded-xl">
