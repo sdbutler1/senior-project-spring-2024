@@ -169,6 +169,10 @@ const Login = (props: Props) => {
       <div className="absolute top-8 left-8 h-auto w-96 flex items-center justify-center p-4 bg-white border z-45">
         <ul className="flex flex-col items-start justify-center gap-4 text-sm no-underline ">
           <li className="text-[#255a1d]">
+            * Users can now create events and they are uploaded to the database.
+            Need to work on the other functions.
+          </li>
+          <li className="text-[#255a1d]">
             * Users now can add, edit and delete students from database
           </li>
           <li>* Matthew is still working on the home page</li>
@@ -189,6 +193,10 @@ const Login = (props: Props) => {
           </li>
           <li className="text-[#255a1d]">
             * There are alerts, users can update profile information.
+          </li>
+          <li>
+            * Work on dark mode. Also if you close computer and time passes it
+            doesnt log you out
           </li>
           <li>
             * After these tasks are finished, or during the process will work on

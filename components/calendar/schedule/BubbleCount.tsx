@@ -1,34 +1,96 @@
 // react components
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { collection, doc, getDocs } from "firebase/firestore";
+import dayjs from "dayjs";
+
+// components
+import { useAuth } from "@/context/AuthContext";
 
 // assets
-import { Schedule } from "@/components/calendar/schedule/ScheduleList";
+import { db } from "@/config/firebase";
 
 type Props = {
   popUpSection: string;
 };
 
+interface Event {
+  id: string;
+  eventName: string;
+  selectedDate: string;
+  selectedTime: string;
+  addNote: string;
+  selectedLabel: string;
+}
+
 const BubbleCount = (props: Props) => {
-  let filteredScedule;
+  const { user } = useAuth();
+  const [events, setEvents] = useState<Event[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const getAllEvents = async () => {
+      try {
+        const userDocRef = doc(collection(db, "authEvents"), user.uid);
+        const schedulesCollectionRef = collection(userDocRef, "schedules");
+
+        // Get all documents from the "schedules" collection
+        const querySnapshot = await getDocs(schedulesCollectionRef);
+
+        // Initialize an array to store the events
+        const eventsArray: Event[] = [];
+
+        // Loop through the documents and push the data to the array
+        querySnapshot.forEach((doc) => {
+          eventsArray.push({ id: doc.id, ...doc.data() } as Event);
+        });
+
+        // Set the events state with the fetched data
+        setEvents(eventsArray);
+        setLoading(false);
+
+        console.log("All events:", eventsArray);
+      } catch (error) {
+        console.error("Error getting events:", error);
+        setLoading(false);
+      }
+    };
+
+    getAllEvents();
+  }, []);
+
+  let filteredSchedule: Event[] = [];
   let ScheduleLength;
 
   if (props.popUpSection === "all") {
-    ScheduleLength = Schedule.length;
+    filteredSchedule = events;
+    ScheduleLength = events.length;
   } else if (props.popUpSection === "today") {
-    filteredScedule = Schedule.filter(
-      (singleScedule) => singleScedule.type === props.popUpSection
-    );
-    ScheduleLength = filteredScedule.length;
+    const currentDate = dayjs();
+    filteredSchedule = events.filter((event) => {
+      const eventDate = dayjs(event.selectedDate, "DD/MM/YYYY");
+      return eventDate.isSame(currentDate, "day");
+    });
+    ScheduleLength = filteredSchedule.length;
   } else if (props.popUpSection === "week") {
-    filteredScedule = Schedule.filter(
-      (singleScedule) => singleScedule.type === props.popUpSection
-    );
-    ScheduleLength = filteredScedule.length;
-  } else {
-    filteredScedule = Schedule.filter(
-      (singleScedule) => singleScedule.type === props.popUpSection
-    );
-    ScheduleLength = filteredScedule.length;
+    const currentDate = dayjs();
+    const startOfWeek = currentDate.startOf("week");
+    const endOfWeek = currentDate.endOf("week");
+
+    filteredSchedule = events.filter((event) => {
+      const eventDate = dayjs(event.selectedDate, "DD/MM/YYYY");
+      return eventDate.isAfter(startOfWeek) && eventDate.isBefore(endOfWeek);
+    });
+    ScheduleLength = filteredSchedule.length;
+  } else if (props.popUpSection === "month") {
+    const currentDate = dayjs();
+    const startOfMonth = currentDate.startOf("month");
+    const endOfMonth = currentDate.endOf("month");
+
+    filteredSchedule = events.filter((event) => {
+      const eventDate = dayjs(event.selectedDate, "DD/MM/YYYY");
+      return eventDate.isAfter(startOfMonth) && eventDate.isBefore(endOfMonth);
+    });
+    ScheduleLength = filteredSchedule.length;
   }
 
   return (
