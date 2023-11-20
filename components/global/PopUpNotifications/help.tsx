@@ -1,11 +1,12 @@
 "use client";
 
 // react components
-import React, { useEffect, useState } from "react";
+import React, { useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import { db } from "@/config/firebase";
 import { collection, doc, setDoc } from "firebase/firestore";
+import emailjs from "@emailjs/browser";
 
 // global states
 import { useglobalPopUp } from "@/globalStates/useglobalPopUp";
@@ -25,14 +26,11 @@ const Help = (props: Props) => {
   const { isPopUpOpen2, setPopUpOpen2 } = useglobalPopUp();
   const { setTranslateAlert } = useGlobalAlert();
   const currentUser = CurrentUser({});
+  const form = useRef<HTMLFormElement>(null);
   const [formData, setFormData] = useState({
     subject: "",
     message: "",
   });
-
-  if (currentPathname === "/login" || currentPathname === "/forgotPassword") {
-    return null;
-  }
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -61,6 +59,23 @@ const Help = (props: Props) => {
       // Set the document data
       await setDoc(newDocRef, data);
 
+      // Send email using emailjs
+      emailjs
+        .sendForm(
+          "service_1drgjce",
+          "template_w4jx0ao",
+          form,
+          "iv936lIIvUV_muQzk"
+        )
+        .then(
+          (result) => {
+            console.log(result.text);
+          },
+          (error) => {
+            console.log(error.text);
+          }
+        );
+
       setPopUpOpen2(false);
       setTranslateAlert(
         true,
@@ -88,6 +103,10 @@ const Help = (props: Props) => {
     });
   };
 
+  if (currentPathname === "/login" || currentPathname === "/forgotPassword") {
+    return null;
+  }
+
   return (
     <div
       className={`topbarPopup absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 h-auto w-[20rem] md:w-[30rem] xl:h-[40rem] xl:w-[40rem] flex-col items-center justify-start gap-2 text-black bg-[#fefefe] border rounded-2xl z-40 ${
@@ -106,6 +125,7 @@ const Help = (props: Props) => {
       <form
         id="help"
         onSubmit={handleSubmit}
+        ref={form}
         className="h-full w-11/12 flex flex-col items-center justify-start gap-4 text-[14px] font-semibold"
       >
         <div className="h-auto w-full flex items-center justify-center gap-10">

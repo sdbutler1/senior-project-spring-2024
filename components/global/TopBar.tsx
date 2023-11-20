@@ -85,7 +85,7 @@ const Topbar = () => {
                 className="h-8 w-8 rounded-full"
               />
               <div className="flex items-center justify-center gap-1">
-                <p className="font-semibold">
+                <p className="hidden lg:flex font-semibold">
                   {currentUser.title} {currentUser.firstName} &nbsp;
                   {currentUser.lastName}
                 </p>

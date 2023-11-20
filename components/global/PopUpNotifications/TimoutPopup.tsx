@@ -55,12 +55,24 @@ const TimeoutPopup: React.FC = () => {
       updateExpireTime(900000);
 
       // set event listeners
-      const activityListener = () => updateExpireTime(900000);
+      const activityListener = () => {
+        updateExpireTime(900000);
+        sessionStorage.setItem("active", "true"); // Set a flag in session storage
+      };
 
       window.addEventListener("click", activityListener);
       window.addEventListener("keypress", activityListener);
       window.addEventListener("scroll", activityListener);
       window.addEventListener("mousemove", activityListener);
+
+      // check focus on window
+      const focusListener = () => {
+        if (sessionStorage.getItem("active")) {
+          updateExpireTime(900000);
+        }
+      };
+
+      window.addEventListener("focus", focusListener);
 
       // clean up
       return () => {
@@ -68,13 +80,17 @@ const TimeoutPopup: React.FC = () => {
         window.removeEventListener("keypress", activityListener);
         window.removeEventListener("scroll", activityListener);
         window.removeEventListener("mousemove", activityListener);
+        window.removeEventListener("focus", focusListener);
       };
     } else if (user && showPopup) {
       // clear interval if 2 minutes pass
       const timeoutInterval = setTimeout(() => {
-        setShowPopup(false);
-        setLoading2(true, 0, 1500);
-        logout();
+        if (document.hasFocus()) {
+          // Check if the document is in focus
+          setShowPopup(false);
+          setLoading2(true, 0, 1500);
+          logout();
+        }
       }, 120000); // 2 minutes
 
       // clean up
