@@ -90,7 +90,7 @@ const Help = (props: Props) => {
 
   return (
     <div
-      className={`topbarPopup absolute top-60 left-[40%] h-[40rem] w-[40rem] flex-col items-center justify-start gap-2 text-black bg-[#fefefe] border rounded-2xl mr-8 z-40 ${
+      className={`topbarPopup absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 h-auto w-[20rem] md:w-[30rem] xl:h-[40rem] xl:w-[40rem] flex-col items-center justify-start gap-2 text-black bg-[#fefefe] border rounded-2xl z-40 ${
         isPopUpOpen2 ? "flex" : "hidden"
       }`}
     >

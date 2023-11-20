@@ -19,7 +19,7 @@ const data = [
 
 const BigChartBox = () => {
   return (
-    <div className="formShadow h-full md:h-3/6 w-[20.5rem] md:w-[86%] flex flex-col items-start justify-start">
+    <div className="formShadow h-full w-full flex flex-col items-start justify-start">
       <h1 className="topboxheader">Graduate employment rate</h1>
       <div className="h-4/5 w-full">
         <ResponsiveContainer width="99%" height="100%">

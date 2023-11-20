@@ -202,9 +202,9 @@ const StudentTable = (props: Props) => {
           closeModal={closeModal}
         />
       )}
-      <div className="h-2/6 w-full flex flex-col items-center justify-center gap-2 overflow-x-auto">
+      <div className="h-2/6 w-full flex flex-col items-center justify-center gap-2 overflow-scroll">
         <div className="w-full flex flex-col items-start justify-center gap-2 py-4 px-8 mb-2 2xl:gap-4 2xl:mb-6">
-          <h1 className="text-2xl md:text-4xl font-bold">Students</h1>
+          <h1 className="text-2xl md:text-4xl text-shaw-garnet font-bold">Students</h1>
           <div className="h-full w-full flex items-center justify-between">
             <div className="flex items-center justify-start gap-4">
               <button

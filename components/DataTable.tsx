@@ -92,7 +92,7 @@ const DataTable = (props: Props) => {
       const isRowSelected = selectedRowId === params.row.id;
 
       return (
-        <div className="w-40 flex items-center justify-start">
+        <div className="dataTable w-[40rem] h-[5rem] flex items-center justify-start">
           {isRowSelected ? (
             <div className="flex items-center justify-center gap-1">
               <button type="button" onClick={() => handleDelete(params.row.id)}>
@@ -127,7 +127,7 @@ const DataTable = (props: Props) => {
   };
 
   return (
-    <div className="dataTable w-full h-[45rem] px-8">
+    <div className="dataTable h-[45rem] w-[80rem] 2xl:w-full ml-[60rem] md:ml-[35rem] xl:ml-80 2xl:ml-0 mr-8 2xl:mr-0 px-8">
       <DataGrid
         className="dataGrid"
         rows={props.rows}

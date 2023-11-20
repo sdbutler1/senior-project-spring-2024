@@ -92,9 +92,9 @@ const AddStudent = (props: Props) => {
 
   return (
     <div
-      className={`addPopup absolute top-80 left-[42%] h-[30rem] w-[26rem] ${
+      className={`addPopup absolute top-2/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 h-[30rem] w-80 md:w-[26rem] ${
         props.addPopUp ? "flex" : "hidden"
-      } flex-col items-start justify-center gap-8 bg-[#7d1f2df9] text-[#fff] px-8 rounded-lg border-2 border-[#d8495e] shadow-xl`}
+      } flex-col items-start justify-start gap-8 bg-[#7d1f2df9] text-[#fff] py-4 px-8 rounded-lg border border-[#d8495e] mt-20 shadow-xl overflow-auto z-50`}
     >
       <h1 className="flex items-center justify-start text-2xl font-semibold">
         Add New Student

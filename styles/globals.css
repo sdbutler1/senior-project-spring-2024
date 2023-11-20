@@ -32,7 +32,7 @@ body {
   padding: 2rem;
   background-color: #fff;
   color: #7d1f2e;
-  border: 2px solid #fff;
+  border: 2px solid #f3f3f3;
   scrollbar-width: thin;
   overflow: scroll;
 }
@@ -111,6 +111,40 @@ body {
   font-weight: 700;
 }
 
+.studentId {
+  font-size: 1rem;
+}
+
+/* Media query for smaller screens */
+@media screen and (max-width: 1800px) {
+  .topboxheader {
+    font-size: 1.5rem; /* Adjust the font size for smaller screens */
+  }
+
+  .topboxNames {
+    font-size: 1rem; /* Adjust the font size for smaller screens */
+  }
+
+  .studentId {
+    font-size: 0.8rem;
+  }
+}
+
+/* Media query for even smaller screens */
+@media screen and (max-width: 1200px) {
+  .topboxheader {
+    font-size: 1.3rem; /* Adjust the font size for smaller screens */
+  }
+
+  .topboxNames {
+    font-size: 0.8rem; /* Adjust the font size for smaller screens */
+  }
+
+  .studentId {
+    font-size: 0.7rem;
+  }
+}
+
 .blob {
   border-radius: 40% 60% 65% 35% / 40% 35% 65% 60%;
 }
@@ -136,67 +170,145 @@ h1 {
   font-size: 24px;
 }
 
-input {
-  @apply px-2;
-}
-  .fc-header-toolbar {
-    display: inline-block;
-    padding: 4px 4px;
-    
-    @apply space-x-8;
-}
-
-.fc-day {
-  @apply m-8;
-}
-
-.fc-scrollgrid-sync-table {
-  @apply w-full;
-}
-
-.fc-view {
-  @apply w-full h-full lg:h-3/4 xl:h-2/3 bg-white;
-}
-
-.fc-h-event {
-  @apply bg-violet-500 border border-violet-600 ;
-  
-}
-
-.fc .fc-daygrid-day.fc-day-today {
-  @apply bg-violet-100 ;
-}
-
-.fc .fc-button{
-  @apply bg-violet-800 hover:bg-violet-900  ;
-}
-
-.fc .fc-button-primary:not(:disabled).fc-button-active {
-  @apply bg-violet-600;
-}
-
-.fc .fc-button-primary:disabled {
-  @apply bg-violet-600;
-}
-.fc-v-event {
-  @apply bg-violet-500 border border-violet-600 ;
-  
-}
-
-.notepadLines {
+/* .notepadLines {
   width: 100%;
   position: relative;
   overflow: hidden;
 }
 
 .notepadLines::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(to bottom, transparent 1.5em, #ccc 1.5em, #ccc 1.6em, transparent 1.6em);
+  background: linear-gradient(
+    to bottom,
+    transparent 1.5em,
+    #ccc 1.5em,
+    #ccc 1.6em,
+    transparent 1.6em
+  );
   background-size: 100% 1.6em;
   pointer-events: none;
+} */
+
+@import url("https://fonts.googleapis.com/css?family=Oswald:400,700");
+
+:root {
+  --level-one: translateZ(3rem);
+  --level-two: translateZ(6rem);
+  --level-three: translateZ(9rem);
+
+  --fw-normal: 400;
+  --fw-bold: 700;
+
+  --clr: #b7c9e5;
+}
+
+.card {
+  gap: 2rem;
+  font-family: "Oswald", sans-serif;
+}
+
+.card__content {
+  width: 15rem;
+  height: 12rem;
+  text-align: center;
+  position: relative;
+  transition: transform 1s;
+  transform-style: preserve-3d;
+}
+
+.card__content:hover {
+  transform: rotateY(0.5turn);
+}
+
+.card__front,
+.card__back {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  display: grid;
+  align-content: center;
+  border-radius: 10px;
+  box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.1), -15px -15px 20px #fffb;
+}
+
+.card__front {
+  background-color: #fff;
+  background-size: cover;
+  background-blend-mode: overlay;
+}
+
+.card__front::before {
+  content: "";
+  position: absolute;
+  --spacer: 1em;
+  top: var(--spacer);
+  bottom: var(--spacer);
+  left: var(--spacer);
+  right: var(--spacer);
+  transform: var(--level-one);
+  border-radius: 10px;
+}
+
+.card__title {
+  font-size: 1.3rem;
+  color: #8b2333;
+  font-weight: 600;
+  transform: var(--level-three);
+  order: 2;
+  text-transform: uppercase;
+}
+
+.card__body {
+  transform: var(--level-two);
+  font-weight: var(fw-normal);
+  font-size: 1.2rem;
+  line-height: 1.6;
+}
+
+.card__back {
+  transform: rotateY(0.5turn);
+  color: #fff;
+  background-color: #8b2333;
+  border-radius: 10px;
+}
+
+/* Media query for even smaller screens */
+@media screen and (max-width: 800px) {
+  .card__content {
+    width: 10rem;
+    height: 8rem;
+  }
+
+  .card__title {
+    font-size: 0.8rem;
+  }
+  .card__body {
+    font-size: 0.7rem;
+  }
+}
+
+
+@media screen and (max-width: 400px) {
+  .card__content {
+    width: 8rem;
+    height: 8rem;
+  }
+
+  .card__title {
+    font-size: 0.7rem;
+  }
+  .card__body {
+    font-size: 0.6rem;
+  }
 }

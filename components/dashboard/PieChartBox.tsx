@@ -9,7 +9,7 @@ const data = [
 
 const PieChartBox = () => {
   return (
-    <div className="formShadow h-4/6 w-full flex flex-col items-start justify-start">
+    <div className="formShadow h-full w-full flex flex-col items-start justify-start">
       <h1 className="topboxheader">Internships</h1>
       <div className="h-full w-full">
         <ResponsiveContainer width="99%" height={300}>

@@ -1,14 +1,15 @@
 "use client";
 
 // react components
-import React, { useState } from "react";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
-import { StaticTimePicker } from "@mui/x-date-pickers/StaticTimePicker";
-import dayjs from "dayjs";
+import React, { useEffect, useState } from "react";
 import { db } from "@/config/firebase";
 import { collection, doc, addDoc } from "firebase/firestore";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 // global states
 import { useGlobalAlert } from "@/globalStates/useGlobalAlert";
@@ -16,12 +17,10 @@ import { useGlobalAlert } from "@/globalStates/useGlobalAlert";
 // components
 import { useAuth } from "@/context/AuthContext";
 
-type Props = {};
-
 type FormData = {
   eventName: string;
-  selectedDate: Date | null;
-  selectedTime: Date | null;
+  selectedDate: Date | null | string;
+  selectedTime: Date | null | string;
   addNote: string;
   selectedLabel: keyof typeof labels;
 };
@@ -35,10 +34,14 @@ const labels = {
   "Exam Periods": "006400", // Dark Green
 };
 
+type Props = {};
+
 const NewEvent = (props: Props) => {
   const { user } = useAuth();
   const { setTranslateAlert } = useGlobalAlert();
   const [newEvent, setNewEvent] = useState(false);
+  const [timeFocus, setTimeFocus] = useState(false);
+
   const [formData, setFormData] = useState<FormData>({
     eventName: "",
     selectedDate: new Date(),
@@ -47,58 +50,61 @@ const NewEvent = (props: Props) => {
     selectedLabel: "lectures",
   });
 
-  const [previousDate, setPreviousDate] = useState<Date | null>(null);
-  const [selectDateModal, setSelectDateModal] = useState(false);
-  const [previousTime, setPreviousTime] = useState<Date | null>(null);
-  const [selectTimeModal, setSelectTimeModal] = useState(false);
+  const handleChange = (
+    event: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
+  ) => {
+    const { name, value } = event.target;
+
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleDateChange = (date: Date | null) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      selectedDate: date,
+    }));
+  };
+
+  const handleTimeChange = (time: string) => {
+    const selectedTime = dayjs.tz(time, "HH:mm", "auto");
+
+    // Ensure formData.selectedDate is a Date object
+    const selectedDate =
+      formData.selectedDate instanceof Date
+        ? formData.selectedDate
+        : new Date();
+
+    const newSelectedTime = new Date(selectedDate);
+    newSelectedTime.setHours(selectedTime.hour());
+    newSelectedTime.setMinutes(selectedTime.minute());
+    newSelectedTime.setSeconds(0);
+    newSelectedTime.setMilliseconds(0);
+
+    // Format the time string before setting it in the state
+    const formattedTime = dayjs(newSelectedTime).format("HH:mm");
+
+    setFormData((prevData) => ({
+      ...prevData,
+      selectedTime: newSelectedTime,
+    }));
+
+    // Set the formatted time in the input
+    document.getElementById("timeInput")?.setAttribute("value", formattedTime);
+  };
 
   const cancelSchedule = () => {
     setNewEvent(false);
     setFormData({
       eventName: "",
-      selectedDate: null,
-      selectedTime: null,
+      selectedDate: new Date(),
+      selectedTime: new Date(),
       addNote: "",
       selectedLabel: "lectures",
-    });
-  };
-
-  const handleEventNameChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setFormData({
-      ...formData,
-      eventName: event.target.value,
-    });
-  };
-
-  const handleAddNoteChange = (
-    event: React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
-    setFormData({
-      ...formData,
-      addNote: event.target.value,
-    });
-  };
-
-  const handleDateChange = (newDate: Date | null) => {
-    setFormData({
-      ...formData,
-      selectedDate: newDate,
-    });
-  };
-
-  const handleTimeChange = (newTime: Date | null) => {
-    setFormData({
-      ...formData,
-      selectedTime: newTime,
-    });
-  };
-
-  const handleLabelChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setFormData({
-      ...formData,
-      selectedLabel: event.target.value as keyof typeof labels,
     });
   };
 
@@ -115,11 +121,11 @@ const NewEvent = (props: Props) => {
         return;
       }
 
-      // Format selectedDate to dd, mm, yy format
-      const formattedDate = dayjs(selectedDate).format("DD/MM/YYYY");
+      // Format selectedDate as "YYYY-MM-DD"
+      const formattedDate = dayjs(selectedDate).format("YYYY-MM-DD");
 
-      // Format selectedTime to 24-hour clock format
-      const formattedTime = dayjs(selectedTime).format("HH:mm:ss");
+      // Format selectedTime as "HH:mm"
+      const formattedTime = dayjs(selectedTime).format("HH:mm");
 
       const data = {
         eventName,
@@ -150,223 +156,137 @@ const NewEvent = (props: Props) => {
       setNewEvent(false);
       setFormData({
         eventName: "",
-        selectedDate: null,
-        selectedTime: null,
+        selectedDate: new Date(),
+        selectedTime: new Date(),
         addNote: "",
         selectedLabel: "lectures",
       });
     }, 2000);
   };
 
-  const handleDateCancel = () => {
-    if (previousDate !== null) {
-      setFormData({
-        ...formData,
-        selectedDate: previousDate,
-      });
-    }
-    setSelectDateModal(false);
-  };
-
-  const handleTimeCancel = () => {
-    if (previousTime !== null) {
-      setFormData({
-        ...formData,
-        selectedTime: previousTime,
-      });
-    }
-    setSelectTimeModal(false);
-  };
+  useEffect(() => {
+    const closePopupsOnOutsideClick = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      if (!target.closest(".timeInput")) {
+        setTimeFocus(false);
+      }
+    };
+    document.addEventListener("click", closePopupsOnOutsideClick);
+    return () => {
+      document.removeEventListener("click", closePopupsOnOutsideClick);
+    };
+  }, []);
 
   return (
-    <div className="h-full w-3/12 flex flex-col items-center justify-start gap-12">
+    <div className="h-full w-full sm:w-5/12 2xl:w-3/12 flex flex-col items-center justify-start gap-12 pt-4">
       <button
         type="button"
         onClick={() => setNewEvent(true)}
-        className="h-12 w-40 flex items-center justify-center text-lg text-[#fff] font-semibold bg-[#7d1f2e] rounded hover:bg-[#701b29]"
+        className="h-12 w-40 flex items-center justify-center text-lg text-[#fff] font-semibold bg-[#7d1f2e] rounded hover:bg-[#701b29] hover:scale-[102%]"
       >
         Schedule
       </button>
-      <div
-        className={`h-5/6 w-[22rem] ${
+      <form
+        onSubmit={handleSubmit}
+        className={`h-5/6 w-11/12 ${
           newEvent ? "flex" : "hidden"
-        } flex-col items-center justify-start gap-4 p-4`}
+        } flex flex-col items-start justify-start gap-8 p-4 uppercase`}
       >
-        <form
-          onSubmit={handleSubmit}
-          className="h-full w-full flex flex-col items-center justify-start gap-12 p-2 text-sm uppercase"
-        >
-          <div className="w-full flex flex-col items-start justify-center gap-2">
-            <label htmlFor="eventName">Event Name</label>
+        <div className="w-full flex flex-col items-start justify-center border-b border-gray-300">
+          <label>Event Name</label>
+          <input
+            type="text"
+            name="eventName"
+            value={formData.eventName}
+            onChange={handleChange}
+            className="w-full bg-transparent outline-none -ml-2"
+          />
+        </div>
+        <div className="w-full flex items-start justify-center gap-4">
+          <div className="w-full flex flex-col items-start justify-center">
+            <label>Date</label>
             <input
-              type="text"
-              id="eventName"
-              name="eventName"
-              autoComplete="off"
-              value={formData.eventName || ""}
-              onChange={handleEventNameChange}
-              className="w-full bg-transparent border-b border-gray-300 outline-none"
+              type="date"
+              name="selectedDate"
+              onChange={(e) => handleDateChange(new Date(e.target.value))}
+              value={
+                formData.selectedDate instanceof Date
+                  ? formData.selectedDate.toISOString().split("T")[0]
+                  : formData.selectedDate ?? ""
+              }
+              className="w-full bg-transparent outline-none -ml-2 cursor-pointer"
             />
           </div>
-          <div className="flex items-start justify-center gap-8">
-            <div className="w-full flex flex-col items-start justify-center gap-2">
-              <label htmlFor="date">Date</label>
-              <input
-                type="text"
-                id="date"
-                name="date"
-                value={
-                  formData.selectedDate
-                    ? dayjs(formData.selectedDate).format("ddd, MMM DD YYYY")
-                    : ""
-                }
-                onChange={() => {}}
-                onFocus={() => (
-                  setSelectDateModal(true), setSelectTimeModal(false)
-                )}
-                className="w-full bg-transparent border-b border-gray-300 outline-none"
-              />
-            </div>
-            <div className="w-full flex flex-col items-start justify-center gap-2">
-              <label htmlFor="time">Time</label>
-              <input
-                type="text"
-                id="time"
-                name="time"
-                value={
-                  formData.selectedTime
-                    ? dayjs(formData.selectedTime).format("HH:mm")
-                    : ""
-                }
-                onChange={() => {}}
-                onFocus={() => (
-                  setSelectTimeModal(true), setSelectDateModal(false)
-                )}
-                className="w-full bg-transparent border-b border-gray-300 outline-none"
-              />
-            </div>
+          <div className="w-full flex flex-col items-start justify-center">
+            <label>Time</label>
+            <input
+              type="time"
+              pattern="[0-9]{2}:[0-9]{2}"
+              minLength={5}
+              maxLength={5}
+              value={
+                !timeFocus && formData.selectedTime instanceof Date
+                  ? dayjs(formData.selectedTime).format("HH:mm")
+                  : undefined
+              }
+              onChange={(e) => handleTimeChange(e.target.value)}
+              onFocus={() => setTimeFocus(true)}
+              className="timeInput w-full bg-transparent outline-none -ml-2 cursor-pointer"
+            />
           </div>
-          {/* Time Section */}
-          <div
-            className={`${
-              selectDateModal ? "flex" : "hidden"
-            } flex-col items-center justify-center -mt-6`}
-          >
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DateCalendar sx={{ height: 300 }} onChange={handleDateChange} />
-            </LocalizationProvider>
-
-            <div className="w-3/6 flex items-start justify-between">
-              <button
-                onClick={handleDateCancel}
-                type="button"
-                className="hover:underline hover:scale-105"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={() => setSelectDateModal(false)}
-                type="button"
-                className="hover:underline hover:scale-105"
-              >
-                Ok
-              </button>
-            </div>
+        </div>
+        <div className="w-full flex flex-col items-start justify-center">
+          <label htmlFor="addNote">Add Note</label>
+          <div className="notepadLines">
+            <textarea
+              id="addNote"
+              name="addNote"
+              value={formData.addNote}
+              onChange={handleChange}
+              className="w-full h-28 px-2 bg-transparent outline-none resize-none"
+            />
           </div>
-          <div
-            className={`${
-              selectTimeModal ? "flex" : "hidden"
-            } flex-col items-center justify-center -mt-6`}
-          >
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <StaticTimePicker
-                sx={{ height: 380, background: "transparent" }}
-                onChange={handleTimeChange}
-              />
-            </LocalizationProvider>
-
-            <div className="w-3/6 flex items-start justify-between">
-              <button
-                onClick={handleTimeCancel}
-                type="button"
-                className="hover:underline hover:scale-105"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={() => setSelectTimeModal(false)}
-                type="button"
-                className="hover:underline hover:scale-105"
-              >
-                Ok
-              </button>
-            </div>
-          </div>
-          <div
-            className={`w-full ${
-              selectDateModal || selectTimeModal ? "hidden" : "flex"
-            } flex-col items-start justify-center`}
-          >
-            <label htmlFor="addNote">Add Note</label>
-            <div className="notepadLines">
-              <textarea
-                id="addNote"
-                name="addNote"
-                value={formData.addNote || ""}
-                onChange={handleAddNoteChange}
-                className="w-full h-16 px-2 bg-transparent outline-none resize-none"
-              />
-            </div>
-          </div>
-          <div
-            className={`w-full ${
-              selectDateModal || selectTimeModal ? "hidden" : "flex"
-            } flex-col items-start justify-center gap-2`}
-          >
-            <label htmlFor="eventLabel">Label</label>
-            <div className="w-full flex items-center justify-center p-1 border-b border-slate-300">
-              <div
-                style={{
-                  backgroundColor: `#${labels[formData.selectedLabel]}`,
-                }}
-                className="h-4 w-4 rounded-full"
-              ></div>
-              <select
-                id="eventLabel"
-                name="eventLabel"
-                className="w-full bg-transparent outline-none"
-                onChange={handleLabelChange}
-                value={formData.selectedLabel || ""}
-              >
-                {Object.keys(labels).map((label) => (
-                  <option key={label} value={label}>
-                    {label.charAt(0).toUpperCase() + label.slice(1)}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-          <div className="w-full flex items-center justify-between">
-            <button
-              type="button"
-              onClick={cancelSchedule}
-              className={`h-10 w-32 ${
-                selectDateModal || selectTimeModal ? "hidden" : "flex"
-              } items-center justify-center text-[#000] font-semibold bg-[#dcdcdc] rounded-3xl hover:bg-[#a7a7a7]`}
+        </div>
+        <div className="w-full flex flex-col items-start justify-center">
+          <label htmlFor="eventLabel">Label</label>
+          <div className="w-full flex items-center justify-center p-1 border-b border-slate-300">
+            <div
+              style={{
+                backgroundColor: `#${labels[formData.selectedLabel]}`,
+              }}
+              className="h-4 w-4 rounded-full"
+            ></div>
+            <select
+              id="eventLabel"
+              name="eventLabel"
+              className="w-full bg-transparent outline-none cursor-pointer"
+              value={formData.selectedLabel}
+              onChange={handleChange}
             >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              className={`h-10 w-32 ${
-                selectDateModal || selectTimeModal ? "hidden" : "flex"
-              } items-center justify-center text-[#fff] font-semibold bg-[#7d1f2e] rounded-3xl hover:bg-[#701b29]`}
-            >
-              Create Event
-            </button>
+              {Object.keys(labels).map((label) => (
+                <option key={label} value={label}>
+                  {label.charAt(0).toUpperCase() + label.slice(1)}
+                </option>
+              ))}
+            </select>
           </div>
-        </form>
-      </div>
+        </div>
+        <div className="w-full flex items-center justify-between">
+          <button
+            type="button"
+            onClick={cancelSchedule}
+            className={`h-10 w-32 flex items-center justify-center text-[#000] font-semibold bg-[#dcdcdc] rounded-3xl hover:bg-[#a7a7a7] hover:scale-[102%]`}
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            className={`h-10 w-32 flex items-center justify-center text-[#fff] font-semibold bg-[#7d1f2e] rounded-3xl hover:bg-[#701b29] hover:scale-[102%]`}
+          >
+            Create Event
+          </button>
+        </div>
+      </form>
     </div>
   );
 };
