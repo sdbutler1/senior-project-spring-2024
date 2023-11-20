@@ -138,9 +138,9 @@ const EditStudent = (props: Props) => {
 
   return (
     <div
-      className={`addPopup absolute top-80 left-[42%] h-[30rem] w-[26rem] ${
+      className={`addPopup absolute top-2/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 h-[30rem] w-80 md:w-[26rem] ${
         props.editPopUp ? "flex" : "hidden"
-      } flex-col items-start justify-center gap-8 bg-[#7d1f2df9] text-[#fff] px-8 rounded-lg border-2 border-[#d8495e] shadow-xl`}
+      } flex-col items-start justify-start gap-8 bg-[#7d1f2df9] text-[#fff] py-4 px-8 rounded-lg border border-[#d8495e] mt-20 shadow-xl overflow-auto z-50`}
     >
       <h1 className="flex items-center justify-start text-2xl font-semibold">
         Edit Student
@@ -180,7 +180,7 @@ const EditStudent = (props: Props) => {
               value={formData.firstName}
               onChange={handleChange}
               onFocus={() => setEditFirstName("firstName")}
-              className="h-8 w-full flex items-center justify-start text-sm bg-transparent border-b outline-none"
+              className="h-8 w-full flex items-center justify-start text-sm bg-transparent border-b outline-none placeholder:text-white"
             />
           </div>
           <div className="flex flex-col items-start justify-center">
@@ -196,7 +196,7 @@ const EditStudent = (props: Props) => {
               value={formData.lastName}
               onChange={handleChange}
               onFocus={() => setEditLastName("lastName")}
-              className="h-8 w-full flex items-center justify-start text-sm bg-transparent border-b outline-none"
+              className="h-8 w-full flex items-center justify-start text-sm bg-transparent border-b outline-none placeholder:text-white"
             />
           </div>
         </div>
@@ -214,7 +214,7 @@ const EditStudent = (props: Props) => {
               value={formData.email}
               onChange={handleChange}
               onFocus={() => setEditEmail("email")}
-              className="h-8 w-full flex items-center justify-start text-sm bg-transparent border-b outline-none"
+              className="h-8 w-full flex items-center justify-start text-sm bg-transparent border-b outline-none placeholder:text-white"
             />
           </div>
           <div className="flex flex-col items-start justify-center">
@@ -230,7 +230,7 @@ const EditStudent = (props: Props) => {
               value={formData.phone}
               onChange={handleChange}
               onFocus={() => setEditPhoneNumber("phone")}
-              className="h-8 w-full flex items-center justify-start text-sm bg-transparent border-b outline-none"
+              className="h-8 w-full flex items-center justify-start text-sm bg-transparent border-b outline-none placeholder:text-white"
             />
           </div>
         </div>
@@ -248,7 +248,7 @@ const EditStudent = (props: Props) => {
               value={formData.classification}
               onChange={handleChange}
               onFocus={() => setEditClassification("classification")}
-              className="h-8 w-full flex items-center justify-start text-sm bg-transparent border-b outline-none"
+              className="h-8 w-full flex items-center justify-start text-sm bg-transparent border-b outline-none placeholder:text-white"
             />
           </div>
           <div className="flex flex-col items-start justify-center">
@@ -264,7 +264,7 @@ const EditStudent = (props: Props) => {
               value={formData.gpa}
               onChange={handleChange}
               onFocus={() => setEditGPA("gpa")}
-              className="h-8 w-full flex items-center justify-start text-sm bg-transparent border-b outline-none"
+              className="h-8 w-full flex items-center justify-start text-sm bg-transparent border-b outline-none placeholder:text-white"
             />
           </div>
         </div>

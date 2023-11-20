@@ -13,7 +13,7 @@ import { useGlobalSideBar } from "../../globalStates/useGlobalSideBar";
 import { useGlobalLoading } from "@/globalStates/useGlobalLoading";
 
 //components
-import ThemeSwitcher from "./ThemeSwitcher";
+// import ThemeSwitcher from "./ThemeSwitcher";
 import CurrentUser from "@/components/global/CurrentUser";
 
 // assets
@@ -36,6 +36,7 @@ import {
 import { BiLink } from "react-icons/bi";
 import { FaBuildingColumns } from "react-icons/fa6";
 import { SiGoogleclassroom } from "react-icons/si";
+import { FaUserCircle } from "react-icons/fa";
 
 const SideBar = () => {
   const { isSidebarOpen, isSidebarHidden, toggleSideBar, HideSideBar } =
@@ -52,7 +53,7 @@ const SideBar = () => {
     <div
       className={`fixed bottom-0 left-0 h-[calc(100%-5rem)] ${
         isSidebarOpen ? "w-64" : isSidebarHidden ? "w-20" : "invisible w-0"
-      }  flex flex-col items-center justify-start text-[#fff] bg-[#7d1f2e] z-40 transition-width duration-500`}
+      }  flex flex-col items-center justify-start text-[#fff] bg-[#7d1f2e] z-30 transition-width duration-500`}
     >
       <div
         className={`h-12 w-full items-center ${
@@ -77,7 +78,7 @@ const SideBar = () => {
       <ul className="h-96 2xl:h-auto w-[90%] sm:w-full flex flex-col items-start justify-center px-4">
         <Link
           href={"/"}
-          className={`relative h-[3.5rem] w-full flex items-center justify-center rounded-md hover:text-[#f4b461] ${
+          className={`relative h-full xl:h-[3.5rem] w-full flex items-center justify-center rounded-md hover:text-[#f4b461] ${
             currentPathname === "/"
               ? "bg-[#6e1d2a9f] text-[#f4b461]"
               : undefined
@@ -100,7 +101,7 @@ const SideBar = () => {
         </Link>
         <Link
           href={"/dashboard"}
-          className={`relative h-[3.5rem] w-full flex items-center justify-center rounded-md hover:text-[#f4b461] ${
+          className={`relative h-full xl:h-[3.5rem] w-full flex items-center justify-center rounded-md hover:text-[#f4b461] ${
             currentPathname === "/dashboard"
               ? "bg-[#6e1d2a9f] text-[#f4b461]"
               : undefined
@@ -124,7 +125,7 @@ const SideBar = () => {
         <Link
           onClick={() => setLoading(true, 0, 2000)}
           href={"/student"}
-          className={`relative h-[3.5rem] w-full flex items-center justify-center rounded-md hover:text-[#f4b461] ${
+          className={`relative h-full xl:h-[3.5rem] w-full flex items-center justify-center rounded-md hover:text-[#f4b461] ${
             currentPathname === "/student"
               ? "bg-[#6e1d2a9f] text-[#f4b461]"
               : undefined
@@ -146,8 +147,8 @@ const SideBar = () => {
           </li>
         </Link>
         <Link
-          href={"/calendar"}
-          className={`relative h-[3.5rem] w-full flex items-center justify-center rounded-md hover:text-[#f4b461] ${
+          href={""}
+          className={`relative h-full xl:h-[3.5rem] w-full invisible flex items-center justify-center rounded-md hover:text-[#f4b461] ${
             currentPathname === "" ? "bg-[#6e1d2a9f] text-[#f4b461]" : undefined
           }`}
         >
@@ -168,7 +169,7 @@ const SideBar = () => {
         </Link>
         <Link
           href={"/student"}
-          className={`relative h-[3.5rem] w-full invisible flex items-center justify-center rounded-md hover:text-[#f4b461] ${
+          className={`relative h-full xl:h-[3.5rem] w-full invisible flex items-center justify-center rounded-md hover:text-[#f4b461] ${
             currentPathname === "" ? "bg-[#6e1d2a9f] text-[#f4b461]" : undefined
           }`}
         >
@@ -189,7 +190,7 @@ const SideBar = () => {
         </Link>
         <Link
           href={""}
-          className={`relative h-[3.5rem] w-full invisible flex items-center justify-center rounded-md text-[#fefefe93] ${
+          className={`relative h-full xl:h-[3.5rem] w-full invisible flex items-center justify-center rounded-md text-[#fefefe93] ${
             currentPathname === "" ? "bg-[#6e1d2a9f] text-[#f4b461]" : undefined
           }`}
         >
@@ -212,7 +213,7 @@ const SideBar = () => {
         </Link>
         <Link
           href={""}
-          className={`relative h-[3.5rem] w-full invisible flex items-center justify-center rounded-md text-[#fefefe93] ${
+          className={`relative h-full xl:h-[3.5rem] w-full invisible flex items-center justify-center rounded-md text-[#fefefe93] ${
             currentPathname === "" ? "bg-[#6e1d2a9f] text-[#f4b461]" : undefined
           }`}
         >
@@ -299,7 +300,7 @@ const SideBar = () => {
       <ul className="h-32 2xl:h-auto w-[90%] sm:w-full flex flex-col items-start justify-center px-4">
         <Link
           href={""}
-          className={`relative h-[3.5rem] w-full invisible flex items-center justify-center rounded-md text-[#fefefe93] ${
+          className={`relative h-full xl:h-[3.5rem] w-full hidden items-center justify-center rounded-md text-[#fefefe93] ${
             currentPathname === "" ? "bg-[#6e1d2a9f] text-[#f4b461]" : undefined
           }`}
         >
@@ -321,10 +322,10 @@ const SideBar = () => {
         <Link
           href={"https://www.shawcomputerscience.com/"}
           target="blank"
-          className="relative h-[3.5rem] w-full flex items-center justify-center rounded-md hover:text-[#f4b461]"
+          className="relative h-full xl:h-[3.5rem] w-full flex items-center justify-center rounded-md hover:text-[#f4b461]"
         >
           <li
-            className={`absolute left-0 h-full w-full flex items-center text-[1.75rem] ${
+            className={`absolute left-0 h-full w-full flex items-center text-[1.65rem] ${
               isSidebarOpen
                 ? "justify-start pl-[1.25rem]"
                 : "justify-center pl-0"
@@ -343,7 +344,7 @@ const SideBar = () => {
         <Link
           href={"/userProfile"}
           onClick={() => setLoading(true, 0, 500)}
-          className={`relative h-[3.5rem] w-full flex items-center justify-center rounded-md hover:text-[#f4b461] ${
+          className={`relative h-full xl:h-[3.5rem] w-full flex items-center justify-center rounded-md hover:text-[#f4b461] ${
             currentPathname === "/userProfile" ? "text-[#f4b461]" : undefined
           }`}
         >
@@ -354,15 +355,7 @@ const SideBar = () => {
                 : "justify-center pl-0"
             } `}
           >
-            {currentUser && user && (
-              <Image
-                src={user.photoURL ? user.photoURL : userPhotoUrl}
-                width={10}
-                height={10}
-                alt={`${currentUser.firstName} ${currentUser.lastName}`}
-                className="h-[1.6rem] w-[1.6rem] rounded-full"
-              />
-            )}
+            <FaUserCircle />
           </li>
           <li
             className={`absolute right-0 h-full w-full flex items-center justify-center text-[1.1rem] whitespace-nowrap pr-[2.2rem] ${
@@ -374,7 +367,7 @@ const SideBar = () => {
         </Link>
         <Link
           href={""}
-          className={`relative h-[3.5rem] w-full flex items-center justify-center rounded-md hover:text-[#f4b461] ${
+          className={`relative h-full xl:h-[3.5rem] w-full flex items-center justify-center rounded-md hover:text-[#f4b461] ${
             currentPathname === "" ? "bg-[#6e1d2a9f] text-[#f4b461]" : undefined
           }`}
         >

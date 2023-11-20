@@ -121,10 +121,16 @@ const NewEvent = (props: Props) => {
         return;
       }
 
+      // Format selectedDate as "YYYY-MM-DD"
+      const formattedDate = dayjs(selectedDate).format("YYYY-MM-DD");
+
+      // Format selectedTime as "HH:mm"
+      const formattedTime = dayjs(selectedTime).format("HH:mm");
+
       const data = {
         eventName,
-        selectedDate,
-        selectedTime,
+        selectedDate: formattedDate,
+        selectedTime: formattedTime,
         addNote,
         selectedLabel,
       };
