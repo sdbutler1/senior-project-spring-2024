@@ -58,7 +58,7 @@ const ScheduleCard = (props: Props) => {
     };
 
     getAllEvents();
-  }, []);
+  }, [user.uid]);
 
   let filteredSchedule = events;
 

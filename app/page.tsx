@@ -52,7 +52,7 @@ const Homepage = (props: Props) => {
     return () => {
       clearInterval(intervalId);
     };
-  }, [currentSlide]);
+  }, [currentSlide, slides.length]);
 
   const handleNextSlide = () => {
     setCurrentSlide((prevSlide) => (prevSlide + 1) % slides.length);
@@ -177,7 +177,7 @@ const Homepage = (props: Props) => {
               <h3 className="card__title">Respect</h3>
             </div>
             <div className="card__back">
-              <p className="card__body">This would be some</p>
+              <p className="card__body">Honor digital boundaries</p>
             </div>
           </div>
           <div className="card__content">
@@ -185,7 +185,7 @@ const Homepage = (props: Props) => {
               <h3 className="card__title">Integrity</h3>
             </div>
             <div className="card__back">
-              <p className="card__body">This would be some</p>
+              <p className="card__body">Uphold ethical code</p>
             </div>
           </div>
         </div>
@@ -195,7 +195,7 @@ const Homepage = (props: Props) => {
               <h3 className="card__title">Responsibility</h3>
             </div>
             <div className="card__back">
-              <p className="card__body">This would be some</p>
+              <p className="card__body">Deliver quality, meet deadlines.</p>
             </div>
           </div>
           <div className="card__content">
@@ -203,7 +203,7 @@ const Homepage = (props: Props) => {
               <h3 className="card__title">Professionalism</h3>
             </div>
             <div className="card__back">
-              <p className="card__body">This would be some</p>
+              <p className="card__body">Craft code, conduct, and character</p>
             </div>
           </div>
         </div>
@@ -212,7 +212,7 @@ const Homepage = (props: Props) => {
             <h3 className="card__title">Honesty</h3>
           </div>
           <div className="card__back">
-            <p className="card__body">This would be some</p>
+            <p className="card__body">Code truthfully, debug honestly</p>
           </div>
         </div>
       </div>

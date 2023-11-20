@@ -55,7 +55,7 @@ const BubbleCount = (props: Props) => {
     };
 
     getAllEvents();
-  }, []);
+  }, [user.uid]);
 
   let filteredSchedule: Event[] = [];
   let ScheduleLength;
