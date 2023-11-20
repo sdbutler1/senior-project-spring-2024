@@ -166,51 +166,6 @@ const Login = (props: Props) => {
           </form>
         </div>
       </div>
-      <div className="absolute top-8 left-8 h-auto w-96 flex items-center justify-center p-4 bg-white border z-45">
-        <ul className="flex flex-col items-start justify-center gap-4 text-sm no-underline ">
-          <li className="text-[#255a1d]">
-            * Users can now create events and they are uploaded to the database.
-            Need to work on the other functions and shown on schedule.
-            <span className="text-[#c64242]">
-              Need to change create button for schedule, and allow input for
-              date ad time
-            </span>
-          </li>
-          <li className="text-[#255a1d]">
-            * Users now can add, edit and delete students from database
-          </li>
-          <li>* Matthew is still working on the home page</li>
-          <li>* Probably create a calendar page</li>
-          <li className="text-[#255a1d]">
-            * The help pop-up sends the information to the database.
-          </li>
-          <li>
-            * Need to work on Help popup sending an email when the database gets
-            a new document.
-          </li>
-          <li className="text-[#255a1d]">
-            * Loading also works, no glitches when trying to go back.
-          </li>
-          <li className="text-[#255a1d]">
-            * Table is now getting data directly from the firebase database and
-            automatically updates and alerts user.
-          </li>
-          <li className="text-[#255a1d]">
-            * There are alerts, users can update profile information.
-          </li>
-          <li>
-            * Work on dark mode. Also if you close computer and time passes it
-            doesnt log you out
-          </li>
-          <li>
-            * After these tasks are finished, or during the process will work on
-            the responsive aspect of the website to screen sizes
-            <span className="text-[#255a1d]">
-              (login and forget password not included)
-            </span>
-          </li>
-        </ul>
-      </div>
     </div>
   );
 };

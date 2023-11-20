@@ -108,7 +108,7 @@ const Homepage = (props: Props) => {
             target="blank"
             className="h-10 w-24 md:w-32 bg-[#7d1f2e] flex items-center justify-center text-xs md:text-sm text-white text-center font-semibold rounded-md hover:bg-[#f4a645] shadow-xl"
           >
-            CS Department
+            CS Dept.
           </Link>
           <Link
             href={"https://bearsnet.shawu.edu/ics"}
